@@ -1,0 +1,5 @@
+Objects\TipoUsuario.class
+Objects\Pessoa.class
+Objects\Programa.class
+UI\GUI.class
+DAO\PessoaDAO.class
