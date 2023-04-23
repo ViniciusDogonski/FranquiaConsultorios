@@ -22,14 +22,87 @@ public class Programa {
 
     public Programa() {
 
-        int opcaoUsuario;
+        dadosTEST();
 
+        inicioMenu();
+
+    }
+
+    public void inicioMenu() {
+        int op = gui.pegaOpcaoLoginCadastro();
+
+        switch (op) {
+            case 1:
+                System.out.println("------ CADASTRO ------");
+                Pessoa pessoaCadastro = gui.cadastrarPessoa();
+                pessoaCadastro.setTipoUsuario(TipoUsuario.PACIENTE);
+                pessoaDAO.criarPessoa(pessoaCadastro);
+                inicioMenu();
+                break;
+            case 2:
+                System.out.println("------ LOGIN ------");
+                System.out.print("login:");
+                String log = scan.nextLine();
+                System.out.print("senha:");
+                String senha = scan.nextLine();
+                login(log, senha);
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+    }
+
+    public void login(String login, String senha) {
+        Pessoa pessoa = pessoaDAO.buscarPessoaPorLogin(login);
+        if (pessoa == null) {
+            System.out.println("Login inválido.");
+            return;
+        }
+
+        if (!pessoa.getSenha().equals(senha)) {
+            System.out.println("Senha incorreta.");
+            return;
+        }
+
+        switch (pessoa.getTipoUsuario()) {
+            case DONO_FRANQUIA:
+                //gui dono franquia
+                break;
+            case DONO_UNIDADE:
+                //gui
+                break;
+            case ADMINISTRATIVO:
+                //gui
+                break;
+            case MEDICO:
+                //gui
+                break;
+            case PACIENTE:
+                System.out.println("paciente");
+                break;
+            case ADMINISTRADOR:
+                admMenu();
+                break;
+
+            default:
+                System.out.println("Tipo de usuário inválido.");
+        }
+    }
+
+    public void cadastrar() {
+
+    }
+
+    public void admMenu() {
+
+        int opcaoUsuario;
         do {
-            opcaoUsuario = gui.pegaOpcaoUsuario();
+            opcaoUsuario = gui.pegaOpcaoADM();
 
             switch (opcaoUsuario) {
                 case 1:
-
+                    System.out.println("------ Criar Pessoa ------");
                     Pessoa p = gui.cadastrarPessoa();
                     int id = pessoaDAO.criarPessoa(p);
                     System.out.println(id);
@@ -40,9 +113,23 @@ public class Programa {
                     break;
 
                 case 3:
+                    System.out.println("------ Editar Pessoa------");
+
+                    System.out.print("id da pessoa:");
+                    int idEdit = Integer.parseInt(scan.nextLine());
+                    //Pessoa pessoaBuscada = pessoaDAO.buscarPessoa(idEdit);
+
+                    Pessoa editPessoa = gui.cadastrarPessoa();
+                    editPessoa.setId(idEdit);
+                    pessoaDAO.atualizarPessoa(editPessoa);
 
                     break;
                 case 4:
+                    System.out.println("------ Delete Pessoa------");
+
+                    System.out.print("id da pessoa:");
+                    int idDel = Integer.parseInt(scan.nextLine());
+                    pessoaDAO.excluirPessoa(idDel);
 
                     break;
                 case 5:
@@ -73,37 +160,15 @@ public class Programa {
 
     }
 
-    public void login(String login, String senha) {
-        Pessoa pessoa = pessoaDAO.buscarPessoaPorLogin(login);
-        if (pessoa == null) {
-            System.out.println("Login inválido.");
-            return;
-        }
+    public void dadosTEST() {
 
-        if (!pessoa.getSenha().equals(senha)) {
-            System.out.println("Senha incorreta.");
-            return;
-        }
+        Pessoa adm = new Pessoa();
+        adm.setLogin("adm");
+        adm.setNome("adm");
+        adm.setSenha("adm");
+        adm.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
+        pessoaDAO.criarPessoa(adm);
 
-        switch (pessoa.getTipoUsuario()) {
-            case DONO_FRANQUIA:
-                //gui dono franquia
-                break;
-            case DONO_UNIDADE:
-                //gui
-                break;
-            case ADMINISTRATIVO:
-                //gui
-                break;
-            case MEDICO:
-                //gui
-                break;
-            case PACIENTE:
-                //gui
-                break;
-            default:
-                System.out.println("Tipo de usuário inválido.");
-        }
     }
 
     public static void main(String[] args) {

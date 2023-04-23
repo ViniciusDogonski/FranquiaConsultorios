@@ -13,5 +13,6 @@ public enum TipoUsuario {
     DONO_UNIDADE,
     ADMINISTRATIVO,
     MEDICO,
-    PACIENTE
+    PACIENTE,
+    ADMINISTRADOR
 }

@@ -19,8 +19,7 @@ public class GUI {
 
     public Pessoa cadastrarPessoa() {
 
-        System.out.println("------ Criar Pessoa ------");
-        System.out.println("Por favor, informe os dados da pessoa:");
+        System.out.println("Por favor, informe os dados:");
 
         Pessoa pessoa = new Pessoa();
 
@@ -48,7 +47,7 @@ public class GUI {
         String senha = scan.nextLine();
         pessoa.setSenha(senha);
 
-        System.out.print("Tipo de usuário (1-Dono Franquia, 2-Dono Unidade, 3-Administrativo, 4-Médico, 5-Paciente): ");
+      /*  System.out.print("Tipo de usuário (1-Dono Franquia, 2-Dono Unidade, 3-Administrativo, 4-Médico, 5-Paciente, 6-Administrador): ");
         int tipoUsuario = Integer.parseInt(scan.nextLine());
 
         switch (tipoUsuario) {
@@ -67,16 +66,17 @@ public class GUI {
             case 5:
                 pessoa.setTipoUsuario(TipoUsuario.PACIENTE);
                 break;
+            case 6:
+                pessoa.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
+                break;
             default:
                 System.out.print("opçao invalida!");
-        }
+        }*/
         return pessoa;
     }
-    
-    
-     public Medico  cadastrarMedico(Pessoa pessoa) {
 
-     
+    public Medico cadastrarMedico(Pessoa pessoa) {
+
         System.out.println("Por favor, informe os dados do medico:");
 
         Medico medico = new Medico();
@@ -88,14 +88,13 @@ public class GUI {
         System.out.print("Especialidade: ");
         String especialidade = scan.nextLine();
         medico.setEspecialidade(especialidade);
-   
+
         medico.setPessoa(pessoa);
-        
+
         return medico;
     }
-    
 
-    public int pegaOpcaoUsuario() {
+    public int pegaOpcaoADM() {
 
         System.out.println("1 cadastrar PESSOA");
         System.out.println("2 mostrar todas PESSOAS");
@@ -104,6 +103,16 @@ public class GUI {
         System.out.println("5 cadastrar MEDICO");
         System.out.println("6 mostrar MEDICO");
         System.out.println("0 sair");
+
+        System.out.print("Qual sua opcao ?");
+        return Integer.parseInt(scan.nextLine());
+
+    }
+
+    public int pegaOpcaoLoginCadastro() {
+
+        System.out.println("1 cadastrar");
+        System.out.println("2 logar");
 
         System.out.print("Qual sua opcao ?");
         return Integer.parseInt(scan.nextLine());
