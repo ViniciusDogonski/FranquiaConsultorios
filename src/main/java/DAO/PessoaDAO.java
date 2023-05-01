@@ -82,7 +82,20 @@ public class PessoaDAO {
 
     }
 
+    public Pessoa buscarPacientes() {
 
+        for (Pessoa pessoa : pessoas) {
+            if (pessoa != null) {
+                if (pessoa.getTipoUsuario() == TipoUsuario.PACIENTE) {
+                    System.out.println(pessoa);
+                }
+            }
+
+        }
+
+        return null;
+
+    }
 
     /*public PessoaDAO() {
 

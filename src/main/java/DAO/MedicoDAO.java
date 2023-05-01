@@ -20,18 +20,35 @@ public class MedicoDAO {
         this.proximoID = 1;
     }
 
-     public int criarMedico(Medico medico) {
+    public int criarMedico(Medico medico) {
         int id = this.proximoID++;
         medico.setId(id);
         this.medicos[id - 1] = medico;
         return id;
     }
 
-   
-    
-    //
-     
-       public void mostrarMedicos() {
+    public void excluirMedico(int id) {
+        if (id < 1 || id > this.proximoID - 1) {
+            return; // ID inválido
+        }
+        this.medicos[id - 1] = null;
+    }
+
+    public Medico buscarMedico(int id) {
+        if (id < 1 || id > this.proximoID - 1) {
+            return null; // ID inválido
+        }
+        return this.medicos[id - 1];
+    }
+
+    public void atualizarMedico(Medico medico) {
+        if (medico.getId() < 1 || medico.getId() > this.proximoID - 1) {
+            return; // ID inválido
+        }
+        this.medicos[medico.getId() - 1] = medico;
+    }
+
+    public void mostrarMedicos() {
 
         boolean temMedicos = false;
         for (Medico m : medicos) {
@@ -45,5 +62,15 @@ public class MedicoDAO {
         }
 
     }
-     
+
+    public Medico findPessoaByMedico(int id) {
+       
+        for (Medico medico : medicos) {
+            if (medico.getPessoa().getId() == id) {
+                return medico;
+            }
+        }
+        return null;
+    }
+
 }

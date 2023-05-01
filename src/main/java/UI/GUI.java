@@ -6,8 +6,14 @@ package UI;
 
 import Objects.Pessoa;
 import Objects.Medico;
+import Objects.Consulta;
+import Objects.Estados;
 import Objects.TipoUsuario;
 import java.util.Scanner;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -47,7 +53,7 @@ public class GUI {
         String senha = scan.nextLine();
         pessoa.setSenha(senha);
 
-      /*  System.out.print("Tipo de usuário (1-Dono Franquia, 2-Dono Unidade, 3-Administrativo, 4-Médico, 5-Paciente, 6-Administrador): ");
+        /*  System.out.print("Tipo de usuário (1-Dono Franquia, 2-Dono Unidade, 3-Administrativo, 4-Médico, 5-Paciente, 6-Administrador): ");
         int tipoUsuario = Integer.parseInt(scan.nextLine());
 
         switch (tipoUsuario) {
@@ -94,14 +100,43 @@ public class GUI {
         return medico;
     }
 
-    public int pegaOpcaoADM() {
+    public Consulta cadastrarConsulta(Medico medico, Pessoa paciente) {
 
+        System.out.println("Por favor, informe os dados da Consulta:");
+        Consulta consulta = new Consulta();
+
+        System.out.print("data da consulta (dd/MM/yyyy):");
+        String dataConsulta = scan.nextLine();
+        consulta.setData(DateConverter(dataConsulta));
+
+        System.out.print("hora da consulta (HH:mm):");
+        String horaConsulta = scan.nextLine();
+        consulta.setHorario(TimeConverter(horaConsulta));
+
+        consulta.setEstado(Estados.AGENDADA);
+        consulta.setMedico(medico);
+        consulta.setPaciente(paciente);
+       
+        return consulta;
+
+    }
+
+    public int pegaOpcaoADM() {
+        System.out.println("------ PESSOA------");
         System.out.println("1 cadastrar PESSOA");
         System.out.println("2 mostrar todas PESSOAS");
         System.out.println("3 alterar PESSOA");
         System.out.println("4 excluir pelo id  PESSOAS");
+        System.out.println("------ MEDICO------");
         System.out.println("5 cadastrar MEDICO");
         System.out.println("6 mostrar MEDICO");
+        System.out.println("7 deletar MEDICO");
+        System.out.println("8 editar MEDICO");
+        System.out.println("------CONSULTA------");
+        System.out.println("9 cadastrar CONSULTA");
+        System.out.println("10 mostrar CONSULTAS");
+        System.out.println("11 deletar CONSULTA");
+        System.out.println("12 editar CONSULTA");
         System.out.println("0 sair");
 
         System.out.print("Qual sua opcao ?");
@@ -117,6 +152,16 @@ public class GUI {
         System.out.print("Qual sua opcao ?");
         return Integer.parseInt(scan.nextLine());
 
+    }
+
+    private LocalDate DateConverter(String dataConsulta) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return LocalDate.parse(dataConsulta, formatter);
+    }
+
+    private LocalTime TimeConverter(String timeString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        return LocalTime.parse(timeString, formatter);
     }
 
 }
