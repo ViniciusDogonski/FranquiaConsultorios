@@ -6,6 +6,7 @@ package Objects;
 
 import DAO.PessoaDAO;
 import DAO.MedicoDAO;
+import DAO.FranquiaDAO;
 import UI.GUI;
 import java.util.Scanner;
 
@@ -19,7 +20,7 @@ public class Programa {
     GUI gui = new GUI();
     PessoaDAO pessoaDAO = new PessoaDAO(100);
     MedicoDAO medicoDAO = new MedicoDAO(100);
-
+    FranquiaDAO franquiaDAO = new FranquiaDAO(100);
     public Programa() {
 
         dadosTEST();
@@ -149,6 +150,22 @@ public class Programa {
                 case 6:
                     //listar medicos 
                     medicoDAO.mostrarMedicos();
+                    break;
+                case 7:
+                    System.out.println("CRIAR FRANQUIA");
+                    Franquia franquiacriada= gui.cadastrarFranquia();
+                    Pessoa responsavel = new Pessoa();
+                     System.out.println("Possíveis pessoas resposáveis pela franquia:");
+                    pessoaDAO.mostrarPessoasQualificadas();
+                    System.out.println("Informe o ID do responsável pela Franquia:");
+                    int idResp = Integer.parseInt(scan.nextLine());
+                    responsavel= pessoaDAO.buscarPessoa(idResp);
+                    franquiacriada.setResponsavel(responsavel);
+                    franquiaDAO.criarFranquia(franquiacriada);
+                    break;
+                case 8:
+                    System.out.println("Franquias Cadastradas:");
+                    franquiaDAO.mostrarFranquias();
                     break;
                 case 0:
 

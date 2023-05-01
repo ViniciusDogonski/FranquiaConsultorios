@@ -6,7 +6,7 @@ package UI;
 
 import Objects.Pessoa;
 import Objects.Medico;
-import Objects.TipoUsuario;
+import Objects.Franquia;
 import java.util.Scanner;
 
 /**
@@ -93,6 +93,26 @@ public class GUI {
 
         return medico;
     }
+    public Franquia cadastrarFranquia(){
+
+        System.out.println("CADASTRO DE FRANQUIA");
+        Franquia franquia = new Franquia();
+        System.out.println("Informe o nome da franquia:");
+        String nome = scan.nextLine();
+        franquia.setNome(nome);
+        System.out.println("Informe o CNPJ da franquia:");
+        String cnpj = scan.nextLine();
+        franquia.setCnpj(cnpj);
+        System.out.println("Informe a cidade:");
+        String cidade = scan.nextLine();
+        franquia.setCidade(cidade);
+        System.out.println("Informe o endereco da franquia:");
+        String endereco = scan.nextLine();
+        franquia.setEndereco(endereco);
+        //System.out.println("Informe o responsavel pela franquia:");
+        return franquia;
+
+    }
 
     public int pegaOpcaoADM() {
 
@@ -102,6 +122,8 @@ public class GUI {
         System.out.println("4 excluir pelo id  PESSOAS");
         System.out.println("5 cadastrar MEDICO");
         System.out.println("6 mostrar MEDICO");
+        System.out.println(" 7- cadastrar FRANQUIA");
+        System.out.println(" 8- mostrar FRANQUIA");
         System.out.println("0 sair");
 
         System.out.print("Qual sua opcao ?");

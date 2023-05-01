@@ -77,9 +77,21 @@ public class PessoaDAO {
             }
         }
         if (!temPessoas) {
-            System.out.println("não existe pessoas cadastrado");
+            System.out.println("não existem pessoas cadastradas");
         }
 
+    }
+    public void mostrarPessoasQualificadas(){
+        boolean temPessoas = false;
+        for(Pessoa p : pessoas){
+            if((p != null && p.getTipoUsuario() == TipoUsuario.DONO_FRANQUIA) ||(p != null && p.getTipoUsuario() == TipoUsuario.DONO_UNIDADE) || (p != null && p.getTipoUsuario() == TipoUsuario.MEDICO) || (p != null && p.getTipoUsuario() == TipoUsuario.ADMINISTRATIVO)){
+                System.out.println(p);
+                temPessoas = true;
+            }
+        }
+        if (!temPessoas) {
+            System.out.println("não existem pessoas cadastradas");
+    }
     }
 
 
