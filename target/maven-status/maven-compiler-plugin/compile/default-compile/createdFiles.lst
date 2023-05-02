@@ -1,5 +1,12 @@
+Objects\Medico.class
 Objects\TipoUsuario.class
+Objects\Franquia.class
 Objects\Pessoa.class
 Objects\Programa.class
+Objects\UnidadeFranquia.class
+DAO\MedicoDAO.class
 UI\GUI.class
 DAO\PessoaDAO.class
+Objects\Programa$1.class
+DAO\FranquiaDAO.class
+DAO\UnidadeFranquiaDAO.class

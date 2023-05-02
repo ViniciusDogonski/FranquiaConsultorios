@@ -154,22 +154,32 @@ public class Programa {
                 case 7:
                     System.out.println("CRIAR FRANQUIA");
                     Franquia franquiacriada= gui.cadastrarFranquia();
-                    Pessoa responsavel = new Pessoa();
+                   // Pessoa responsavel = new Pessoa();
                      System.out.println("Possíveis pessoas resposáveis pela franquia:");
                     pessoaDAO.mostrarPessoasQualificadas();
                     System.out.println("Informe o ID do responsável pela Franquia:");
                     int idResp = Integer.parseInt(scan.nextLine());
-                    responsavel= pessoaDAO.buscarPessoa(idResp);
-                    franquiacriada.setResponsavel(responsavel);
+                    //responsavel= ;
+                    franquiacriada.setResponsavel(pessoaDAO.buscarPessoa(idResp));
                     franquiaDAO.criarFranquia(franquiacriada);
                     break;
                 case 8:
                     System.out.println("Franquias Cadastradas:");
                     franquiaDAO.mostrarFranquias();
                     break;
-                case 0:
-
+                case 9:
+                    System.out.println("Editar Franquia");
+                    Franquia franquiaAtual = new Franquia();
+                    System.out.println("Informe o id da Franquia que será alterada");
+                    int id_franquia = Integer.parseInt(scan.nextLine());
+                    franquiaDAO.criarFranquia(franquiaAtual);
+                     franquiaAtual.setId(id_franquia);
+                    franquiaDAO.atualizarFranquia(franquiaAtual);
                     break;
+                case 10:
+                    System.out.println("Deletar Franquia:");
+                    System.out.println("informe o id da franquia:");
+                    
                 default:
                     throw new AssertionError();
             }
