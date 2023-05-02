@@ -70,4 +70,8 @@ public class UnidadeFranquia {
         return dataModificacao;
 
     }
+    @Override
+    public String toString() {
+        return "UnidadeFranquia{" + "franquia=" + franquia + ", id=" + id + ", cidade=" + cidade + ", endereco=" + endereco + ", responsavel=" + responsavel + ", dataCriacao=" + dataCriacao + ", dataModificacao=" + dataModificacao + '}';
+    }
 }

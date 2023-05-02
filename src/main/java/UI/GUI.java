@@ -7,6 +7,7 @@ package UI;
 import Objects.Pessoa;
 import Objects.Medico;
 import Objects.Franquia;
+import Objects.UnidadeFranquia;
 import java.util.Scanner;
 
 /**
@@ -95,23 +96,32 @@ public class GUI {
     }
     public Franquia cadastrarFranquia(){
 
-        System.out.println("CADASTRO DE FRANQUIA");
+        
         Franquia franquia = new Franquia();
-        System.out.println("Informe o nome da franquia:");
+        System.out.println("Por favor, informe os dados da Franquia abaixo:");
+        System.out.println("Nome");
         String nome = scan.nextLine();
         franquia.setNome(nome);
-        System.out.println("Informe o CNPJ da franquia:");
+        System.out.println(" CNPJ:");
         String cnpj = scan.nextLine();
         franquia.setCnpj(cnpj);
-        System.out.println("Informe a cidade:");
+        System.out.println("Cidade:");
         String cidade = scan.nextLine();
         franquia.setCidade(cidade);
-        System.out.println("Informe o endereco da franquia:");
+        System.out.println("Endereco:");
         String endereco = scan.nextLine();
         franquia.setEndereco(endereco);
-        //System.out.println("Informe o responsavel pela franquia:");
         return franquia;
 
+    }
+    public UnidadeFranquia cadastrarUnidade(){
+        UnidadeFranquia unidade = new UnidadeFranquia();
+        System.out.println("Por favor informe os dados da UNIDADE:");
+        System.out.println("Cidade:");
+        unidade.setCidade(scan.nextLine());
+        System.out.println("Endereco:");
+        unidade.setEndereco(scan.nextLine());
+        return unidade;
     }
 
     public int pegaOpcaoADM() {
@@ -124,6 +134,11 @@ public class GUI {
         System.out.println("6 mostrar MEDICO");
         System.out.println(" 7- cadastrar FRANQUIA");
         System.out.println(" 8- mostrar FRANQUIA");
+        System.out.println(" 9- alterar FRANQUIA");
+        System.out.println(" 10- deletar FRANQUIA");
+        System.out.println("11- cadastrar UNIDADE");
+        System.out.println("12 - mostrar UNIDADE");
+        System.out.println("13 - alterar UNIDADE");
         System.out.println("0 sair");
 
         System.out.print("Qual sua opcao ?");
