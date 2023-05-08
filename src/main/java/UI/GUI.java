@@ -6,9 +6,14 @@ package UI;
 
 import Objects.Pessoa;
 import Objects.Medico;
+
 import Objects.Consulta;
 import Objects.Estados;
 import Objects.TipoUsuario;
+
+import Objects.Franquia;
+import Objects.UnidadeFranquia;
+
 import java.util.Scanner;
 
 import java.time.LocalDate;
@@ -99,6 +104,35 @@ public class GUI {
 
         return medico;
     }
+    public Franquia cadastrarFranquia(){
+
+        
+        Franquia franquia = new Franquia();
+        System.out.println("Por favor, informe os dados da Franquia abaixo:");
+        System.out.println("Nome");
+        String nome = scan.nextLine();
+        franquia.setNome(nome);
+        System.out.println(" CNPJ:");
+        String cnpj = scan.nextLine();
+        franquia.setCnpj(cnpj);
+        System.out.println("Cidade:");
+        String cidade = scan.nextLine();
+        franquia.setCidade(cidade);
+        System.out.println("Endereco:");
+        String endereco = scan.nextLine();
+        franquia.setEndereco(endereco);
+        return franquia;
+
+    }
+    public UnidadeFranquia cadastrarUnidade(){
+        UnidadeFranquia unidade = new UnidadeFranquia();
+        System.out.println("Por favor informe os dados da UNIDADE:");
+        System.out.println("Cidade:");
+        unidade.setCidade(scan.nextLine());
+        System.out.println("Endereco:");
+        unidade.setEndereco(scan.nextLine());
+        return unidade;
+    }
 
     public Consulta cadastrarConsulta(Medico medico, Pessoa paciente) {
 
@@ -130,6 +164,7 @@ public class GUI {
         System.out.println("------ MEDICO------");
         System.out.println("5 cadastrar MEDICO");
         System.out.println("6 mostrar MEDICO");
+
         System.out.println("7 deletar MEDICO");
         System.out.println("8 editar MEDICO");
         System.out.println("------CONSULTA------");
@@ -137,6 +172,16 @@ public class GUI {
         System.out.println("10 mostrar CONSULTAS");
         System.out.println("11 deletar CONSULTA");
         System.out.println("12 editar CONSULTA");
+        System.out.println("------FRANQUIA------");
+        System.out.println(" 13- cadastrar FRANQUIA");
+        System.out.println(" 14- mostrar FRANQUIA");
+        System.out.println(" 15- alterar FRANQUIA");
+        System.out.println(" 16- deletar FRANQUIA");
+        System.out.println("------UNIDADE DE FRANQUIA------");
+        System.out.println("17- cadastrar UNIDADE");
+        System.out.println("18 - mostrar UNIDADE");
+        System.out.println("19 - alterar UNIDADE");
+
         System.out.println("0 sair");
 
         System.out.print("Qual sua opcao ?");

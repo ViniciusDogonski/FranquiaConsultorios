@@ -6,9 +6,14 @@ package Objects;
 
 import DAO.PessoaDAO;
 import DAO.MedicoDAO;
+
 import DAO.ConsultaDAO;
 import DAO.InfoConsultaDAO;
 import DAO.ProcedimentoDAO;
+
+import DAO.FranquiaDAO;
+import DAO.UnidadeFranquiaDAO;
+
 import UI.GUI;
 import java.util.Scanner;
 
@@ -22,9 +27,13 @@ public class Programa {
     GUI gui = new GUI();
     PessoaDAO pessoaDAO = new PessoaDAO(100);
     MedicoDAO medicoDAO = new MedicoDAO(100);
+
     ConsultaDAO consultaDAO = new ConsultaDAO(100);
     InfoConsultaDAO infoConsultaDAO = new InfoConsultaDAO(100);
     ProcedimentoDAO procedimentoDAO = new ProcedimentoDAO(100);
+    FranquiaDAO franquiaDAO = new FranquiaDAO(100);
+    UnidadeFranquiaDAO unidadeDAO = new UnidadeFranquiaDAO(100);
+
 
     public Programa() {
 
@@ -107,6 +116,9 @@ public class Programa {
             opcaoUsuario = gui.pegaOpcaoADM();
 
             switch (opcaoUsuario) {
+                case 0:
+                    inicioMenu();
+
                 case 1:
                     System.out.println("------ Criar Pessoa ------");
                     Pessoa p = gui.cadastrarPessoa();
@@ -175,6 +187,7 @@ public class Programa {
                     medicoDAO.mostrarMedicos();
                     break;
                 case 7:
+
                     System.out.println("------ Delete MEdico------");
 
                     System.out.print("id do medico:");
@@ -258,8 +271,76 @@ public class Programa {
                     consultaDAO.editarConsulta(consultaEdit);
 
                     break;
-                case 0:
-                    inicioMenu();
+                
+                 case 13:
+                    System.out.println("CRIAR FRANQUIA");
+                    Franquia franquiacriada= gui.cadastrarFranquia();
+                   // Pessoa responsavel = new Pessoa();
+                     System.out.println("Possíveis pessoas resposáveis pela franquia:");
+                    pessoaDAO.mostrarPessoasQualificadas();
+                    System.out.println("Informe o ID do responsável pela Franquia:");
+                    int idResp = Integer.parseInt(scan.nextLine());
+                    //responsavel= ;
+                    franquiacriada.setResponsavel(pessoaDAO.buscarPessoa(idResp));
+                    franquiaDAO.criarFranquia(franquiacriada);
+                    break;
+                case 14:
+                    System.out.println("Franquias Cadastradas:");
+                    franquiaDAO.mostrarFranquias();
+                    break;
+                case 15:
+                    System.out.println("Editar Franquia");
+                    Franquia franquiaAtual = new Franquia();
+                    System.out.println("Informe o id da Franquia que será alterada");
+                    int id_franquia = Integer.parseInt(scan.nextLine());
+                    System.out.println("Possíveis pessoas resposáveis pela franquia:");
+                    pessoaDAO.mostrarPessoasQualificadas();
+                    System.out.println("Informe o ID do responsável pela Franquia:");
+                    int resp_novo = Integer.parseInt(scan.nextLine());
+                    franquiaAtual.setResponsavel(pessoaDAO.buscarPessoa(resp_novo));
+                    franquiaDAO.criarFranquia(franquiaAtual);
+                     franquiaAtual.setId(id_franquia);
+                    franquiaDAO.atualizarFranquia(franquiaAtual);
+                    break;
+                case 16:
+                    System.out.println("Deletar Franquia:");
+                    System.out.println("informe o id da franquia:");
+                    break;
+                case 17:
+                    System.out.println("cadastrar Unidade de Franquia:");
+                    UnidadeFranquia unidade = gui.cadastrarUnidade();
+                    System.out.println("Informe o id da Franquia:");
+                    int franquia_id = Integer.parseInt(scan.nextLine());
+                    unidade.setFranquia(franquiaDAO.buscarFranquia(franquia_id));
+                    System.out.println("Possíveis pessoas resposáveis pela UNIDADE:");
+                    pessoaDAO.mostrarPessoasQualificadas();
+                    System.out.println("Informe o ID do responsável pela UNIDADE:");
+                    int resp_unid = Integer.parseInt(scan.nextLine());
+                    unidade.setResponsavel(pessoaDAO.buscarPessoa(resp_unid));
+                    unidadeDAO.criarUnidade(unidade);
+                    break;
+                case 18:
+                    System.out.println("Unidades Cadastradas:");
+                    unidadeDAO.mostrarUnidades();
+                    break;
+                case 19:
+                    System.out.println("Editar UNIDADE");
+                    UnidadeFranquia unidadeNova = new UnidadeFranquia();
+                    System.out.println("Informe o id da unidade:");
+                    int id_unid = Integer.parseInt(scan.nextLine());
+                    unidadeNova =gui.cadastrarUnidade();
+                    System.out.println("Informe o id da Franquia:");
+                    int franquia_nova = Integer.parseInt(scan.nextLine());
+                    unidadeNova.setFranquia(franquiaDAO.buscarFranquia(franquia_nova));
+                    System.out.println("Possíveis pessoas resposáveis pela UNIDADE:");
+                    pessoaDAO.mostrarPessoasQualificadas();
+                    System.out.println("Informe o ID do responsável pela UNIDADE:");
+                    int responsavel_unid = Integer.parseInt(scan.nextLine());
+                    //responsavel= ;
+                    unidadeNova.setResponsavel(pessoaDAO.buscarPessoa(responsavel_unid));
+                    unidadeNova.setId(id_unid);
+                    unidadeDAO.atualizarUnidade(unidadeNova);
+
                     break;
                 default:
                     throw new AssertionError();
