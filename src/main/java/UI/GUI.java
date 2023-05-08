@@ -5,17 +5,19 @@
 package UI;
 
 import Objects.Pessoa;
+import Objects.TipoMovimento;
 import Objects.Medico;
 
 import Objects.Consulta;
 import Objects.Estados;
+import Objects.FinaceiroAdm;
 import Objects.TipoUsuario;
 
 import Objects.Franquia;
 import Objects.UnidadeFranquia;
 
 import java.util.Scanner;
-
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -154,7 +156,29 @@ public class GUI {
         return consulta;
 
     }
+    public FinaceiroAdm cadastrarFinanca(){
+        FinaceiroAdm financa = new FinaceiroAdm();
+       
+        System.out.println("É uma consulta ou procedimento?");
+        System.out.println("1 - Sim");
+        System.out.println("2 - Nao");
+        int opc= Integer.parseInt(scan.nextLine());
+        if(opc == 1){
+            financa.setTipoMovimento(TipoMovimento.ENTRADA);
+        }
+        else{
+            financa.setTipoMovimento(TipoMovimento.SAIDA);
+        }
+        System.out.println("Valor:");
+        BigDecimal valor = BigDecimal.valueOf(Double.parseDouble(scan.nextLine()));
+        financa.setValor(valor);
+        System.out.println("Descrição:");
+        String descricao = scan.nextLine();
+        financa.setDescricao(descricao);
+        return financa;
 
+
+    }
     public int pegaOpcaoADM() {
         System.out.println("------ PESSOA------");
         System.out.println("1 cadastrar PESSOA");
@@ -181,7 +205,8 @@ public class GUI {
         System.out.println("17- cadastrar UNIDADE");
         System.out.println("18 - mostrar UNIDADE");
         System.out.println("19 - alterar UNIDADE");
-
+        System.out.println("-------FINANCEIRO ADM-------");
+        System.out.println("20 - Criar uma Movimentacao");
         System.out.println("0 sair");
 
         System.out.print("Qual sua opcao ?");

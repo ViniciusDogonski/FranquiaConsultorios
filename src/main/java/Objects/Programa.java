@@ -8,6 +8,7 @@ import DAO.PessoaDAO;
 import DAO.MedicoDAO;
 
 import DAO.ConsultaDAO;
+import DAO.FinanceiroAdmDAO;
 import DAO.InfoConsultaDAO;
 import DAO.ProcedimentoDAO;
 
@@ -33,6 +34,7 @@ public class Programa {
     ProcedimentoDAO procedimentoDAO = new ProcedimentoDAO(100);
     FranquiaDAO franquiaDAO = new FranquiaDAO(100);
     UnidadeFranquiaDAO unidadeDAO = new UnidadeFranquiaDAO(100);
+    FinanceiroAdmDAO financeiroAdmDAO = new FinanceiroAdmDAO(100);
 
 
     public Programa() {
@@ -341,6 +343,17 @@ public class Programa {
                     unidadeNova.setId(id_unid);
                     unidadeDAO.atualizarUnidade(unidadeNova);
 
+                    break;
+                case 20:
+                    FinaceiroAdm financa = gui.cadastrarFinanca();
+                    System.out.println("Informe o id da Unidade de Franquia");
+                    int idFinanca = Integer.parseInt(scan.nextLine());
+                    financa.setUnidade(unidadeDAO.buscarUnidade(idFinanca));
+                    financeiroAdmDAO.cadastrarFinanca(financa);
+                    break;
+                case 21:
+                //mostrar financas
+                    financeiroAdmDAO.mostrarFinancas();
                     break;
                 default:
                     throw new AssertionError();

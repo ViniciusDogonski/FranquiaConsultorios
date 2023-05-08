@@ -4,6 +4,7 @@
  */
 package Objects;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 import Objects.Estados;
 import Objects.Medico;
 import Objects.Pessoa;
-
+import Objects.UnidadeFranquia;
 /**
  *
  * @author Vinicius Augusto
@@ -26,9 +27,9 @@ public class Consulta {
 
     private Medico medico;
     private Pessoa paciente;
-    private double valor;
+    private BigDecimal valor;
 
-    //private unidade unidade
+    private UnidadeFranquia unidade;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataModificacao;
 
@@ -61,7 +62,7 @@ public class Consulta {
         this.paciente = paciente;
     }
 
-    public void setValor(double valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
 
@@ -102,10 +103,15 @@ public class Consulta {
         return paciente;
     }
 
-    public double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
-
+    public UnidadeFranquia getUnidade(){
+        return this.unidade;
+    }
+    public void setUnidade(UnidadeFranquia unidade){
+        this.unidade = unidade;
+    }
     public LocalDateTime getDataCriacao() {
         return dataCriacao;
     }
