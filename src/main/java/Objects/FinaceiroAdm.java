@@ -15,6 +15,7 @@ public class FinaceiroAdm {
     public FinaceiroAdm(){
         this.setDataCriacao(dataCriacao);
         this.setDataModificacao(LocalDateTime.now());
+        this.movimentacao= TipoMovimento.SAIDA;
     }
     public int getId() {
         return id;
@@ -69,5 +70,10 @@ public class FinaceiroAdm {
 
     public void setDataModificacao(LocalDateTime dataModificacao) {
         this.dataModificacao = dataModificacao;
+    }
+    @Override
+    public String toString() {
+        
+        return "Franquia{" + "id=" + id + ", Tipo Movimentacao=" + movimentacao + ", valor=" + valor + ", unidade=" + unidade +  ",descricao = "+ descricao +", dataCriacao=" + dataCriacao + ", dataModificacao=" + dataModificacao + '}';
     }
 }

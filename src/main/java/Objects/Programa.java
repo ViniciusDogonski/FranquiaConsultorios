@@ -352,8 +352,21 @@ public class Programa {
                     financeiroAdmDAO.cadastrarFinanca(financa);
                     break;
                 case 21:
-                //mostrar financas
+                //mostrar finanças
                     financeiroAdmDAO.mostrarFinancas();
+                    break;
+                case 22:
+                // editar finança
+                    System.out.println("EDIT FINANCA");
+                    FinaceiroAdm nova = new FinaceiroAdm();
+                    System.out.println("Informe o id da financa:");
+                    int idDelFinanca = Integer.parseInt(scan.nextLine());
+                    nova = gui.cadastrarFinanca();
+                    System.out.println("Informe o id da Unidade de Franquia");
+                    int idFinancaUni = Integer.parseInt(scan.nextLine());
+                    nova.setUnidade(unidadeDAO.buscarUnidade(idFinancaUni));
+                    financeiroAdmDAO.cadastrarFinanca(nova);
+                    nova.setId(idDelFinanca);
                     break;
                 default:
                     throw new AssertionError();
@@ -396,6 +409,21 @@ public class Programa {
         medicodemedico1.setEspecialidade("joelho");
         medicodemedico1.setPessoa(medico1);
         medicoDAO.criarMedico(medicodemedico1);
+
+        Franquia franquiaTeste = new Franquia();
+        franquiaTeste.setNome("Unimed");
+        franquiaTeste.setCidade("Belo Horizonte");
+        franquiaTeste.setCnpj("123");
+        franquiaTeste.setEndereco("coquinhos");
+        franquiaTeste.setResponsavel(medico1);
+        franquiaDAO.criarFranquia(franquiaTeste);
+
+        UnidadeFranquia unidadeTeste = new UnidadeFranquia();
+        unidadeTeste.setCidade("Uberaba");
+        unidadeTeste.setEndereco("palmeiras");
+        unidadeTeste.setFranquia(franquiaTeste);
+        unidadeTeste.setResponsavel(medico1);
+        unidadeDAO.criarUnidade(unidadeTeste);
 
         /*Pessoa pessoaMedico = gui.cadastrarPessoa();
                     pessoaMedico.setTipoUsuario(TipoUsuario.MEDICO);

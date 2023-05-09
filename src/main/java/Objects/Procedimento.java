@@ -17,7 +17,7 @@ public class Procedimento {
     private int id;
     private LocalDate data; //dia
     private LocalTime horario;
-
+    private Consulta consulta;
     private Estados estado;
     private double valor;
     private String laudo;
@@ -40,7 +40,9 @@ public class Procedimento {
     public void setHorario(LocalTime horario) {
         this.horario = horario;
     }
-
+    public void setConsulta(Consulta consulta){
+        this.consulta = consulta;
+    }
     public void setEstado(Estados estado) {
         this.estado = estado;
     }
@@ -77,7 +79,9 @@ public class Procedimento {
     public LocalTime getHorario() {
         return horario;
     }
-
+    public Consulta getConsulta(){
+        return this.consulta;
+    }
     public Estados getEstado() {
         return estado;
     }

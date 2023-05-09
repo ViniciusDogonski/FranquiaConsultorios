@@ -207,6 +207,8 @@ public class GUI {
         System.out.println("19 - alterar UNIDADE");
         System.out.println("-------FINANCEIRO ADM-------");
         System.out.println("20 - Criar uma Movimentacao");
+        System.out.println("21 - Mostrar Movimentacao");
+        System.out.println("22 - Editar Movimentacao");
         System.out.println("0 sair");
 
         System.out.print("Qual sua opcao ?");
