@@ -9,10 +9,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
 
-import Objects.Estados;
-import Objects.Medico;
-import Objects.Pessoa;
-import Objects.UnidadeFranquia;
 /**
  *
  * @author Vinicius Augusto
