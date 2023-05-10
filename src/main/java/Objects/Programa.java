@@ -4,11 +4,16 @@
  */
 package Objects;
 
+/*DAOI*/
 import DAO.PessoaDAO;
 import DAO.MedicoDAO;
 import DAO.ConsultaDAO;
 import DAO.InfoConsultaDAO;
 import DAO.ProcedimentoDAO;
+import DAO.FranquiaDAO;
+import DAO.UnidadeFranquiaDAO;
+
+/*GRAFICO*/
 import UI.GUI;
 import java.util.Scanner;
 
@@ -25,6 +30,8 @@ public class Programa {
     ConsultaDAO consultaDAO = new ConsultaDAO(100);
     InfoConsultaDAO infoConsultaDAO = new InfoConsultaDAO(100);
     ProcedimentoDAO procedimentoDAO = new ProcedimentoDAO(100);
+    FranquiaDAO franquiaDAO = new FranquiaDAO(100);
+    UnidadeFranquiaDAO unidadeFranquiaDAO = new UnidadeFranquiaDAO(100);
 
     public Programa() {
 
@@ -115,7 +122,8 @@ public class Programa {
 
                     break;
                 case 2:
-                    pessoaDAO.mostrarPessoas();
+                    Pessoa pessoas[] = pessoaDAO.mostrarPessoas();
+                    gui.mostrarPessoasPrint(pessoas);
                     break;
 
                 case 3:
@@ -201,6 +209,111 @@ public class Programa {
 
                     break;
                 case 9:
+//CADASTRO FRANQUIA 
+
+                    System.out.println("------Criar franquia------");
+
+                    System.out.print("id de Pessoa:");
+                    int idDonoFranquia = Integer.parseInt(scan.nextLine());
+                    Pessoa pessoaDonoFranquia = pessoaDAO.buscarPessoa(idDonoFranquia);
+                    System.out.println(pessoaDonoFranquia);
+                    pessoaDonoFranquia.setTipoUsuario(TipoUsuario.DONO_FRANQUIA);
+
+                    Franquia franquiaCriada = gui.cadastrarFranquia(pessoaDonoFranquia);
+                    franquiaDAO.criarFranquia(franquiaCriada);
+
+                    break;
+                case 10:
+//MOSTRAR FRANQUIA
+
+                    franquiaDAO.mostrarFranquias();
+
+                    break;
+                case 11:
+//DELETE FRANQUIA
+
+                    System.out.println("------ Delete franquia------");
+
+                    System.out.print("id da franquia:");
+                    int idDelFranquia = Integer.parseInt(scan.nextLine());
+
+                    franquiaDAO.excluirFranquia(idDelFranquia);
+
+                    break;
+                case 12:
+// EDIT FRANQUIA
+
+                    System.out.println("------ EDIT franquia------");
+
+                    System.out.print("id da franquia:");
+                    int idEditFranquia = Integer.parseInt(scan.nextLine());
+                    Franquia franquiaBuscado = franquiaDAO.buscarFranquia(idEditFranquia);
+                    System.out.println(franquiaBuscado);
+
+                    System.out.print("id de Pessoa:");
+                    int idEditDonoFranquia = Integer.parseInt(scan.nextLine());
+                    Pessoa pessoaEditDonoFranquia = pessoaDAO.buscarPessoa(idEditDonoFranquia);
+                    System.out.println(pessoaEditDonoFranquia);
+                    pessoaEditDonoFranquia.setTipoUsuario(TipoUsuario.DONO_FRANQUIA);
+
+                    Franquia franquiaEdit = gui.cadastrarFranquia(pessoaEditDonoFranquia);
+                    franquiaEdit.setId(idEditFranquia);
+
+                    franquiaDAO.atualizarFranquia(franquiaEdit);
+
+                    break;
+                case 13:
+
+                    System.out.println("------Criar unidade franquia------");
+
+                    System.out.print("id de Pessoa:");
+                    int idDonoUnidadeFranquia = Integer.parseInt(scan.nextLine());
+                    Pessoa pessoaDonoUnidadeFranquia = pessoaDAO.buscarPessoa(idDonoUnidadeFranquia);
+                    System.out.println(pessoaDonoUnidadeFranquia);
+                    pessoaDonoUnidadeFranquia.setTipoUsuario(TipoUsuario.DONO_UNIDADE);
+
+                    System.out.print("id de franquia:");
+                    int idFranquia = Integer.parseInt(scan.nextLine());
+                    Franquia buscarFranquia = franquiaDAO.buscarFranquia(idFranquia);
+
+                    UnidadeFranquia unidadefranquiaCriada = gui.cadastrarUnidadeFranquia(buscarFranquia, pessoaDonoUnidadeFranquia);
+                    unidadeFranquiaDAO.criarUnidade(unidadefranquiaCriada);
+
+                    break;
+                case 14:
+                    unidadeFranquiaDAO.mostrarUnidades();
+                    break;
+                case 15:
+
+                    System.out.println("------ Delete unidade franquia------");
+
+                    System.out.print("id da unidade franquia:");
+                    int idDelUnidadeFranquia = Integer.parseInt(scan.nextLine());
+                    unidadeFranquiaDAO.excluirUnidade(idDelUnidadeFranquia);
+
+                    break;
+                case 16:
+
+                    System.out.println("------Edit unidade franquia------");
+
+                    System.out.print("id de Pessoa:");
+                    int idDonoUnidadeFranquiaEdit = Integer.parseInt(scan.nextLine());
+                    Pessoa pessoaDonoUnidadeFranquiaEdit = pessoaDAO.buscarPessoa(idDonoUnidadeFranquiaEdit);
+                    System.out.println(pessoaDonoUnidadeFranquiaEdit);
+                    pessoaDonoUnidadeFranquiaEdit.setTipoUsuario(TipoUsuario.DONO_UNIDADE);
+
+                    System.out.print("id de franquia:");
+                    int idFranquiaEdit = Integer.parseInt(scan.nextLine());
+                    Franquia buscarFranquiaEdit = franquiaDAO.buscarFranquia(idFranquiaEdit);
+                    System.out.println(buscarFranquiaEdit);
+
+                    UnidadeFranquia unidadefranquiaEdit = gui.cadastrarUnidadeFranquia(buscarFranquiaEdit, pessoaDonoUnidadeFranquiaEdit);
+                    unidadefranquiaEdit.setId(buscarFranquiaEdit.getID());
+                    unidadeFranquiaDAO.atualizarUnidade(unidadefranquiaEdit);
+
+                    break;
+
+                case 17:
                     System.out.println("------ Criar Consulta------");
 
                     System.out.print("id do medico:");
@@ -218,11 +331,11 @@ public class Programa {
                     consultaDAO.cadastrarConsulta(consultaInsert);
 
                     break;
-                case 10:
+                case 18:
                     consultaDAO.mostrarConsultas();
 
                     break;
-                case 11:
+                case 19:
                     System.out.println("------ Delete Consulta------");
                     System.out.print("id do Consulta:");
                     consultaDAO.mostrarConsultas();
@@ -232,8 +345,7 @@ public class Programa {
 
                     break;
 
-                case 12:
-
+                case 20:
                     System.out.println("------ EDIT Consulta------");
 
                     System.out.print("id do Consulta:");
@@ -258,6 +370,99 @@ public class Programa {
                     consultaDAO.editarConsulta(consultaEdit);
 
                     break;
+                case 21:
+
+                    System.out.println("------ Criar info Consulta------");
+
+                    System.out.print("id da Consulta:");
+                    int idConsulta = Integer.parseInt(scan.nextLine());
+
+                    Consulta consultaVinculada = consultaDAO.buscarConsulta(idConsulta);
+
+                    InfoConsulta InfoConsultaCriado = gui.cadastrarInfoConsulta(consultaVinculada);
+
+                    infoConsultaDAO.criarInfoConsulta(InfoConsultaCriado);
+
+                    break;
+                case 22:
+
+                    infoConsultaDAO.mostrarInfoConsulta();
+
+                    break;
+                case 23:
+
+                    System.out.println("------ Delete info Consulta------");
+                    System.out.print("id do info Consulta:");
+                    infoConsultaDAO.mostrarInfoConsulta();
+
+                    int idDelInfoConsulta = Integer.parseInt(scan.nextLine());
+                    infoConsultaDAO.excluirInfoConsulta(idDelInfoConsulta);
+
+                    break;
+                case 24:
+
+                    System.out.println("------ EDIT info Consulta------");
+
+                    System.out.print("id do info Consulta:");
+                    int idEditInfoConsulta = Integer.parseInt(scan.nextLine());
+
+                    System.out.print("id da Consulta:");
+                    int idConsultaBusca = Integer.parseInt(scan.nextLine());
+
+                    Consulta consultaBuscadaedit = consultaDAO.buscarConsulta(idConsultaBusca);
+
+                    InfoConsulta infoCunsultaBusca = infoConsultaDAO.buscarInfoConsulta(idEditInfoConsulta);
+
+                    InfoConsulta infoConsultaEditado = gui.cadastrarInfoConsulta(consultaBuscadaedit);
+                    infoConsultaEditado.setId(infoCunsultaBusca.getId());
+
+                    break;
+                case 25:
+
+                    System.out.println("------ Criar PROCEDIMENTO------");
+
+                    System.out.print("id da Consulta:");
+                    int idConsultaProcedimento = Integer.parseInt(scan.nextLine());
+
+                    Consulta consultaVinculadaProcedimento = consultaDAO.buscarConsulta(idConsultaProcedimento);
+
+                    Procedimento criadoPrecedimento = gui.cadastrarProcedimento(consultaVinculadaProcedimento);
+
+                    procedimentoDAO.criarProcedimento(criadoPrecedimento);
+
+                    break;
+                case 26:
+
+                    procedimentoDAO.mostrarProcedimento();
+
+                    break;
+                case 27:
+                    System.out.println("------ Delete PROCEDIMENTO------");
+
+                    System.out.print("id do PROCEDIMENTO:");
+
+                    int idDelProcedimento = Integer.parseInt(scan.nextLine());
+                    procedimentoDAO.excluirProcedimento(idDelProcedimento);
+
+                    break;
+                case 28:
+                    System.out.println("------ EDIT PROCEDIMENTO------");
+
+                    System.out.print("id do PROCEDIMENTO:");
+                    int idEditProcedimento = Integer.parseInt(scan.nextLine());
+
+                    System.out.print("id da consulta:");
+                    int idconsultaEditProce = Integer.parseInt(scan.nextLine());
+
+                    Procedimento precedimentoBuscado = procedimentoDAO.buscarProcedimento(idEditProcedimento);
+                    Consulta consultaBuscada = consultaDAO.buscarConsulta(idconsultaEditProce);
+
+                    Procedimento novoProcedimento = gui.cadastrarProcedimento(consultaBuscada);
+                    novoProcedimento.setId(precedimentoBuscado.getId());
+
+                    procedimentoDAO.atualizarProcedimento(novoProcedimento);
+
+                    break;
                 case 0:
                     inicioMenu();
                     break;
@@ -277,6 +482,7 @@ public class Programa {
         adm.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
         pessoaDAO.criarPessoa(adm);
 
+        ////
         Pessoa paciente1 = new Pessoa();
         paciente1.setNome("maria");
         paciente1.setCpf("1111");

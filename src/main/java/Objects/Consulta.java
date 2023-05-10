@@ -29,6 +29,7 @@ public class Consulta {
     private double valor;
 
     //private unidade unidade
+    private UnidadeFranquia unidade;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataModificacao;
 

@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public class Procedimento {
 
     private int id;
+    private String nome;
     private LocalDate data; //dia
     private LocalTime horario;
 
@@ -22,19 +23,30 @@ public class Procedimento {
     private double valor;
     private String laudo;
 
+    private Consulta consulta;
+
     private LocalDateTime dataCriacao;
     private LocalDateTime dataModificacao;
 
     public Procedimento() {
-
+        this.setDataCriacao();
+        this.setDataModificacao(LocalDateTime.now());
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     public void setData(LocalDate data) {
         this.data = data;
+    }
+
+    public void setConsulta(Consulta consulta) {
+        this.consulta = consulta;
     }
 
     public void setHorario(LocalTime horario) {
@@ -53,8 +65,8 @@ public class Procedimento {
         this.laudo = laudo;
     }
 
-    public void setDataCriacao(LocalDateTime dataCriacao) {
-        this.dataCriacao = dataCriacao;
+    public void setDataCriacao() {
+        this.dataCriacao = LocalDateTime.now();
     }
 
     public void setDataModificacao(LocalDateTime dataModificacao) {
@@ -70,6 +82,10 @@ public class Procedimento {
         return id;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
     public LocalDate getData() {
         return data;
     }
@@ -80,6 +96,10 @@ public class Procedimento {
 
     public Estados getEstado() {
         return estado;
+    }
+
+    public Consulta getConsulta() {
+        return consulta;
     }
 
     public double getValor() {

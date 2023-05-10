@@ -41,6 +41,13 @@ public class InfoConsultaDAO {
         return this.InfosConsultas[id - 1];
     }
 
+    public InfoConsulta buscarInfoConsulta(int id) {
+        if (id < 1 || id > this.proximoID - 1) {
+            return null; // ID inválido
+        }
+        return this.InfosConsultas[id - 1];
+    }
+
     public void atualizarInfoConsulta(InfoConsulta Infoconsulta) {
         if (Infoconsulta.getId() < 1 || Infoconsulta.getId() > this.proximoID - 1) {
             return; // ID inválido

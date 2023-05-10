@@ -9,6 +9,10 @@ import Objects.Medico;
 import Objects.Consulta;
 import Objects.Estados;
 import Objects.TipoUsuario;
+import Objects.Franquia;
+import Objects.InfoConsulta;
+import Objects.UnidadeFranquia;
+import Objects.Procedimento;
 import java.util.Scanner;
 
 import java.time.LocalDate;
@@ -116,9 +120,100 @@ public class GUI {
         consulta.setEstado(Estados.AGENDADA);
         consulta.setMedico(medico);
         consulta.setPaciente(paciente);
-       
+
         return consulta;
 
+    }
+
+    public Franquia cadastrarFranquia(Pessoa responsavelPessoa) {
+
+        System.out.println("Por favor, informe os dados da Franquia:");
+
+        Franquia franquia = new Franquia();
+
+        franquia.setResponsavel(responsavelPessoa);
+
+        System.out.print("nome:");
+        String nome = scan.nextLine();
+        franquia.setNome(nome);
+
+        System.out.print(" CNPJ:");
+        String cnpj = scan.nextLine();
+        franquia.setCnpj(cnpj);
+
+        System.out.print("cidade:");
+        String cidade = scan.nextLine();
+        franquia.setCidade(cidade);
+
+        System.out.print("endereco:");
+        String endereco = scan.nextLine();
+        franquia.setEndereco(endereco);
+
+        return franquia;
+
+    }
+
+    public UnidadeFranquia cadastrarUnidadeFranquia(Franquia franquia, Pessoa responsavel) {
+
+        System.out.println("Por favor, informe os dados da Unidade Franquia:");
+
+        UnidadeFranquia unidadeFranquia = new UnidadeFranquia();
+        unidadeFranquia.setFranquia(franquia);
+        unidadeFranquia.setResponsavel(responsavel);
+
+        System.out.print("cidade:");
+        String cidade = scan.nextLine();
+        unidadeFranquia.setCidade(cidade);
+
+        System.out.print("endereco:");
+        String endereco = scan.nextLine();
+        unidadeFranquia.setEndereco(endereco);
+
+        return unidadeFranquia;
+
+    }
+
+    public InfoConsulta cadastrarInfoConsulta(Consulta consulta) {
+
+        InfoConsulta InfoConsultaCriacao = new InfoConsulta();
+
+        InfoConsultaCriacao.setConsulta(consulta);
+
+        System.out.print("Descrição:");
+        String descricao = scan.nextLine();
+        InfoConsultaCriacao.setDescricao(descricao);
+
+        return InfoConsultaCriacao;
+    }
+
+    public Procedimento cadastrarProcedimento(Consulta consulta) {
+
+        Procedimento procedimentoCriacao = new Procedimento();
+        procedimentoCriacao.setConsulta(consulta);
+
+        System.out.print("nome:");
+        String nome = scan.nextLine();
+        procedimentoCriacao.setNome(nome);
+
+        System.out.print("data do procedimento (dd/MM/yyyy):");
+        String dataProcedimento = scan.nextLine();
+        procedimentoCriacao.setData(DateConverter(dataProcedimento));
+
+        System.out.print("hora do procedimento (HH:mm):");
+        String horaProcedimento = scan.nextLine();
+        procedimentoCriacao.setHorario(TimeConverter(horaProcedimento));
+
+        procedimentoCriacao.setEstado(Estados.AGENDADA);
+
+        System.out.print("Valor:");
+        double valor = Double.parseDouble(scan.nextLine());
+        procedimentoCriacao.setValor(valor);
+
+        System.out.print("laudo:");
+        String laudo = scan.nextLine();
+        procedimentoCriacao.setLaudo(laudo);
+
+        return procedimentoCriacao;
     }
 
     public int pegaOpcaoADM() {
@@ -132,11 +227,31 @@ public class GUI {
         System.out.println("6 mostrar MEDICO");
         System.out.println("7 deletar MEDICO");
         System.out.println("8 editar MEDICO");
+        System.out.println("------FRANQUIA------");
+        System.out.println("9 cadastrar FRANQUIA");
+        System.out.println("10 mostrar FRANQUIA");
+        System.out.println("11 deletar FRANQUIA");
+        System.out.println("12 editar FRANQUIA");
+        System.out.println("------UNIDADE FRANQUIA------");
+        System.out.println("13 cadastrar UNIDADE FRANQUIA");
+        System.out.println("14 mostrar UNIDADE FRANQUIA");
+        System.out.println("15 deletar UNIDADE FRANQUIA");
+        System.out.println("16 editar UNIDADE FRANQUIA");
         System.out.println("------CONSULTA------");
-        System.out.println("9 cadastrar CONSULTA");
-        System.out.println("10 mostrar CONSULTAS");
-        System.out.println("11 deletar CONSULTA");
-        System.out.println("12 editar CONSULTA");
+        System.out.println("17 cadastrar CONSULTA");
+        System.out.println("18 mostrar CONSULTAS");
+        System.out.println("19 deletar CONSULTA");
+        System.out.println("20 editar CONSULTA");
+        System.out.println("------ INFO CONSULTA------");
+        System.out.println("21 cadastrar INFO CONSULTA");
+        System.out.println("22 mostrar INFO CONSULTAS");
+        System.out.println("23 deletar INFO CONSULTA");
+        System.out.println("24 editar INFO CONSULTA");
+        System.out.println("------ PROCEDIMENTO------");
+        System.out.println("25 cadastrar PROCEDIMENTO");
+        System.out.println("26 mostrar PROCEDIMENTO");
+        System.out.println("27 deletar PROCEDIMENTO");
+        System.out.println("28 editar PROCEDIMENTO");
         System.out.println("0 sair");
 
         System.out.print("Qual sua opcao ?");
@@ -152,6 +267,14 @@ public class GUI {
         System.out.print("Qual sua opcao ?");
         return Integer.parseInt(scan.nextLine());
 
+    }
+
+    public void mostrarPessoasPrint(Pessoa[] pessoas) {
+        for (Pessoa pessoa : pessoas) {
+            if (pessoa != null) {
+                System.out.println(pessoa);
+            }
+        }
     }
 
     private LocalDate DateConverter(String dataConsulta) {

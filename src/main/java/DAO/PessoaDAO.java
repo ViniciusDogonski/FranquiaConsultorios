@@ -67,19 +67,9 @@ public class PessoaDAO {
         this.pessoas[id - 1] = null;
     }
 
-    public void mostrarPessoas() {
+    public Pessoa[] mostrarPessoas() {
 
-        boolean temPessoas = false;
-        for (Pessoa p : pessoas) {
-            if (p != null) {
-                System.out.println(p);
-                temPessoas = true;
-            }
-        }
-        if (!temPessoas) {
-            System.out.println("não existe pessoas cadastrado");
-        }
-
+        return this.pessoas;
     }
 
     public Pessoa buscarPacientes() {
