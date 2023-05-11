@@ -49,9 +49,9 @@ public class ProcedimentoDAO {
         this.procedimentos[procedimento.getId() - 1] = procedimento;
     }
 
-    public void mostrarProcedimento() {
+    public Procedimento[] mostrarProcedimento() {
 
-        boolean temMedicos = false;
+       /* boolean temMedicos = false;
         for (Procedimento m : procedimentos) {
             if (m != null) {
                 System.out.println(m);
@@ -60,8 +60,10 @@ public class ProcedimentoDAO {
         }
         if (!temMedicos) {
             System.out.println("não existe procedimentos cadastrados");
-        }
+        }*/
 
+       return this.procedimentos;
+       
     }
     
 }

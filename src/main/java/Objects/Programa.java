@@ -122,8 +122,7 @@ public class Programa {
 
                     break;
                 case 2:
-                    Pessoa pessoas[] = pessoaDAO.mostrarPessoas();
-                    gui.mostrarPessoasPrint(pessoas);
+                    gui.mostrarPessoasPrint(pessoaDAO.mostrarPessoas());
                     break;
 
                 case 3:
@@ -180,7 +179,7 @@ public class Programa {
                     break;
                 case 6:
                     //listar medicos 
-                    medicoDAO.mostrarMedicos();
+                    gui.mostrarMedicosPrint(medicoDAO.mostrarMedicos());
                     break;
                 case 7:
                     System.out.println("------ Delete MEdico------");
@@ -226,7 +225,7 @@ public class Programa {
                 case 10:
 //MOSTRAR FRANQUIA
 
-                    franquiaDAO.mostrarFranquias();
+                    gui.mostrarFranquiasPrint(franquiaDAO.mostrarFranquias());
 
                     break;
                 case 11:
@@ -281,7 +280,7 @@ public class Programa {
 
                     break;
                 case 14:
-                    unidadeFranquiaDAO.mostrarUnidades();
+                    gui.mostrarUnidadeFranquiasPrint(unidadeFranquiaDAO.mostrarUnidades());
                     break;
                 case 15:
 
@@ -332,7 +331,7 @@ public class Programa {
 
                     break;
                 case 18:
-                    consultaDAO.mostrarConsultas();
+                    gui.mostrarConsultasPrint(consultaDAO.mostrarConsultas());
 
                     break;
                 case 19:
@@ -386,7 +385,7 @@ public class Programa {
                     break;
                 case 22:
 
-                    infoConsultaDAO.mostrarInfoConsulta();
+                    gui.mostrarInfoConsultasPrint(infoConsultaDAO.mostrarInfoConsulta());
 
                     break;
                 case 23:
@@ -433,7 +432,7 @@ public class Programa {
                     break;
                 case 26:
 
-                    procedimentoDAO.mostrarProcedimento();
+                    gui.mostrarProcedimentoPrint(procedimentoDAO.mostrarProcedimento());
 
                     break;
                 case 27:
@@ -475,6 +474,7 @@ public class Programa {
 
     public void dadosTEST() {
 
+        /*adm*/
         Pessoa adm = new Pessoa();
         adm.setLogin("adm");
         adm.setNome("adm");
@@ -482,8 +482,196 @@ public class Programa {
         adm.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
         pessoaDAO.criarPessoa(adm);
 
-        ////
-        Pessoa paciente1 = new Pessoa();
+        /*pessoas*/
+// Criando Pessoa 1
+// pessoa dona de duas franquias
+        Pessoa pessoa1 = new Pessoa();
+        pessoa1.setNome("Maria");
+        pessoa1.setCpf("1111");
+        pessoa1.setEndereco("Rua A, 123");
+        pessoa1.setTelefone("1111");
+        pessoa1.setLogin("maria");
+        pessoa1.setSenha("test");
+        pessoa1.setTipoUsuario(TipoUsuario.DONO_FRANQUIA);
+        pessoaDAO.criarPessoa(pessoa1);
+
+// Criando Pessoa 2
+// pessoa dona franquia
+        Pessoa pessoa2 = new Pessoa();
+        pessoa2.setNome("João");
+        pessoa2.setCpf("2222");
+        pessoa2.setEndereco("Rua B, 456");
+        pessoa2.setTelefone("2222");
+        pessoa2.setLogin("joao");
+        pessoa2.setSenha("test");
+        pessoa2.setTipoUsuario(TipoUsuario.DONO_FRANQUIA);
+        pessoaDAO.criarPessoa(pessoa2);
+
+// Criando Pessoa 3
+// pessoa dona unidade
+        Pessoa pessoa3 = new Pessoa();
+        pessoa3.setNome("Ana");
+        pessoa3.setCpf("3333");
+        pessoa3.setEndereco("Rua C, 789");
+        pessoa3.setTelefone("3333");
+        pessoa3.setLogin("ana");
+        pessoa3.setSenha("test");
+        pessoa3.setTipoUsuario(TipoUsuario.DONO_UNIDADE);
+        pessoaDAO.criarPessoa(pessoa3);
+
+// Criando Pessoa 4
+// pessoa dona unidade
+        Pessoa pessoa4 = new Pessoa();
+        pessoa4.setNome("Carlos");
+        pessoa4.setCpf("4444");
+        pessoa4.setEndereco("Rua D, 1011");
+        pessoa4.setTelefone("4444");
+        pessoa4.setLogin("carlos");
+        pessoa4.setSenha("test");
+        pessoa4.setTipoUsuario(TipoUsuario.DONO_UNIDADE);
+        pessoaDAO.criarPessoa(pessoa4);
+
+// Criando Pessoa 5
+// pessoa paciente
+        Pessoa pessoa5 = new Pessoa();
+        pessoa5.setNome("Mariana");
+        pessoa5.setCpf("5555");
+        pessoa5.setEndereco("Rua E, 1213");
+        pessoa5.setTelefone("5555");
+        pessoa5.setLogin("mariana");
+        pessoa5.setSenha("test");
+        pessoa5.setTipoUsuario(TipoUsuario.PACIENTE);
+        pessoaDAO.criarPessoa(pessoa5);
+
+// Criando Pessoa 6
+// pessoa paciente
+        Pessoa pessoa6 = new Pessoa();
+        pessoa6.setNome("Pedro");
+        pessoa6.setCpf("6666");
+        pessoa6.setEndereco("Rua F, 1415");
+        pessoa6.setTelefone("6666");
+        pessoa6.setLogin("pedro");
+        pessoa6.setSenha("test");
+        pessoa6.setTipoUsuario(TipoUsuario.PACIENTE);
+        pessoaDAO.criarPessoa(pessoa6);
+
+// Criando Pessoa 7
+        Pessoa pessoa7 = new Pessoa();
+        pessoa7.setNome("Fernanda");
+        pessoa7.setCpf("7777");
+        pessoa7.setEndereco("Rua G, 1617");
+        pessoa7.setTelefone("7777");
+        pessoa7.setLogin("fernanda");
+        pessoa7.setSenha("test");
+        pessoa7.setTipoUsuario(null);
+        pessoaDAO.criarPessoa(pessoa7);
+
+        /*medicos*/
+// Criando Médico 2
+        Pessoa medico2 = new Pessoa();
+        medico2.setNome("Luiz");
+        medico2.setCpf("2222");
+        medico2.setEndereco("Rua B, 456");
+        medico2.setTelefone("2222");
+        medico2.setLogin("luiz");
+        medico2.setSenha("test");
+        medico2.setTipoUsuario(TipoUsuario.MEDICO);
+        pessoaDAO.criarPessoa(medico2);
+
+        Medico medicodemedico2 = new Medico();
+        medicodemedico2.setCrm("22222");
+        medicodemedico2.setEspecialidade("Cardiologia");
+        medicodemedico2.setPessoa(medico2);
+        medicoDAO.criarMedico(medicodemedico2);
+
+// Criando Médico 3
+        Pessoa medico3 = new Pessoa();
+        medico3.setNome("Julia");
+        medico3.setCpf("3333");
+        medico3.setEndereco("Rua C, 789");
+        medico3.setTelefone("3333");
+        medico3.setLogin("julia");
+        medico3.setSenha("test");
+        medico3.setTipoUsuario(TipoUsuario.MEDICO);
+        pessoaDAO.criarPessoa(medico3);
+
+        Medico medicodemedico3 = new Medico();
+        medicodemedico3.setCrm("33333");
+        medicodemedico3.setEspecialidade("Pediatria");
+        medicodemedico3.setPessoa(medico3);
+        medicoDAO.criarMedico(medicodemedico3);
+
+// Criando Médico 4
+        Pessoa medico4 = new Pessoa();
+        medico4.setNome("Ricardo");
+        medico4.setCpf("4444");
+        medico4.setEndereco("Rua D, 1011");
+        medico4.setTelefone("4444");
+        medico4.setLogin("ricardo");
+        medico4.setSenha("test");
+        medico4.setTipoUsuario(TipoUsuario.MEDICO);
+        pessoaDAO.criarPessoa(medico4);
+
+        Medico medicodemedico4 = new Medico();
+        medicodemedico4.setCrm("44444");
+        medicodemedico4.setEspecialidade("Dermatologia");
+        medicodemedico4.setPessoa(medico4);
+        medicoDAO.criarMedico(medicodemedico4);
+
+        /*franquias*/
+        Franquia franquia1 = new Franquia();
+        franquia1.setNome("Franquia 1");
+        franquia1.setCnpj("123456789");
+        franquia1.setResponsavel(pessoa1);
+        franquia1.setEndereco("Rua A, 123");
+        franquia1.setCidade("São Paulo");
+
+        Franquia franquia2 = new Franquia();
+        franquia2.setNome("Franquia 2");
+        franquia2.setCnpj("987654321");
+        franquia2.setResponsavel(pessoa1);
+        franquia2.setEndereco("Rua B, 456");
+        franquia2.setCidade("Rio de Janeiro");
+
+        Franquia franquia3 = new Franquia();
+        franquia3.setNome("Franquia 3");
+        franquia3.setCnpj("555555555");
+        franquia3.setResponsavel(pessoa2);
+        franquia3.setEndereco("Rua C, 789");
+        franquia3.setCidade("Belo Horizonte");
+        franquiaDAO.criarFranquia(franquia1);
+        franquiaDAO.criarFranquia(franquia2);
+        franquiaDAO.criarFranquia(franquia3);
+
+        /*unidade franquia*/
+        UnidadeFranquia unidadeFranquia1 = new UnidadeFranquia();
+        unidadeFranquia1.setCidade("São Paulo");
+        unidadeFranquia1.setEndereco("Rua A, 123");
+        unidadeFranquia1.setFranquia(franquia1);
+        unidadeFranquia1.setResponsavel(pessoa3);
+
+        UnidadeFranquia unidadeFranquia2 = new UnidadeFranquia();
+        unidadeFranquia2.setCidade("São Paulo");
+        unidadeFranquia2.setEndereco("Rua B, 098");
+        unidadeFranquia2.setFranquia(franquia1);
+        unidadeFranquia2.setResponsavel(pessoa3);
+
+        UnidadeFranquia unidadeFranquia3 = new UnidadeFranquia();
+        unidadeFranquia3.setCidade("São Paulo");
+        unidadeFranquia3.setEndereco("Rua c, 398");
+        unidadeFranquia3.setFranquia(franquia2);
+        unidadeFranquia3.setResponsavel(pessoa4);
+
+        unidadeFranquiaDAO.criarUnidade(unidadeFranquia1);
+        unidadeFranquiaDAO.criarUnidade(unidadeFranquia2);
+        unidadeFranquiaDAO.criarUnidade(unidadeFranquia3);
+
+        /*consultas*/
+        //p 5 6
+        //m 2 3 
+        
+////
+        /*  Pessoa paciente1 = new Pessoa();
         paciente1.setNome("maria");
         paciente1.setCpf("1111");
         paciente1.setEndereco("Rua A, 123");
@@ -509,7 +697,7 @@ public class Programa {
         medicodemedico1.setPessoa(medico1);
         medicoDAO.criarMedico(medicodemedico1);
 
-        /*Pessoa pessoaMedico = gui.cadastrarPessoa();
+        Pessoa pessoaMedico = gui.cadastrarPessoa();
                     pessoaMedico.setTipoUsuario(TipoUsuario.MEDICO);
                     pessoaDAO.criarPessoa(pessoaMedico);
                     Medico medicocriado = gui.cadastrarMedico(pessoaMedico);

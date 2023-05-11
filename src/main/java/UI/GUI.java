@@ -277,6 +277,54 @@ public class GUI {
         }
     }
 
+    public void mostrarMedicosPrint(Medico[] medicos) {
+        for (Medico medico : medicos) {
+            if (medico != null) {
+                System.out.println(medico);
+            }
+        }
+    }
+
+    public void mostrarFranquiasPrint(Franquia[] franquias) {
+        for (Franquia franquia : franquias) {
+            if (franquia != null) {
+                System.out.println(franquia);
+            }
+        }
+    }
+
+    public void mostrarUnidadeFranquiasPrint(UnidadeFranquia[] unidadesFranquias) {
+        for (UnidadeFranquia unidadeFranquia : unidadesFranquias) {
+            if (unidadeFranquia != null) {
+                System.out.println(unidadeFranquia);
+            }
+        }
+    }
+
+    public void mostrarConsultasPrint(Consulta[] consultas) {
+        for (Consulta consulta : consultas) {
+            if (consulta != null) {
+                System.out.println(consulta);
+            }
+        }
+    }
+
+    public void mostrarInfoConsultasPrint(InfoConsulta[] infosconsultas) {
+        for (InfoConsulta infoconsulta : infosconsultas) {
+            if (infoconsulta != null) {
+                System.out.println(infoconsulta);
+            }
+        }
+    }
+
+    public void mostrarProcedimentoPrint(Procedimento[] precedimentos) {
+        for (Procedimento procedimento : precedimentos) {
+            if (procedimento != null) {
+                System.out.println(procedimento);
+            }
+        }
+    }
+
     private LocalDate DateConverter(String dataConsulta) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(dataConsulta, formatter);

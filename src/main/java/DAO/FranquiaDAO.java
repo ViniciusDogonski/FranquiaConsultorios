@@ -49,9 +49,9 @@ public class FranquiaDAO {
         this.franquias[id - 1] = null;
     }
 
-    public void mostrarFranquias() {
+    public Franquia[] mostrarFranquias() {
 
-        boolean temFranquias = false;
+        /* boolean temFranquias = false;
         for (Franquia f : this.franquias) {
             if (f != null) {
                 System.out.println(f);
@@ -60,7 +60,8 @@ public class FranquiaDAO {
         }
         if (!temFranquias) {
             System.out.println("não existe franquia cadastrada");
-        }
+        }*/
+        return this.franquias;
 
     }
 }

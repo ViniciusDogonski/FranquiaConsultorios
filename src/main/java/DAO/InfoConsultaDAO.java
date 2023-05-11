@@ -55,9 +55,9 @@ public class InfoConsultaDAO {
         this.InfosConsultas[Infoconsulta.getId() - 1] = Infoconsulta;
     }
 
-    public void mostrarInfoConsulta() {
+    public InfoConsulta[] mostrarInfoConsulta() {
 
-        boolean temMedicos = false;
+        /*  boolean temMedicos = false;
         for (InfoConsulta m : InfosConsultas) {
             if (m != null) {
                 System.out.println(m);
@@ -66,7 +66,8 @@ public class InfoConsultaDAO {
         }
         if (!temMedicos) {
             System.out.println("não existe informacoes cadastradas");
-        }
+        }*/
+        return this.InfosConsultas;
 
     }
 

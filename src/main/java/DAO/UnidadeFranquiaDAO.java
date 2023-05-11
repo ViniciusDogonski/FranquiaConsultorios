@@ -49,9 +49,9 @@ public class UnidadeFranquiaDAO {
         this.unidades[id - 1] = null;
     }
 
-    public void mostrarUnidades() {
+    public UnidadeFranquia[] mostrarUnidades() {
 
-        boolean temUnidades = false;
+        /*  boolean temUnidades = false;
         for (UnidadeFranquia f : this.unidades) {
             if (f != null) {
                 System.out.println(f);
@@ -60,7 +60,8 @@ public class UnidadeFranquiaDAO {
         }
         if (!temUnidades) {
             System.out.println("não existe unidade cadastrada");
-        }
+        }*/
+        return this.unidades;
 
     }
 }

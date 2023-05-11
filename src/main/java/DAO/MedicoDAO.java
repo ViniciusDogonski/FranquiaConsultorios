@@ -48,9 +48,9 @@ public class MedicoDAO {
         this.medicos[medico.getId() - 1] = medico;
     }
 
-    public void mostrarMedicos() {
+    public Medico[] mostrarMedicos() {
 
-        boolean temMedicos = false;
+        /*  boolean temMedicos = false;
         for (Medico m : medicos) {
             if (m != null) {
                 System.out.println(m);
@@ -59,12 +59,13 @@ public class MedicoDAO {
         }
         if (!temMedicos) {
             System.out.println("não existe medicos cadastrado");
-        }
+        }*/
+        return this.medicos;
 
     }
 
     public Medico findPessoaByMedico(int id) {
-       
+
         for (Medico medico : medicos) {
             if (medico.getPessoa().getId() == id) {
                 return medico;

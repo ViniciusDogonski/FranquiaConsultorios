@@ -48,9 +48,9 @@ public class ConsultaDAO {
         this.consultas[consultaAtualizada.getId() - 1] = consultaAtualizada;
     }
 
-    public void mostrarConsultas() {
+    public Consulta[] mostrarConsultas() {
 
-        boolean temMedicos = false;
+        /* boolean temMedicos = false;
         for (Consulta m : consultas) {
             if (m != null) {
                 System.out.println(m);
@@ -59,7 +59,8 @@ public class ConsultaDAO {
         }
         if (!temMedicos) {
             System.out.println("não existe Consultas cadastradas");
-        }
+        }*/
+        return this.consultas;
 
     }
 
