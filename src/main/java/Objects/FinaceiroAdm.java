@@ -1,12 +1,12 @@
 package Objects;
 
-import java.math.BigDecimal;
+
 import java.time.LocalDateTime;
 
 public class FinaceiroAdm {
     private int id;
     private  TipoMovimento movimentacao;
-    private BigDecimal valor;
+    private double valor;
     private UnidadeFranquia unidade;
     private String descricao;
     private LocalDateTime dataCriacao;
@@ -32,11 +32,11 @@ public class FinaceiroAdm {
         this.movimentacao = movimentacao;
     }
 
-    public void setValor(BigDecimal valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 
-    public BigDecimal getValor() {
+    public double getValor() {
         return this.valor;
     }
 

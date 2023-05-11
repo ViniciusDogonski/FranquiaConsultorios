@@ -1,9 +1,14 @@
 package DAO;
+
+
 import Objects.FinanceiroMed;
+import Objects.Medico;
+
 
 public class FinanceiroMedDAO{
     private FinanceiroMed[] financas;
     private int proximoID;
+
 
     public FinanceiroMedDAO(int tamanho) {
         this.financas = new FinanceiroMed[tamanho];
@@ -45,11 +50,13 @@ public class FinanceiroMedDAO{
             if (m != null) {
                 System.out.println(m);
                 temMedicos = true;
+      
             }
         }
         if (!temMedicos) {
             System.out.println("não existem finanças cadastradas");
         }
-
+       
     }
+   
 }

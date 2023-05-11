@@ -1,11 +1,11 @@
 package Objects;
 
-import java.math.BigDecimal;
+
 import java.time.LocalDateTime;
 
 public class FinanceiroMed {
     private int id;
-    private BigDecimal valor;
+    private double valor;
     private Medico medico;
     private EstadoFinanceiro estado;
     private Franquia franquia;
@@ -22,10 +22,10 @@ public class FinanceiroMed {
     public void setId(int id){
         this.id = id;
     }
-    public BigDecimal getValor(){
+    public double getValor(){
         return this.valor;
     }
-    public void setValor(BigDecimal valor){
+    public void setValor(double valor){
         this.valor = valor;
     }
     public Medico getMedico(){

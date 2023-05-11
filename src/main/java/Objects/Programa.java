@@ -16,6 +16,8 @@ import DAO.FranquiaDAO;
 import DAO.UnidadeFranquiaDAO;
 
 import UI.GUI;
+
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 /**
@@ -35,7 +37,6 @@ public class Programa {
     FranquiaDAO franquiaDAO = new FranquiaDAO(100);
     UnidadeFranquiaDAO unidadeDAO = new UnidadeFranquiaDAO(100);
     FinanceiroAdmDAO financeiroAdmDAO = new FinanceiroAdmDAO(100);
-
 
     public Programa() {
 
@@ -273,12 +274,12 @@ public class Programa {
                     consultaDAO.editarConsulta(consultaEdit);
 
                     break;
-                
-                 case 13:
+
+                case 13:
                     System.out.println("CRIAR FRANQUIA");
-                    Franquia franquiacriada= gui.cadastrarFranquia();
-                   // Pessoa responsavel = new Pessoa();
-                     System.out.println("Possíveis pessoas resposáveis pela franquia:");
+                    Franquia franquiacriada = gui.cadastrarFranquia();
+                    // Pessoa responsavel = new Pessoa();
+                    System.out.println("Possíveis pessoas resposáveis pela franquia:");
                     pessoaDAO.mostrarPessoasQualificadas();
                     System.out.println("Informe o ID do responsável pela Franquia:");
                     int idResp = Integer.parseInt(scan.nextLine());
@@ -301,7 +302,7 @@ public class Programa {
                     int resp_novo = Integer.parseInt(scan.nextLine());
                     franquiaAtual.setResponsavel(pessoaDAO.buscarPessoa(resp_novo));
                     franquiaDAO.criarFranquia(franquiaAtual);
-                     franquiaAtual.setId(id_franquia);
+                    franquiaAtual.setId(id_franquia);
                     franquiaDAO.atualizarFranquia(franquiaAtual);
                     break;
                 case 16:
@@ -330,7 +331,7 @@ public class Programa {
                     UnidadeFranquia unidadeNova = new UnidadeFranquia();
                     System.out.println("Informe o id da unidade:");
                     int id_unid = Integer.parseInt(scan.nextLine());
-                    unidadeNova =gui.cadastrarUnidade();
+                    unidadeNova = gui.cadastrarUnidade();
                     System.out.println("Informe o id da Franquia:");
                     int franquia_nova = Integer.parseInt(scan.nextLine());
                     unidadeNova.setFranquia(franquiaDAO.buscarFranquia(franquia_nova));
@@ -352,11 +353,11 @@ public class Programa {
                     financeiroAdmDAO.cadastrarFinanca(financa);
                     break;
                 case 21:
-                //mostrar finanças
+                    //mostrar finanças
                     financeiroAdmDAO.mostrarFinancas();
                     break;
                 case 22:
-                // editar finança
+                    // editar finança
                     System.out.println("EDIT FINANCA");
                     FinaceiroAdm nova = new FinaceiroAdm();
                     System.out.println("Informe o id da financa:");
@@ -430,6 +431,24 @@ public class Programa {
                     pessoaDAO.criarPessoa(pessoaMedico);
                     Medico medicocriado = gui.cadastrarMedico(pessoaMedico);
                     medicoDAO.criarMedico(medicocriado);*/
+    }
+
+    public double calculoMontante(Medico medico) {
+
+        double vconsultas = 0;
+        double vprocedimentos = 0;
+        LocalDateTime dataAtual = LocalDateTime.now();
+        if (dataAtual.getDayOfMonth() == 01) {
+
+            for (Consulta consulta : consultaDAO.getConsultas()) {
+
+                if (consulta.getMedico() == medico) {
+                    vconsultas += (consulta.getValor() * 0.7);
+                }
+            }
+            // for (Procedimento procedimento : procedimentoDAO)
+        }
+        return vconsultas + vprocedimentos;
     }
 
     public static void main(String[] args) {

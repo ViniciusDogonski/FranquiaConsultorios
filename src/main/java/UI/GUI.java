@@ -170,7 +170,7 @@ public class GUI {
             financa.setTipoMovimento(TipoMovimento.SAIDA);
         }
         System.out.println("Valor:");
-        BigDecimal valor = BigDecimal.valueOf(Double.parseDouble(scan.nextLine()));
+        double valor = Double.parseDouble(scan.nextLine());
         financa.setValor(valor);
         System.out.println("Descrição:");
         String descricao = scan.nextLine();

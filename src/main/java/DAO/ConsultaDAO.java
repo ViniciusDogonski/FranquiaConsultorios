@@ -19,7 +19,9 @@ public class ConsultaDAO {
         this.consultas = new Consulta[tamanho];
         this.proximoID = 1;
     }
-
+    public Consulta[] getConsultas(){
+        return this.consultas;
+    }
     public int cadastrarConsulta(Consulta consulta) {
         int id = this.proximoID++;
         consulta.setId(id);

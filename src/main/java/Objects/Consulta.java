@@ -4,7 +4,6 @@
  */
 package Objects;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
@@ -23,7 +22,7 @@ public class Consulta {
 
     private Medico medico;
     private Pessoa paciente;
-    private BigDecimal valor;
+    private double valor;
 
     private UnidadeFranquia unidade;
     private LocalDateTime dataCriacao;
@@ -58,7 +57,7 @@ public class Consulta {
         this.paciente = paciente;
     }
 
-    public void setValor(BigDecimal valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 
@@ -99,7 +98,7 @@ public class Consulta {
         return paciente;
     }
 
-    public BigDecimal getValor() {
+    public double getValor() {
         return valor;
     }
     public UnidadeFranquia getUnidade(){
