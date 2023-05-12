@@ -15,6 +15,8 @@ import DAO.UnidadeFranquiaDAO;
 
 /*GRAFICO*/
 import UI.GUI;
+
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 /**
@@ -470,6 +472,25 @@ public class Programa {
             }
         } while (opcaoUsuario != 0);
 
+    }
+    public double calcularMontante(Medico medico){
+        double vconsulta=0;
+        double vprocedimento=0;
+        LocalDateTime dataAtual= LocalDateTime.now();
+        if(dataAtual.getDayOfMonth() == 01){
+            for(Consulta consulta : consultaDAO.mostrarConsultas()){
+                if((dataAtual.getMonthValue() - consulta.getDataCriacao().getMonthValue() ) == 1 && consulta.getEstado() == Estados.REALIZADA && consulta.getMedico() == medico){
+                    vconsulta+= consulta.getValor() * 0.7;
+                }
+            }
+            for(Procedimento procedimento : procedimentoDAO.mostrarProcedimento()){
+                if((dataAtual.getMonthValue() - procedimento.getDataCriacao().getMonthValue() ) == 1 && procedimento.getEstado() == Estados.REALIZADA && procedimento.getConsulta().getMedico() == medico){
+                    vprocedimento+= procedimento.getValor() * 0.5;
+                }
+            }    
+        }
+        
+        return vconsulta + vprocedimento;
     }
 
     public void dadosTEST() {
