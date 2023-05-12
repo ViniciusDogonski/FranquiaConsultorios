@@ -15,6 +15,7 @@ import DAO.UnidadeFranquiaDAO;
 
 /*GRAFICO*/
 import UI.GUI;
+import java.time.LocalDate;
 
 import java.time.LocalDateTime;
 import java.util.Scanner;
@@ -37,6 +38,9 @@ public class Programa {
 
     public Programa() {
 
+        LocalDate dataAtual = LocalDate.now();
+        System.out.println("Data atual: " + dataAtual);
+        
         dadosTEST();
 
         inicioMenu();
@@ -473,7 +477,8 @@ public class Programa {
         } while (opcaoUsuario != 0);
 
     }
-    public double calcularMontante(Medico medico){
+
+    /*  public double calcularMontante(Medico medico){
         double vconsulta=0;
         double vprocedimento=0;
         LocalDateTime dataAtual= LocalDateTime.now();
@@ -491,8 +496,7 @@ public class Programa {
         }
         
         return vconsulta + vprocedimento;
-    }
-
+    }*/
     public void dadosTEST() {
 
         /*adm*/
@@ -690,7 +694,6 @@ public class Programa {
         /*consultas*/
         //p 5 6
         //m 2 3 
-        
 ////
         /*  Pessoa paciente1 = new Pessoa();
         paciente1.setNome("maria");
