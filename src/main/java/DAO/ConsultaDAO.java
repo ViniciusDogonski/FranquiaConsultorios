@@ -5,6 +5,7 @@
 package DAO;
 
 import Objects.Consulta;
+import Objects.Medico;
 
 /**
  *
@@ -62,6 +63,19 @@ public class ConsultaDAO {
         }*/
         return this.consultas;
 
+    }
+      public Consulta[] consultarConsultasPorMedico(Medico medico) {
+
+        Consulta[] consultasDoMedico = new Consulta[consultas.length];
+        int index = 0;
+        for (Consulta consulta : consultas) {
+            if (consulta != null && consulta.getMedico().equals(medico)) {
+                consultasDoMedico[index] = consulta;
+                index++;
+            }
+        }
+        
+        return consultasDoMedico;
     }
 
 }

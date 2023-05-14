@@ -28,9 +28,6 @@ public class Pessoa {
         this.setDataModificacao( LocalDateTime.now());
     }
 
-    public int getID() {
-        return id;
-    }
 
     public String getNome() {
         return nome;

@@ -64,4 +64,23 @@ public class FranquiaDAO {
         return this.franquias;
 
     }
+    /*  public Franquia buscarFranquiasPorMedico(Medico medico, UnidadeFranquia[] unidadesFranquias) {
+        
+        Franquia[] franquiasMedico = new Franquia[100];
+        
+        for (Franquia franquia : franquias) {
+            
+            for (UnidadeFranquia unidadeFranquia : unidadesFranquias) {
+                
+                if (unidadeFranquia.getFranquia().equals(franquia)) {
+                    
+                }
+                
+            }
+            
+        }
+        
+        return null;
+        
+    }*/
 }

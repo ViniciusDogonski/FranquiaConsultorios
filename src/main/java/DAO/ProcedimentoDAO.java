@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Objects.Medico;
 import Objects.Procedimento;
 
 /**
@@ -65,5 +66,15 @@ public class ProcedimentoDAO {
        return this.procedimentos;
        
     }
-    
+     public Procedimento[] getProcedimentosPorMedico(Medico medico) {
+        Procedimento[] procedimentosPorMedico = new Procedimento[procedimentos.length];
+        int contador = 0;
+        for (Procedimento procedimento : procedimentos) {
+            if (procedimento != null && procedimento.getConsulta() != null && procedimento.getConsulta().getMedico().equals(medico)) {
+                procedimentosPorMedico[contador] = procedimento;
+                contador++;
+            }
+        }
+        return procedimentosPorMedico;
+    }
 }

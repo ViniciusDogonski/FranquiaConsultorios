@@ -57,7 +57,9 @@ public class Consulta {
     public void setMedico(Medico medico) {
         this.medico = medico;
     }
-
+    public void setUnidade (UnidadeFranquia unidade){
+        this.unidade = unidade;
+    }
     public void setPaciente(Pessoa paciente) {
         this.paciente = paciente;
     }
@@ -76,7 +78,7 @@ public class Consulta {
 
     @Override
     public String toString() {
-        return "Consulta{" + "id=" + id + ", data=" + data + ", horario=" + horario + ", estado=" + estado + ", medico=" + medico.toString() + ", paciente=" + paciente.toString() + ", valor=" + valor + ", dataCriacao=" + dataCriacao + ", dataModificacao=" + dataModificacao + '}';
+        return "Consulta{" + "id=" + id + ", data=" + data + ", horario=" + horario + ", estado=" + estado + ", medico=" + medico.toString() + ", paciente=" + paciente.toString() + "Unidade= " + unidade.toString() + ", valor=" + valor + ", dataCriacao=" + dataCriacao + ", dataModificacao=" + dataModificacao + '}';
     }
 
     public int getId() {
@@ -102,7 +104,9 @@ public class Consulta {
     public Pessoa getPaciente() {
         return paciente;
     }
-
+    public UnidadeFranquia getUnidade(){
+        return this.unidade;
+    }
     public double getValor() {
         return valor;
     }

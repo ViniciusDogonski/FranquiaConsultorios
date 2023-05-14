@@ -8,9 +8,7 @@ package Objects;
  *
  * @author Vinicius Augusto
  */
-public enum Estados {
-    VAZIO,
-    AGENDADA,
-    CANCELADA,
-    REALIZADA, PAGO
+public enum EstadoFinanceiroMedico {
+    AGENDADO,
+    PAGO
 }

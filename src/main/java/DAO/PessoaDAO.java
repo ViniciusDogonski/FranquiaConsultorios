@@ -60,11 +60,14 @@ public class PessoaDAO {
         this.pessoas[pessoa.getId() - 1] = pessoa;
     }
 
-    public void excluirPessoa(int id) {
-        if (id < 1 || id > this.proximoID - 1) {
+    public void excluirPessoa(int id ) {
+      
+        if(id < 1 || id > this.proximoID - 1) {
             return; // ID inválido
         }
+      
         this.pessoas[id - 1] = null;
+    
     }
 
     public Pessoa[] mostrarPessoas() {
