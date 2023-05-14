@@ -267,16 +267,17 @@ public class Programa {
                                 }
                             }
                         }
-                        if (medicoConsulta == null) {
+                        if (medicoConsulta != null && medicoConsulta.equals(medico)) {
+                            System.out.println("Não é possível excluir o médico! Existem dados vinculados ao médico ");
+                        } else {
                             medicoDAO.buscarMedico(idDelMedico).getPessoa().setTipoUsuario(null);
                             medicoDAO.excluirMedico(idDelMedico);
                             System.out.println("sucesso!");
-                        } else {
-                            System.out.println("Não é possível excluir o médico! Existem dados vinculados ao médico ");
                         }
                     
 
                     break;
+
                 case 8:
                     System.out.println("------ EDIT Medico------");
 
@@ -348,11 +349,11 @@ public class Programa {
                             }
                         }
                     }
-                    if (franquiaresp == null) {
-                        franquiaDAO.excluirFranquia(idDelFranquia);
-
-                    } else {
+                    if(franquiaresp!= null && franquiaresp.equals(franquia)){
                         System.out.println("Não é possivel excluir a franquia");
+                    }
+                    else{
+                        franquiaDAO.excluirFranquia(idDelFranquia);
                     }
 
                     break;
@@ -378,7 +379,14 @@ public class Programa {
                     for (UnidadeFranquia unidade : unidadeFranquiaDAO.mostrarUnidades()) {
                         if (unidade != null) {
                             if (unidade.getFranquia().getId() == idEditFranquia) {
-                                unidade.setFranquia(franquiaDAO.buscarFranquia(idEditDonoFranquia));
+                                unidade.setFranquia(franquiaEdit);
+                            }
+                        }
+                    }
+                    for(FinanceiroMedico financeiro : financeiroMedicoDAO.mostrarFinancas()){
+                        if(financeiro!= null){
+                            if(financeiro.getFranquia().getId() == idEditFranquia){
+                                financeiro.setFranquia(franquiaEdit);
                             }
                         }
                     }
@@ -412,28 +420,34 @@ public class Programa {
 
                     System.out.print("id da unidade franquia:");
                     int idDelUnidadeFranquia = Integer.parseInt(scan.nextLine());
+                    UnidadeFranquia unidade = unidadeFranquiaDAO.buscarUnidade(idDelUnidadeFranquia);
+                    if(unidade == null){
+                        System.out.println("ID inválido!!");
+                    }
                     UnidadeFranquia unidadeConsulta = new UnidadeFranquia();
                     UnidadeFranquia unidadeAdm = new UnidadeFranquia();
                     for (Consulta consulta : consultaDAO.mostrarConsultas()) {
                         if (consulta != null) {
-                            if (consulta.getUnidade().getId() == idDelUnidadeFranquia) {
+                            if (consulta.getUnidade().equals(unidade)) {
                                 unidadeConsulta = consulta.getUnidade();
                             }
                         }
                     }
                     for (FinanceiroADM finaceiroadm : financeiroADMDAO.mostrarFinancas()) {
                         if (finaceiroadm != null) {
-                            if (finaceiroadm.getUnidade().getId() == idDelUnidadeFranquia) {
+                            if (finaceiroadm.getUnidade().equals(unidade)) {
                                 unidadeAdm = finaceiroadm.getUnidade();
                             }
                         }
                     }
-                    if (unidadeAdm == null && unidadeConsulta == null) {
-                        unidadeFranquiaDAO.excluirUnidade(idDelUnidadeFranquia);
-
-                    } else {
+                    
+                    if(unidadeAdm!= null && unidadeAdm.equals(unidade)|| unidadeConsulta!= null && unidadeConsulta.equals(unidade)){
                         System.out.println("Não é possivel excluir a unidade!");
 
+                    }
+                    else{
+                         unidadeFranquiaDAO.excluirUnidade(idDelUnidadeFranquia);
+                         System.out.println("sucesso:D");
                     }
 
                     break;
@@ -700,13 +714,13 @@ public class Programa {
 
                             System.out.println(fran);
 
-                            for (UnidadeFranquia unidade : unidadeFranquiaDAO.mostrarUnidades()) {
+                            for (UnidadeFranquia uni : unidadeFranquiaDAO.mostrarUnidades()) {
 
-                                if (unidade != null && fran.equals(unidade.getFranquia())) {
+                                if (uni != null && fran.equals(uni.getFranquia())) {
 
                                     for (Consulta consulta : cosnsultassdasd) {
 
-                                        if (consulta != null && consulta.getUnidade().equals(unidade)) {
+                                        if (consulta != null && consulta.getUnidade().equals(uni)) {
 
                                             System.out.println(consulta);
 

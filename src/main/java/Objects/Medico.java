@@ -5,6 +5,7 @@
 package Objects;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  *
@@ -76,5 +77,36 @@ public class Medico {
     public LocalDateTime getDataModificacao() {
         return dataModificacao;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Medico other = (Medico) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.crm, other.crm)) {
+            return false;
+        }
+        return Objects.equals(this.pessoa, other.pessoa);
+    }
+
+  
+
+   
 
 }

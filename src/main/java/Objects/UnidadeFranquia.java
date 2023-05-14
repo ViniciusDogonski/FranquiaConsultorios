@@ -4,6 +4,7 @@
  */
 package Objects;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  *
@@ -82,4 +83,27 @@ public class UnidadeFranquia {
     public String toString() {
         return "UnidadeFranquia{" + "franquia=" + franquia + ", id=" + id + ", cidade=" + cidade + ", endereco=" + endereco + ", responsavel=" + responsavel + ", dataCriacao=" + dataCriacao + ", dataModificacao=" + dataModificacao + '}';
     }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final UnidadeFranquia other = (UnidadeFranquia) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.franquia, other.franquia)) {
+            return false;
+        }
+        return Objects.equals(this.responsavel, other.responsavel);
+    }
+    
 }

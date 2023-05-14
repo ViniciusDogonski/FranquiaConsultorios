@@ -4,6 +4,7 @@
  */
 package Objects;
 import java.time.LocalDateTime;
+import java.util.Objects;
 /**
  *
  * @author Vinicius Augusto
@@ -90,6 +91,28 @@ public class Franquia {
 
     public LocalDateTime getDataModificacao() {
         return dataModificacao;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Franquia other = (Franquia) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        return Objects.equals(this.responsavel, other.responsavel);
     }
  
 }
