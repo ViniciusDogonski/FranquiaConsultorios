@@ -21,7 +21,7 @@ public class FinanceiroADM {
     private LocalDateTime dataModificacao;
 
     public FinanceiroADM() {
-        this.setDataCriacao();
+        this.setDataCriacao(LocalDateTime.now());
         this.setDataModificacao(LocalDateTime.now());
     }
 
@@ -78,8 +78,8 @@ public class FinanceiroADM {
         this.descriacao = descriacao;
     }
 
-    public void setDataCriacao() {
-        this.dataCriacao = LocalDateTime.now();
+    public void setDataCriacao(LocalDateTime dataModificacao) {
+        this.dataCriacao = dataModificacao;
     }
 
     public void setDataModificacao(LocalDateTime dataModificacao) {

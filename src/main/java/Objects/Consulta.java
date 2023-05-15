@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import Objects.Estados;
 import Objects.Medico;
 import Objects.Pessoa;
+import java.util.Objects;
 
 /**
  *
@@ -118,5 +119,38 @@ public class Consulta {
     public LocalDateTime getDataModificacao() {
         return dataModificacao;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Consulta other = (Consulta) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.medico, other.medico)) {
+            return false;
+        }
+        if (!Objects.equals(this.paciente, other.paciente)) {
+            return false;
+        }
+        return Objects.equals(this.unidade, other.unidade);
+    }
+
+  
+   
 
 }

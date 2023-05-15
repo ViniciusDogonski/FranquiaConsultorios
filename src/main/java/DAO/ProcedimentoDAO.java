@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Objects.Consulta;
 import Objects.Medico;
 import Objects.Procedimento;
 
@@ -28,31 +29,30 @@ public class ProcedimentoDAO {
         return id;
     }
 
-    
-     public void excluirProcedimento(int id) {
+    public void excluirProcedimento(int id) {
         if (id < 1 || id > this.proximoID - 1) {
-            return; // ID inválido
+            return; // ID invÃ¡lido
         }
         this.procedimentos[id - 1] = null;
     }
 
     public Procedimento buscarProcedimento(int id) {
         if (id < 1 || id > this.proximoID - 1) {
-            return null; // ID inválido
+            return null; // ID invÃ¡lido
         }
         return this.procedimentos[id - 1];
     }
 
     public void atualizarProcedimento(Procedimento procedimento) {
         if (procedimento.getId() < 1 || procedimento.getId() > this.proximoID - 1) {
-            return; // ID inválido
+            return; // ID invÃ¡lido
         }
         this.procedimentos[procedimento.getId() - 1] = procedimento;
     }
 
     public Procedimento[] mostrarProcedimento() {
 
-       /* boolean temMedicos = false;
+        /* boolean temMedicos = false;
         for (Procedimento m : procedimentos) {
             if (m != null) {
                 System.out.println(m);
@@ -60,13 +60,13 @@ public class ProcedimentoDAO {
             }
         }
         if (!temMedicos) {
-            System.out.println("não existe procedimentos cadastrados");
+            System.out.println("nÃ£o existe procedimentos cadastrados");
         }*/
+        return this.procedimentos;
 
-       return this.procedimentos;
-       
     }
-     public Procedimento[] getProcedimentosPorMedico(Medico medico) {
+
+    public Procedimento[] getProcedimentosPorMedico(Medico medico) {
         Procedimento[] procedimentosPorMedico = new Procedimento[procedimentos.length];
         int contador = 0;
         for (Procedimento procedimento : procedimentos) {
@@ -77,4 +77,18 @@ public class ProcedimentoDAO {
         }
         return procedimentosPorMedico;
     }
+
+    public Procedimento[] getProcedimentosPorConsulta(Consulta consulta) {
+        Procedimento[] procedimentosPorConsulta = new Procedimento[procedimentos.length];
+        int contador = 0;
+
+        for (Procedimento procedimento : procedimentos) {
+            if (procedimento != null && procedimento.getConsulta() != null && procedimento.getConsulta().equals(consulta)) {
+                procedimentosPorConsulta[contador] = procedimento;
+                contador++;
+            }
+        }
+        return procedimentosPorConsulta;
+    }
+
 }

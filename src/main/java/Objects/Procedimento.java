@@ -75,7 +75,7 @@ public class Procedimento {
 
     @Override
     public String toString() {
-        return "Procedimento{" + "id=" + id + ", data=" + data + ", horario=" + horario + ", estado=" + estado + ", valor=" + valor + ", laudo=" + laudo + ", dataCriacao=" + dataCriacao + ", dataModificacao=" + dataModificacao + '}';
+        return "Procedimento{" + "id=" + id + ", data=" + data + ", horario=" + horario + ", estado=" + estado + ",Consulta=" + consulta + ",valor=" + valor + ", laudo=" + laudo + ", dataCriacao=" + dataCriacao + ", dataModificacao=" + dataModificacao + '}';
     }
 
     public int getId() {

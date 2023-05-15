@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Objects.Consulta;
 import Objects.InfoConsulta;
 
 /**
@@ -29,28 +30,28 @@ public class InfoConsultaDAO {
 
     public void excluirInfoConsulta(int id) {
         if (id < 1 || id > this.proximoID - 1) {
-            return; // ID inválido
+            return; // ID invÃ¡lido
         }
         this.InfosConsultas[id - 1] = null;
     }
 
     public InfoConsulta buscarMedico(int id) {
         if (id < 1 || id > this.proximoID - 1) {
-            return null; // ID inválido
+            return null; // ID invÃ¡lido
         }
         return this.InfosConsultas[id - 1];
     }
 
     public InfoConsulta buscarInfoConsulta(int id) {
         if (id < 1 || id > this.proximoID - 1) {
-            return null; // ID inválido
+            return null; // ID invÃ¡lido
         }
         return this.InfosConsultas[id - 1];
     }
 
     public void atualizarInfoConsulta(InfoConsulta Infoconsulta) {
         if (Infoconsulta.getId() < 1 || Infoconsulta.getId() > this.proximoID - 1) {
-            return; // ID inválido
+            return; // ID invÃ¡lido
         }
         this.InfosConsultas[Infoconsulta.getId() - 1] = Infoconsulta;
     }
@@ -65,10 +66,24 @@ public class InfoConsultaDAO {
             }
         }
         if (!temMedicos) {
-            System.out.println("não existe informacoes cadastradas");
+            System.out.println("nÃ£o existe informacoes cadastradas");
         }*/
         return this.InfosConsultas;
 
+    }
+
+    public InfoConsulta[] consultarInfoConsultasConsulta(Consulta consulta) {
+
+        InfoConsulta[] InfoConsultaDaConsulta = new InfoConsulta[InfosConsultas.length];
+        int index = 0;
+        for (InfoConsulta infoConsulta : InfosConsultas) {
+            if (infoConsulta != null && infoConsulta.getConsulta().equals(consulta)) {
+                InfoConsultaDaConsulta[index] = infoConsulta;
+                index++;
+            }
+        }
+
+        return InfoConsultaDaConsulta;
     }
 
 }

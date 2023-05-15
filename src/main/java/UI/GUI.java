@@ -13,6 +13,7 @@ import Objects.Franquia;
 import Objects.InfoConsulta;
 import Objects.UnidadeFranquia;
 import Objects.Procedimento;
+import Objects.FinanceiroMedico;
 import java.util.Scanner;
 
 import java.time.LocalDate;
@@ -37,7 +38,7 @@ public class GUI {
         String nome = scan.nextLine();
         pessoa.setNome(nome);
 
-        System.out.print("Endereço: ");
+        System.out.print("EndereÃ§o: ");
         String endereco = scan.nextLine();
         pessoa.setEndereco(endereco);
 
@@ -57,7 +58,7 @@ public class GUI {
         String senha = scan.nextLine();
         pessoa.setSenha(senha);
 
-        /*  System.out.print("Tipo de usuário (1-Dono Franquia, 2-Dono Unidade, 3-Administrativo, 4-Médico, 5-Paciente, 6-Administrador): ");
+        /*  System.out.print("Tipo de usuÃ¡rio (1-Dono Franquia, 2-Dono Unidade, 3-Administrativo, 4-MÃ©dico, 5-Paciente, 6-Administrador): ");
         int tipoUsuario = Integer.parseInt(scan.nextLine());
 
         switch (tipoUsuario) {
@@ -80,7 +81,7 @@ public class GUI {
                 pessoa.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
                 break;
             default:
-                System.out.print("opçao invalida!");
+                System.out.print("opÃ§ao invalida!");
         }*/
         return pessoa;
     }
@@ -179,7 +180,7 @@ public class GUI {
 
         InfoConsultaCriacao.setConsulta(consulta);
 
-        System.out.print("Descrição:");
+        System.out.print("DescriÃ§Ã£o:");
         String descricao = scan.nextLine();
         InfoConsultaCriacao.setDescricao(descricao);
 
@@ -259,6 +260,45 @@ public class GUI {
 
     }
 
+    public int pegarOpcaoPaciente() {
+
+        System.out.println("1 Ver minhas consultas");
+        System.out.println("2 Ver informaÃ§Ã£o da consulta");
+        System.out.println("3 ver procedimento");
+
+        System.out.println("0 sair");
+
+        System.out.print("Qual sua opcao ?");
+        return Integer.parseInt(scan.nextLine());
+
+    }
+
+    public int pegarOpcaoMedico() {
+
+        System.out.println("1 ver todas consultas do medico");
+        System.out.println("2 ver informaÃ§Ã£o de uma consulta");
+        System.out.println("3  ver procedimento de uma consulta");
+        System.out.println("4  ver agenda de consultas da semana");
+        System.out.println("5  ver consultas ja realizadas");
+        System.out.println("------ INFO CONSULTA------");
+        System.out.println("6 cadastrar INFO CONSULTA");
+        System.out.println("7 buscar INFO CONSULTA");
+        System.out.println("8 deletar INFO CONSULTA");
+        System.out.println("9 editar INFO CONSULTA");
+        System.out.println("------ PROCEDIMENTO------");
+        System.out.println("10 cadastrar PROCEDIMENTO");
+        System.out.println("11 mostrar PROCEDIMENTO");
+        System.out.println("12 deletar PROCEDIMENTO");
+        System.out.println("13 editar PROCEDIMENTO");
+        System.out.println("14 RECEBIDOS");
+
+        System.out.println("0 sair");
+
+        System.out.print("Qual sua opcao ?");
+        return Integer.parseInt(scan.nextLine());
+
+    }
+
     public int pegaOpcaoLoginCadastro() {
 
         System.out.println("1 cadastrar");
@@ -323,6 +363,16 @@ public class GUI {
                 System.out.println(procedimento);
             }
         }
+    }
+
+    public void mostrarFinanceiroMedicoPrint(FinanceiroMedico[] fmedico) {
+
+        for (FinanceiroMedico financeiroMedico : fmedico) {
+            if (financeiroMedico != null) {
+                System.out.println(financeiroMedico);
+            }
+        }
+
     }
 
     private LocalDate DateConverter(String dataConsulta) {

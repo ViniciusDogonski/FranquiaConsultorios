@@ -6,6 +6,8 @@ package DAO;
 
 import Objects.Consulta;
 import Objects.Medico;
+import Objects.Pessoa;
+import java.time.LocalDate;
 
 /**
  *
@@ -30,21 +32,21 @@ public class ConsultaDAO {
 
     public void excluirConsulta(int id) {
         if (id < 1 || id > this.proximoID - 1) {
-            return; // ID inválido
+            return; // ID invÃ¡lido
         }
         this.consultas[id - 1] = null;
     }
 
     public Consulta buscarConsulta(int id) {
         if (id < 1 || id > this.proximoID - 1) {
-            return null; // ID inválido
+            return null; // ID invÃ¡lido
         }
         return this.consultas[id - 1];
     }
 
     public void editarConsulta(Consulta consultaAtualizada) {
         if (consultaAtualizada.getId() < 1 || consultaAtualizada.getId() > this.proximoID - 1) {
-            return; // ID inválido
+            return; // ID invÃ¡lido
         }
         this.consultas[consultaAtualizada.getId() - 1] = consultaAtualizada;
     }
@@ -59,12 +61,13 @@ public class ConsultaDAO {
             }
         }
         if (!temMedicos) {
-            System.out.println("não existe Consultas cadastradas");
+            System.out.println("nÃ£o existe Consultas cadastradas");
         }*/
         return this.consultas;
 
     }
-      public Consulta[] consultarConsultasPorMedico(Medico medico) {
+
+    public Consulta[] consultarConsultasPorMedico(Medico medico) {
 
         Consulta[] consultasDoMedico = new Consulta[consultas.length];
         int index = 0;
@@ -74,7 +77,35 @@ public class ConsultaDAO {
                 index++;
             }
         }
-        
+
+        return consultasDoMedico;
+    }
+
+    public Consulta[] consultarConsultasPorPaciente(Pessoa paciente) {
+
+        Consulta[] consultasDoPaciente = new Consulta[consultas.length];
+        int index = 0;
+        for (Consulta consulta : consultas) {
+            if (consulta != null && consulta.getPaciente().equals(paciente)) {
+                consultasDoPaciente[index] = consulta;
+                index++;
+            }
+        }
+
+        return consultasDoPaciente;
+    }
+
+    public Consulta[] buscarConsultasPorMedicoSemana(Medico medico, LocalDate data) {
+
+        Consulta[] consultasDoMedico = new Consulta[consultas.length];
+        int index = 0;
+        for (Consulta consulta : consultas) {
+            if (consulta.getMedico().equals(medico) && consulta.getData().isEqual(data)) {
+                consultasDoMedico[index] = consulta;
+                index++;
+            }
+        }
+
         return consultasDoMedico;
     }
 
