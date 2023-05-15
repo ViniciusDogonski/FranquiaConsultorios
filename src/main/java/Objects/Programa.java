@@ -44,16 +44,16 @@ public class Programa {
     FinanceiroMedicoDAO financeiroMedicoDAO = new FinanceiroMedicoDAO(100);
 
     LocalDate dataAtual = LocalDate.of(2023, 6, 1);
-    public Programa() {
-
-        LocalDate dataAtual = LocalDate.now();
-        System.out.println("Data atual: " + dataAtual);
+   public Programa() {
 
         dadosTEST();
+
+        System.out.println("Data atual: " + dataAtual);
+
         boolean primeiroDiaDoMes = dataAtual.getDayOfMonth() == 1;
 
         if (primeiroDiaDoMes) {
-            // System.out.println("Hoje Ã© o primeiro dia do mÃªs.");
+            // System.out.println("Hoje é o primeiro dia do mês.");
             gerarFinanceiroMedico();
 
             for (UnidadeFranquia unidade : unidadeFranquiaDAO.mostrarUnidades()) {
@@ -73,6 +73,7 @@ public class Programa {
             }
 
         }
+
         inicioMenu();
 
     }
@@ -952,91 +953,6 @@ public class Programa {
                     procedimentoDAO.atualizarProcedimento(novoProcedimento);
 
                     break;
-                case 29:
-
-                    System.out.print("id do medico:");
-                    int idMEdico = Integer.parseInt(scan.nextLine());
-
-                    Medico mediquinho = medicoDAO.buscarMedico(idMEdico);
-
-                    System.out.println(mediquinho);
-
-                    Consulta[] cosnsultassdasd = consultaDAO.consultarConsultasPorMedico(mediquinho);
-
-                    Procedimento[] procedime = procedimentoDAO.getProcedimentosPorMedico(mediquinho);
-
-                    /*for (Consulta consulta : cosnsultassdasd) {
-                        System.out.println(consulta);
-                    }
-                    
-                    for (Procedimento procedimento : procedime) {
-                        System.out.println(procedimento);
-                    }
-                    
-                    financeiroMedicoDAO.registrarPagamento(mediquinho, cosnsultassdasd, procedime);*/
-                    Procedimento[] precedimentosData = null;
-                    int indexproce = 0;
-
-                    Consulta[] consultaData = null;
-                    int indexconsul = 0;
-
-                    for (Franquia fran : franquiaDAO.mostrarFranquias()) {
-
-                        if (fran != null) {
-
-                            precedimentosData = new Procedimento[100];
-
-                            consultaData = new Consulta[100];
-
-                            System.out.println(fran);
-
-                            for (UnidadeFranquia uni : unidadeFranquiaDAO.mostrarUnidades()) {
-
-                                if (uni != null && fran.equals(uni.getFranquia())) {
-
-                                    for (Consulta consulta : cosnsultassdasd) {
-
-                                        if (consulta != null && consulta.getUnidade().equals(uni)) {
-
-                                            System.out.println(consulta);
-
-                                            for (Procedimento procedimento : procedime) {
-
-                                                if (procedimento != null && procedimento.getConsulta().equals(consulta)) {
-
-                                                    System.out.println(procedimento);
-                                                    precedimentosData[indexproce] = procedimento;
-                                                    indexproce++;
-                                                    System.out.println("add proce");
-                                                }
-                                            }
-                                            System.out.println("add consulta");
-                                            consultaData[indexconsul] = consulta;
-                                            indexconsul++;
-                                            /*  System.out.println("----------");
-                                            for (Procedimento procedimento : precedimentosData) {
-                                                System.out.println(procedimento);
-                                            }*/
-
-                                        }
-                                    }
-                                    // System.out.println("3");
-                                }
-
-                            }
-                            System.out.println("chamo metodo");
-                            financeiroMedicoDAO.registrarPagamento(mediquinho, consultaData, precedimentosData, fran);
-                            indexproce = 0;
-                            indexconsul = 0;
-                        }
-                    }
-                    System.out.println("-----");
-
-                    for (FinanceiroMedico fmedico : financeiroMedicoDAO.mostrarFinancas()) {
-                        System.out.println(fmedico);
-                    }
-
-                    break;
 
                 case 0:
                     inicioMenu();
@@ -1140,7 +1056,6 @@ public class Programa {
         }
 
     }
-
     public void dadosTEST() {
 
         /*adm*/
