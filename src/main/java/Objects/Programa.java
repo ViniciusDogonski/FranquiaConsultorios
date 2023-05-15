@@ -398,7 +398,7 @@ public class Programa {
 
             }
 
-            opcaoUsuario = gui.pegaOpcaoDonoUnidade();
+            opcaoUsuario = gui.pegaOpcaoResponsavelFranquia();
 
             switch (opcaoUsuario) {
 
@@ -594,20 +594,22 @@ public class Programa {
 
             System.out.println("----------------------------");
             System.out.print("Responsavel Unidade logado: ");
-            System.out.println(responsavelFranquia);
+            System.out.println(responsavelUnidade);
 
             System.out.println("Suas franquias:");
 
             for (Franquia fran : franquiaDAO.mostrarFranquias()) {
 
-                if (fran != null && fran.getResponsavel().equals(responsavelFranquia)) {
+                if (fran != null && fran.getResponsavel().equals(responsavelUnidade)) {
                     System.out.println(fran);
                 }
 
             }
 
             opcaoUsuario = gui.pegaOpcaoResponsavelUnidade();
-          case 1:
+            switch (opcaoUsuario) {
+
+                case 1:
 
                     System.out.println("------Criar unidade franquia------");
 
@@ -709,14 +711,8 @@ public class Programa {
                     break;
                 default:
                     throw new AssertionError();
-            }while (opcaoUsuario!= 0);
-
-}
-    
-        
-        
-        public void cadastrar() {
-
+            }
+    }while(opcaoUsuario!=0);
     }
 
     public void admMenu() {
@@ -1382,6 +1378,7 @@ public class Programa {
         }
 
     }
+
     public void dadosTEST() {
 
         /*adm*/
