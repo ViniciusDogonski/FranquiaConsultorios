@@ -8,12 +8,15 @@ import Objects.Pessoa;
 import Objects.Medico;
 import Objects.Consulta;
 import Objects.Estados;
+import Objects.FinanceiroADM;
 import Objects.TipoUsuario;
 import Objects.Franquia;
 import Objects.InfoConsulta;
 import Objects.UnidadeFranquia;
 import Objects.Procedimento;
 import Objects.FinanceiroMedico;
+import Objects.MovimentoDesc;
+import Objects.TipoMovimentacao;
 import java.util.Scanner;
 
 import java.time.LocalDate;
@@ -118,9 +121,13 @@ public class GUI {
         String horaConsulta = scan.nextLine();
         consulta.setHorario(TimeConverter(horaConsulta));
 
+        System.out.print("Valor da consulta (HH:mm):");
+        double valor = Double.parseDouble(scan.nextLine());
+
         consulta.setEstado(Estados.AGENDADA);
         consulta.setMedico(medico);
         consulta.setPaciente(paciente);
+        consulta.setValor(valor);
 
         return consulta;
 
@@ -217,6 +224,66 @@ public class GUI {
         return procedimentoCriacao;
     }
 
+    public FinanceiroADM cadastrarFinanceiroADM(UnidadeFranquia unidade) {
+
+        FinanceiroADM financeiroADM = new FinanceiroADM();
+
+        financeiroADM.setUnidade(unidade);
+
+        System.out.print("tipo movimento 1-ENTRADA 2-SAIDA:");
+        int opMovimento = Integer.parseInt(scan.nextLine());
+
+        switch (opMovimento) {
+            case 1:
+                financeiroADM.setTipoMovimentacao(TipoMovimentacao.ENTRADA);
+                break;
+            case 2:
+                financeiroADM.setTipoMovimentacao(TipoMovimentacao.SAIDA);
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+        System.out.print("tipo desc 1-CONSULTA, 2- PROCEDIMENTO, 3-SALARIO, 4-FUNCIONARIO, 5-ENERGIA, 6-AGUA, 7-PAGAMENTO, 8-FRANQUIA");
+        int opDesc = Integer.parseInt(scan.nextLine());
+
+        switch (opMovimento) {
+            case 1:
+                financeiroADM.setDescriacao(MovimentoDesc.CONSULTA);
+                break;
+            case 2:
+                financeiroADM.setDescriacao(MovimentoDesc.PROCEDIMENTO);
+                break;
+            case 3:
+                financeiroADM.setDescriacao(MovimentoDesc.SALARIO);
+                break;
+            case 4:
+                financeiroADM.setDescriacao(MovimentoDesc.FUNCIONARIO);
+                break;
+            case 5:
+                financeiroADM.setDescriacao(MovimentoDesc.ENERGIA);
+                break;
+            case 6:
+                financeiroADM.setDescriacao(MovimentoDesc.AGUA);
+                break;
+            case 7:
+                financeiroADM.setDescriacao(MovimentoDesc.PAGAMENTO);
+                break;
+            case 8:
+                financeiroADM.setDescriacao(MovimentoDesc.FRANQUIA);
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+        System.out.print("Valor:");
+        double valor = Double.parseDouble(scan.nextLine());
+        financeiroADM.setValor(valor);
+
+        return financeiroADM;
+
+    }
+
     public int pegaOpcaoADM() {
         System.out.println("------ PESSOA------");
         System.out.println("1 cadastrar PESSOA");
@@ -298,7 +365,33 @@ public class GUI {
         return Integer.parseInt(scan.nextLine());
 
     }
-    public int pegaOpcaoResponsavelFranquia(){
+
+    public int pegarOpcaoAdministrativo() {
+
+        System.out.println("------CONSULTA------");
+        System.out.println("1 cadastrar CONSULTA");
+        System.out.println("2 mostrar CONSULTAS");
+        System.out.println("3 deletar CONSULTA");
+        System.out.println("4 editar CONSULTA");
+        System.out.println("------ PROCEDIMENTO------");
+        System.out.println("5 cadastrar PROCEDIMENTO");
+        System.out.println("6 mostrar PROCEDIMENTO");
+        System.out.println("7 deletar PROCEDIMENTO");
+        System.out.println("8 editar PROCEDIMENTO");
+        System.out.println("------ FINANCEIRO ADM------");
+        System.out.println("9 cadastrar FINANCEIRO ADM");
+        System.out.println("10 mostrar FINANCEIRO ADM");
+        System.out.println("11 deletar FINANCEIRO ADM");
+        System.out.println("12 editar FINANCEIRO ADM");
+        System.out.println("13 RELATORIO FINANCAS");
+        System.out.println("0 sair");
+
+        System.out.print("Qual sua opcao ?");
+        return Integer.parseInt(scan.nextLine());
+
+    }
+
+    public int pegaOpcaoResponsavelFranquia() {
         System.out.println("------FRANQUIA------");
         System.out.println("1- cadastrar FRANQUIA");
         System.out.println("2- mostrar FRANQUIA");
@@ -310,23 +403,24 @@ public class GUI {
         System.out.println("7-deletar UNIDADE FRANQUIA");
         System.out.println("8- editar UNIDADE FRANQUIA");
         System.out.println("0 - sair");
-        
 
         System.out.print("Qual sua opcao ?");
         return Integer.parseInt(scan.nextLine());
     }
-    public int pegaOpcaoResponsavelUnidade(){
-       
+
+    public int pegaOpcaoResponsavelUnidade() {
+
         System.out.println("------UNIDADE FRANQUIA------");
         System.out.println("1- cadastrar UNIDADE FRANQUIA");
         System.out.println("2-mostrar UNIDADE FRANQUIA");
         System.out.println("3-deletar UNIDADE FRANQUIA");
         System.out.println("5- editar UNIDADE FRANQUIA");
         System.out.println("0 - sair");
-        
+
         System.out.print("Qual sua opcao ?");
         return Integer.parseInt(scan.nextLine());
     }
+
     public int pegaOpcaoLoginCadastro() {
 
         System.out.println("1 cadastrar");
@@ -398,6 +492,16 @@ public class GUI {
         for (FinanceiroMedico financeiroMedico : fmedico) {
             if (financeiroMedico != null) {
                 System.out.println(financeiroMedico);
+            }
+        }
+
+    }
+
+    public void mostrarFinanceiroADMPrint(FinanceiroADM[] fADM) {
+
+        for (FinanceiroADM financeiroADM : fADM) {
+            if (financeiroADM != null) {
+                System.out.println(financeiroADM);
             }
         }
 

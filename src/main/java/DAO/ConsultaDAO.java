@@ -100,7 +100,7 @@ public class ConsultaDAO {
         Consulta[] consultasDoMedico = new Consulta[consultas.length];
         int index = 0;
         for (Consulta consulta : consultas) {
-            if (consulta.getMedico().equals(medico) && consulta.getData().isEqual(data)) {
+            if (consulta != null && consulta.getMedico().equals(medico) && consulta.getData().isEqual(data)) {
                 consultasDoMedico[index] = consulta;
                 index++;
             }
