@@ -298,7 +298,35 @@ public class GUI {
         return Integer.parseInt(scan.nextLine());
 
     }
+    public int pegaOpcaoResponsavelFranquia(){
+        System.out.println("------FRANQUIA------");
+        System.out.println("1- cadastrar FRANQUIA");
+        System.out.println("2- mostrar FRANQUIA");
+        System.out.println("3- deletar FRANQUIA");
+        System.out.println("4 editar FRANQUIA");
+        System.out.println("------UNIDADE FRANQUIA------");
+        System.out.println("5- cadastrar UNIDADE FRANQUIA");
+        System.out.println("6-mostrar UNIDADE FRANQUIA");
+        System.out.println("7-deletar UNIDADE FRANQUIA");
+        System.out.println("8- editar UNIDADE FRANQUIA");
+        System.out.println("0 - sair");
+        
 
+        System.out.print("Qual sua opcao ?");
+        return Integer.parseInt(scan.nextLine());
+    }
+    public int pegaOpcaoResponsavelUnidade(){
+       
+        System.out.println("------UNIDADE FRANQUIA------");
+        System.out.println("1- cadastrar UNIDADE FRANQUIA");
+        System.out.println("2-mostrar UNIDADE FRANQUIA");
+        System.out.println("3-deletar UNIDADE FRANQUIA");
+        System.out.println("5- editar UNIDADE FRANQUIA");
+        System.out.println("0 - sair");
+        
+        System.out.print("Qual sua opcao ?");
+        return Integer.parseInt(scan.nextLine());
+    }
     public int pegaOpcaoLoginCadastro() {
 
         System.out.println("1 cadastrar");
