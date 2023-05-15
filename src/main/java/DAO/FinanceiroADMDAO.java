@@ -5,6 +5,7 @@
 package DAO;
 
 import Objects.FinanceiroADM;
+import Objects.Franquia;
 import Objects.MovimentoDesc;
 import Objects.TipoMovimentacao;
 import Objects.UnidadeFranquia;
@@ -68,6 +69,29 @@ public class FinanceiroADMDAO {
         return this.financasADM;
 
     }
+    public FinanceiroADM[] mostrarFinancasFranquia(Franquia franquia){
+        FinanceiroADM [] fin = new FinanceiroADM[financasADM.length];
+        int i =0;
+        for(FinanceiroADM f : financasADM){
+            if(((f!= null) && (f.getUnidade().getFranquia().equals(franquia)))){
+                fin[i] = f;
+                i++;
+            }
+        }
+        return fin;
+    }
+    public FinanceiroADM[] mostrarFinancasUnidade(UnidadeFranquia unidade){
+        FinanceiroADM [] fin = new FinanceiroADM[financasADM.length];
+        int i =0;
+        for(FinanceiroADM f : financasADM){
+            if(((f!= null) && (f.getUnidade().equals(unidade)))){
+                fin[i] = f;
+                i++;
+            }
+        }
+        return fin;
+    }
+
 
     public FinanceiroADM[] buscarMovimentosEntreDatas(LocalDate dataInicial, LocalDate dataFinal) {
 

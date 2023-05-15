@@ -402,6 +402,12 @@ public class GUI {
         System.out.println("6-mostrar UNIDADE FRANQUIA");
         System.out.println("7-deletar UNIDADE FRANQUIA");
         System.out.println("8- editar UNIDADE FRANQUIA");
+        System.out.println("9 - Criar finaceiro ADM");
+        System.out.println("10 - Mostrar finanças da Franquia");
+        System.out.println("11 - Deletar Financeiro ADM");
+        System.out.println("12 - Editar finaceiro ADM");
+        System.out.println("13 - Relatório de Finanças da Franquia");
+        
         System.out.println("0 - sair");
 
         System.out.print("Qual sua opcao ?");
@@ -414,7 +420,12 @@ public class GUI {
         System.out.println("1- cadastrar UNIDADE FRANQUIA");
         System.out.println("2-mostrar UNIDADE FRANQUIA");
         System.out.println("3-deletar UNIDADE FRANQUIA");
-        System.out.println("5- editar UNIDADE FRANQUIA");
+        System.out.println("4- editar UNIDADE FRANQUIA");
+        System.out.println("5 - Criar finaceiro ADM");
+        System.out.println("6 - Mostrar finanças da Unidade");
+        System.out.println("7 - Deletar Financeiro ADM");
+        System.out.println("8 - Editar finaceiro ADM");
+        System.out.println("9 - Relatório de Finanças da Unidade");
         System.out.println("0 - sair");
 
         System.out.print("Qual sua opcao ?");

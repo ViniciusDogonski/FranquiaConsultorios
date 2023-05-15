@@ -4,6 +4,8 @@
  */
 package DAO;
 
+import Objects.Franquia;
+import Objects.Pessoa;
 import Objects.UnidadeFranquia;
 
 /**
@@ -63,5 +65,27 @@ public class UnidadeFranquiaDAO {
         }*/
         return this.unidades;
 
+    }
+    public UnidadeFranquia[] mostrarUnidadeResponsavel(Pessoa responsavel){
+        UnidadeFranquia[] uniResp = new UnidadeFranquia[unidades.length];
+        int i =0;
+        for(UnidadeFranquia u : unidades){
+            if(((u!= null) && (u.getResponsavel().equals(responsavel)))){
+                uniResp[i] = u;
+                i++;
+            }
+        }
+        return uniResp;
+    }
+      public UnidadeFranquia[] mostrarUnidadePorFranquia(Franquia Franquia){
+        UnidadeFranquia[] uniResp = new UnidadeFranquia[unidades.length];
+        int i =0;
+        for(UnidadeFranquia u : unidades){
+            if(((u!= null) && (u.getFranquia().equals(Franquia)))){
+                uniResp[i] = u;
+                i++;
+            }
+        }
+        return uniResp;
     }
 }

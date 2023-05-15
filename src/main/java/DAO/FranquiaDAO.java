@@ -5,6 +5,7 @@
 package DAO;
 
 import Objects.Franquia;
+import Objects.Pessoa;
 
 /**
  *
@@ -64,6 +65,18 @@ public class FranquiaDAO {
         return this.franquias;
 
     }
+    public Franquia[] mostrarFranquiaPorResponsavel(Pessoa responsavel){
+        Franquia [] fran = new Franquia[franquias.length];
+        int i =0;
+        for(Franquia f : franquias){
+            if(((f != null) && (f.getResponsavel().equals(responsavel)))){
+                fran[i] = f;
+                i++;
+            }
+        }
+        return fran;
+    }
+
     /*  public Franquia buscarFranquiasPorMedico(Medico medico, UnidadeFranquia[] unidadesFranquias) {
         
         Franquia[] franquiasMedico = new Franquia[100];

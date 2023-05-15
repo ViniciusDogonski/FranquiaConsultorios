@@ -89,6 +89,28 @@ public class PessoaDAO {
         return null;
 
     }
+    public Pessoa[] mostrarResposnsaveisFranquia(){
+        Pessoa [] responsaveis = new Pessoa[pessoas.length];
+        int i =0;
+        for(Pessoa p : pessoas){
+            if(((p!= null) && (p.getTipoUsuario() == TipoUsuario.DONO_FRANQUIA))){
+                responsaveis[i] = p;
+                i++;
+            }
+        }
+        return responsaveis;
+    }
+    public Pessoa[] mostrarResposnsaveisUnidade(){
+        Pessoa [] responsaveis = new Pessoa[pessoas.length];
+        int i =0;
+        for(Pessoa p : pessoas){
+            if(((p!= null) && (p.getTipoUsuario() == TipoUsuario.DONO_UNIDADE))){
+                responsaveis[i] = p;
+                i++;
+            }
+        }
+        return responsaveis;
+    }
 
     /*public PessoaDAO() {
 
