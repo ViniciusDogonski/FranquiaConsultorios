@@ -122,7 +122,7 @@ public class Programa {
 
                 break;
             case DONO_UNIDADE:
-                // gui
+                responsavelUnidadeMenu(pessoa);
                 break;
             case ADMINISTRATIVO:
                 // gui
