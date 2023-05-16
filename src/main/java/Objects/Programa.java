@@ -30,7 +30,7 @@ import java.util.Scanner;
  * @author Vinicius Augusto
  */
 public class Programa {
-
+    
     Scanner scan = new Scanner(System.in);
     GUI gui = new GUI();
     PessoaDAO pessoaDAO = new PessoaDAO(100);
@@ -42,23 +42,23 @@ public class Programa {
     UnidadeFranquiaDAO unidadeFranquiaDAO = new UnidadeFranquiaDAO(100);
     FinanceiroADMDAO financeiroADMDAO = new FinanceiroADMDAO(100);
     FinanceiroMedicoDAO financeiroMedicoDAO = new FinanceiroMedicoDAO(100);
-
+    
     LocalDate dataAtual = LocalDate.of(2023, 6, 1);
-
+    
     public Programa() {
-
+        
         dadosTEST();
-
+        
         System.out.println("Data atual: " + dataAtual);
-
+        
         boolean primeiroDiaDoMes = dataAtual.getDayOfMonth() == 1;
-
+        
         if (primeiroDiaDoMes) {
             // System.out.println("Hoje é o primeiro dia do mês.");
             gerarFinanceiroMedico();
-
+            
             for (UnidadeFranquia unidade : unidadeFranquiaDAO.mostrarUnidades()) {
-
+                
                 if (unidade != null) {
 
                     // System.out.println(financeiroADMDAO.calcularPagamentoAdmin(dataAtual,
@@ -68,21 +68,21 @@ public class Programa {
                     fiADM.setUnidade(unidade);
                     fiADM.setValor(financeiroADMDAO.calcularPagamentoAdmin(dataAtual, unidade));
                     fiADM.setTipoMovimentacao(TipoMovimentacao.SAIDA);
-
+                    
                     financeiroADMDAO.criarFinancas(fiADM);
                 }
-
+                
             }
-
+            
         }
-
+        
         inicioMenu();
-
+        
     }
-
+    
     public void inicioMenu() {
         int op = gui.pegaOpcaoLoginCadastro();
-
+        
         switch (op) {
             case 1:
                 System.out.println("------ CADASTRO ------");
@@ -102,25 +102,25 @@ public class Programa {
             default:
                 throw new AssertionError();
         }
-
+        
     }
-
+    
     public void login(String login, String senha) {
         Pessoa pessoa = pessoaDAO.buscarPessoaPorLogin(login);
         if (pessoa == null) {
             System.out.println("Login inválido.");
             return;
         }
-
+        
         if (!pessoa.getSenha().equals(senha)) {
             System.out.println("Senha incorreta.");
             return;
         }
-
+        
         switch (pessoa.getTipoUsuario()) {
             case DONO_FRANQUIA:
                 responsavelFranquiaMenu(pessoa);
-
+                
                 break;
             case DONO_UNIDADE:
                 responsavelUnidadeMenu(pessoa);
@@ -130,60 +130,60 @@ public class Programa {
                 break;
             case MEDICO:
                 medicoMenu(medicoDAO.findPessoaByMedico(pessoa.getId()));
-
+                
                 break;
             case PACIENTE:
                 pacienteMenu(pessoa);
-
+                
                 break;
             case ADMINISTRADOR:
                 admMenu();
                 break;
-
+            
             default:
                 System.out.println("Tipo de usuário inválido.");
         }
     }
-
+    
     public void pacienteMenu(Pessoa usuario) {
-
+        
         int opcaoUsuario;
-
+        
         do {
-
+            
             System.out.println("----------------------------");
             System.out.print("paciente logado: ");
             System.out.println(usuario);
-
+            
             opcaoUsuario = gui.pegarOpcaoPaciente();
-
+            
             switch (opcaoUsuario) {
                 case 1:
-
+                    
                     gui.mostrarConsultasPrint(consultaDAO.consultarConsultasPorPaciente(usuario));
-
+                    
                     break;
                 case 2:
-
+                    
                     System.out.print("consulta id:");
                     int idConsulta = Integer.parseInt(scan.nextLine());
-
+                    
                     Consulta consulta = consultaDAO.buscarConsulta(idConsulta);
-
+                    
                     gui.mostrarInfoConsultasPrint(infoConsultaDAO.consultarInfoConsultasConsulta(consulta));
-
+                    
                     break;
                 case 3:
-
+                    
                     System.out.print("consulta id:");
                     int idConsultaProcedimento = Integer.parseInt(scan.nextLine());
-
+                    
                     Consulta consultaProcedimento = consultaDAO.buscarConsulta(idConsultaProcedimento);
-
+                    
                     gui.mostrarProcedimentoPrint(procedimentoDAO.getProcedimentosPorConsulta(consultaProcedimento));
-
+                    
                     break;
-
+                
                 case 0:
                     inicioMenu();
                     break;
@@ -192,185 +192,185 @@ public class Programa {
             }
         } while (opcaoUsuario != 0);
     }
-
+    
     public void medicoMenu(Medico usuarioMedico) {
-
+        
         int opcaoUsuario;
-
+        
         do {
-
+            
             System.out.println("----------------------------");
             System.out.print("Medico logado: ");
             System.out.println(usuarioMedico);
-
+            
             opcaoUsuario = gui.pegarOpcaoMedico();
-
+            
             switch (opcaoUsuario) {
                 case 1:
-
+                    
                     gui.mostrarConsultasPrint(consultaDAO.consultarConsultasPorMedico(usuarioMedico));
-
+                    
                     break;
                 case 2:
-
+                    
                     System.out.print("consulta id:");
                     int idConsulta = Integer.parseInt(scan.nextLine());
-
+                    
                     Consulta buscarConsulta = consultaDAO.buscarConsulta(idConsulta);
-
+                    
                     gui.mostrarInfoConsultasPrint(infoConsultaDAO.consultarInfoConsultasConsulta(buscarConsulta));
-
+                    
                     break;
                 case 3:
-
+                    
                     System.out.print("consulta id:");
                     int idConsultaProcedimento = Integer.parseInt(scan.nextLine());
-
+                    
                     Consulta buscarConsultaProcedimento = consultaDAO.buscarConsulta(idConsultaProcedimento);
-
+                    
                     gui.mostrarProcedimentoPrint(
                             procedimentoDAO.getProcedimentosPorConsulta(buscarConsultaProcedimento));
-
+                    
                     break;
                 case 4:
-
+                    
                     gui.mostrarConsultasPrint(consultaDAO.buscarConsultasPorMedicoSemana(usuarioMedico, dataAtual));
-
+                    
                     break;
-
+                
                 case 5:
-
+                    
                     for (Consulta consulta : consultaDAO.consultarConsultasPorMedico(usuarioMedico)) {
-
+                        
                         if (consulta != null && consulta.getEstado().equals(Estados.REALIZADA)) {
                             System.out.println(consulta);
                         }
                     }
-
+                    
                     break;
-
+                
                 case 6:
                     // cadastrar INFO CONSULTA
 
                     System.out.println("------ Criar info Consulta------");
-
+                    
                     System.out.print("id da Consulta:");
                     int idConsultaCriarInfo = Integer.parseInt(scan.nextLine());
-
+                    
                     Consulta consultaVinculada = consultaDAO.buscarConsulta(idConsultaCriarInfo);
-
+                    
                     InfoConsulta InfoConsultaCriado = gui.cadastrarInfoConsulta(consultaVinculada);
-
+                    
                     infoConsultaDAO.criarInfoConsulta(InfoConsultaCriado);
-
+                    
                     break;
-
+                
                 case 7:
                     // buscar INFO CONSULTA
 
                     System.out.println("------ buscars info Consulta------");
-
+                    
                     System.out.print("id da Consulta:");
                     int idConsultaBuscarInfo = Integer.parseInt(scan.nextLine());
-
+                    
                     Consulta consultaBusca = consultaDAO.buscarConsulta(idConsultaBuscarInfo);
-
+                    
                     gui.mostrarInfoConsultasPrint(infoConsultaDAO.consultarInfoConsultasConsulta(consultaBusca));
                     break;
-
+                
                 case 8:
                     // deletar INFO CONSULTA
 
                     System.out.println("------ Delete info Consulta------");
                     System.out.print("id do info Consulta:");
                     infoConsultaDAO.mostrarInfoConsulta();
-
+                    
                     int idDelInfoConsulta = Integer.parseInt(scan.nextLine());
                     infoConsultaDAO.excluirInfoConsulta(idDelInfoConsulta);
-
+                    
                     break;
-
+                
                 case 9:
                     // editar INFO CONSULTA
                     System.out.println("------ EDIT info Consulta------");
-
+                    
                     System.out.print("id do info Consulta:");
                     int idEditInfoConsulta = Integer.parseInt(scan.nextLine());
-
+                    
                     System.out.print("id da Consulta:");
                     int idConsultaBusca = Integer.parseInt(scan.nextLine());
-
+                    
                     Consulta consultaBuscadaedit = consultaDAO.buscarConsulta(idConsultaBusca);
-
+                    
                     InfoConsulta infoCunsultaBusca = infoConsultaDAO.buscarInfoConsulta(idEditInfoConsulta);
-
+                    
                     InfoConsulta infoConsultaEditado = gui.cadastrarInfoConsulta(consultaBuscadaedit);
                     infoConsultaEditado.setId(infoCunsultaBusca.getId());
                     break;
-
+                
                 case 10:
                     // cadastrar PROCEDIMENTO
                     System.out.println("------ Criar PROCEDIMENTO------");
-
+                    
                     System.out.print("id da Consulta:");
                     int idConsultaParaProcedimento = Integer.parseInt(scan.nextLine());
-
+                    
                     Consulta consultaVinculadaProcedimento = consultaDAO.buscarConsulta(idConsultaParaProcedimento);
-
+                    
                     Procedimento criadoPrecedimento = gui.cadastrarProcedimento(consultaVinculadaProcedimento);
-
+                    
                     procedimentoDAO.criarProcedimento(criadoPrecedimento);
                     break;
-
+                
                 case 11:
                     // mostrar PROCEDIMENTO
 
                     System.out.println("------ buscars PROCEDIMENTOs------");
-
+                    
                     System.out.print("id da Consulta:");
                     int idConsultaBuscarInfoPRoce = Integer.parseInt(scan.nextLine());
-
+                    
                     Consulta consultaBuscaPRoce = consultaDAO.buscarConsulta(idConsultaBuscarInfoPRoce);
-
+                    
                     gui.mostrarProcedimentoPrint(procedimentoDAO.getProcedimentosPorConsulta(consultaBuscaPRoce));
-
+                    
                     break;
-
+                
                 case 12:
                     // deletar PROCEDIMENTO
                     System.out.println("------ Delete PROCEDIMENTO------");
-
+                    
                     System.out.print("id do PROCEDIMENTO:");
-
+                    
                     int idDelProcedimento = Integer.parseInt(scan.nextLine());
                     procedimentoDAO.excluirProcedimento(idDelProcedimento);
                     break;
-
+                
                 case 13:
                     // editar PROCEDIMENTO
                     System.out.println("------ EDIT PROCEDIMENTO------");
-
+                    
                     System.out.print("id do PROCEDIMENTO:");
                     int idEditProcedimento = Integer.parseInt(scan.nextLine());
-
+                    
                     System.out.print("id da consulta:");
                     int idconsultaEditProce = Integer.parseInt(scan.nextLine());
-
+                    
                     Procedimento precedimentoBuscado = procedimentoDAO.buscarProcedimento(idEditProcedimento);
                     Consulta consultaBuscada = consultaDAO.buscarConsulta(idconsultaEditProce);
-
+                    
                     Procedimento novoProcedimento = gui.cadastrarProcedimento(consultaBuscada);
                     novoProcedimento.setId(precedimentoBuscado.getId());
-
+                    
                     procedimentoDAO.atualizarProcedimento(novoProcedimento);
                     break;
-
+                
                 case 14:
-
+                    
                     gui.mostrarFinanceiroMedicoPrint(financeiroMedicoDAO.consultarFInacaPorMedico(usuarioMedico));
                     break;
                 case 0:
-
+                    
                     inicioMenu();
                     break;
                 default:
@@ -378,50 +378,50 @@ public class Programa {
             }
         } while (opcaoUsuario != 0);
     }
-
+    
     public void administrativoMenu(Pessoa usuarioAdministrativo) {
-
+        
         int opcaoUsuario;
-
+        
         do {
-
+            
             System.out.println("----------------------------");
             System.out.print("administrativo logado: ");
             System.out.println(usuarioAdministrativo);
-
+            
             opcaoUsuario = gui.pegarOpcaoAdministrativo();
-
+            
             switch (opcaoUsuario) {
                 case 1:
-
+                    
                     System.out.println("------ Criar Consulta------");
-
+                    
                     System.out.print("id do medico:");
                     int idMedicoConsulta = Integer.parseInt(scan.nextLine());
-
+                    
                     pessoaDAO.buscarPacientes();
                     System.out.print("id do paciente:");
                     int idPacienteConsulta = Integer.parseInt(scan.nextLine());
-
+                    
                     System.out.print("id da Unidade:");
                     int idUnidadeConsultacreate = Integer.parseInt(scan.nextLine());
-
+                    
                     UnidadeFranquia unidadeConsulta = unidadeFranquiaDAO.buscarUnidade(idUnidadeConsultacreate);
                     Medico medicoconsulta = medicoDAO.buscarMedico(idMedicoConsulta);
                     Pessoa paceienteconsulta = pessoaDAO.buscarPessoa(idPacienteConsulta);
-
+                    
                     Consulta consultaInsert = gui.cadastrarConsulta(medicoconsulta, paceienteconsulta);
                     consultaInsert.setUnidade(unidadeConsulta);
-
+                    
                     consultaDAO.cadastrarConsulta(consultaInsert);
-
+                    
                     FinanceiroADM financa = new FinanceiroADM();
                     financa.setDescriacao(MovimentoDesc.CONSULTA);
                     financa.setTipoMovimentacao(TipoMovimentacao.ENTRADA);
                     financa.setUnidade(unidadeConsulta);
                     financa.setValor(consultaInsert.getValor());
                     financeiroADMDAO.criarFinancas(financa);
-
+                    
                     break;
                 case 2:
                     gui.mostrarConsultasPrint(consultaDAO.mostrarConsultas());
@@ -430,7 +430,7 @@ public class Programa {
                     System.out.println("------ Delete Consulta------");
                     System.out.print("id do Consulta:");
                     consultaDAO.mostrarConsultas();
-
+                    
                     int idDelConsulta = Integer.parseInt(scan.nextLine());
                     Consulta consul = consultaDAO.buscarConsulta(idDelConsulta);
                     Consulta consultapro = new Consulta();
@@ -452,7 +452,7 @@ public class Programa {
                     if ((consultapro != null && consultapro.equals(consul))
                             || (consultainfo != null && consultainfo.equals(consul))) {
                         System.out.println("Não é possível excluir a consulta! Há dados vinculados à consulta");
-
+                        
                     } else {
                         consultaDAO.excluirConsulta(idDelConsulta);
                         System.out.println("Consulta deletada com sucesso!");
@@ -460,16 +460,16 @@ public class Programa {
                     break;
                 case 4:
                     System.out.println("------ EDIT Consulta------");
-
+                    
                     System.out.print("id do Consulta:");
                     int idEditConsulta = Integer.parseInt(scan.nextLine());
-
+                    
                     Consulta consultaBuscado = consultaDAO.buscarConsulta(idEditConsulta);
                     System.out.println(consultaBuscado);
-
+                    
                     System.out.print("id do medico:");
                     int idMedicoConsultaEdit = Integer.parseInt(scan.nextLine());
-
+                    
                     System.out.println("Pacientes:");
                     pessoaDAO.buscarPacientes();
                     System.out.print("id do paciente:");
@@ -477,17 +477,17 @@ public class Programa {
                     System.out.println("id unidade");
                     int idUnidadeConsulta = Integer.parseInt(scan.nextLine());
                     UnidadeFranquia uniConsultaEdit = unidadeFranquiaDAO.buscarUnidade(idUnidadeConsulta);
-
+                    
                     Medico medicoconsultaEdit = medicoDAO.buscarMedico(idMedicoConsultaEdit);
                     Pessoa paceienteconsultaEdit = pessoaDAO.buscarPessoa(idPacienteConsultaEdit);
-
+                    
                     Consulta consultaEdit = gui.cadastrarConsulta(medicoconsultaEdit, paceienteconsultaEdit);
                     consultaEdit.setUnidade(uniConsultaEdit);
                     consultaEdit.setId(idEditConsulta);
-
+                    
                     System.out.print("estado da consulta ( 1- VAZIO, 2-AGENDADA, 3-CANCELADA,4-REALIZADA): ");
                     int estado = Integer.parseInt(scan.nextLine());
-
+                    
                     switch (estado) {
                         case 1:
                             consultaEdit.setEstado(Estados.VAZIO);
@@ -501,11 +501,11 @@ public class Programa {
                         case 4:
                             consultaEdit.setEstado(Estados.REALIZADA);
                             break;
-
+                        
                         default:
                             System.out.print("opÃ§ao invalida!");
                     }
-
+                    
                     for (InfoConsulta info : infoConsultaDAO.mostrarInfoConsulta()) {
                         if (info != null) {
                             if (info.getConsulta().equals(consultaBuscado)) {
@@ -520,116 +520,116 @@ public class Programa {
                             }
                         }
                     }
-
+                    
                     consultaDAO.editarConsulta(consultaEdit);
                     System.out.println("editado");
                     break;
                 case 5:
                     System.out.println("------ Criar PROCEDIMENTO------");
-
+                    
                     System.out.print("id da Consulta:");
                     int idConsultaProcedimento = Integer.parseInt(scan.nextLine());
-
+                    
                     Consulta consultaVinculadaProcedimento = consultaDAO.buscarConsulta(idConsultaProcedimento);
-
+                    
                     Procedimento criadoPrecedimento = gui.cadastrarProcedimento(consultaVinculadaProcedimento);
-
+                    
                     procedimentoDAO.criarProcedimento(criadoPrecedimento);
-
+                    
                     FinanceiroADM financaProce = new FinanceiroADM();
                     financaProce.setDescriacao(MovimentoDesc.PROCEDIMENTO);
                     financaProce.setTipoMovimentacao(TipoMovimentacao.ENTRADA);
                     financaProce.setUnidade(criadoPrecedimento.getConsulta().getUnidade());
                     financaProce.setValor(criadoPrecedimento.getValor());
                     financeiroADMDAO.criarFinancas(financaProce);
-
+                    
                     break;
                 case 6:
                     gui.mostrarProcedimentoPrint(procedimentoDAO.mostrarProcedimento());
                     break;
                 case 7:
                     System.out.println("------ Delete PROCEDIMENTO------");
-
+                    
                     System.out.print("id do PROCEDIMENTO:");
-
+                    
                     int idDelProcedimento = Integer.parseInt(scan.nextLine());
                     procedimentoDAO.excluirProcedimento(idDelProcedimento);
                     break;
                 case 8:
                     System.out.println("------ EDIT PROCEDIMENTO------");
-
+                    
                     System.out.print("id do PROCEDIMENTO:");
                     int idEditProcedimento = Integer.parseInt(scan.nextLine());
-
+                    
                     System.out.print("id da consulta:");
                     int idconsultaEditProce = Integer.parseInt(scan.nextLine());
-
+                    
                     Procedimento precedimentoBuscado = procedimentoDAO.buscarProcedimento(idEditProcedimento);
                     Consulta consultaBuscada = consultaDAO.buscarConsulta(idconsultaEditProce);
-
+                    
                     Procedimento novoProcedimento = gui.cadastrarProcedimento(consultaBuscada);
                     novoProcedimento.setId(precedimentoBuscado.getId());
-
+                    
                     procedimentoDAO.atualizarProcedimento(novoProcedimento);
                     break;
                 case 9:
                     System.out.println("------ Criar FINANCEIRO ADM------");
-
+                    
                     System.out.println("id unidade");
                     int idUnidadeFinanceiroADM = Integer.parseInt(scan.nextLine());
                     UnidadeFranquia uniFinanceiroCreate = unidadeFranquiaDAO.buscarUnidade(idUnidadeFinanceiroADM);
-
+                    
                     FinanceiroADM financeiroCreate = gui.cadastrarFinanceiroADM(uniFinanceiroCreate);
-
+                    
                     financeiroADMDAO.criarFinancas(financeiroCreate);
-
+                    
                     break;
                 case 10:
                     gui.mostrarFinanceiroADMPrint(financeiroADMDAO.mostrarFinancas());
                     break;
                 case 11:
                     System.out.println("------ Delete FINANCEIRO ADM------");
-
+                    
                     System.out.print("id do FINANCEIRO ADM:");
-
+                    
                     int idDelFinanceiroADM = Integer.parseInt(scan.nextLine());
                     financeiroADMDAO.excluirFinancas(idDelFinanceiroADM);
-
+                    
                     break;
                 case 12:
                     System.out.println("------ EDIT FINANCEIRO ADM------");
-
+                    
                     System.out.print("id do Financeiro ADM:");
                     int idFinanceiro = Integer.parseInt(scan.nextLine());
                     FinanceiroADM financeiroBuscado = financeiroADMDAO.buscarFinancas(idFinanceiro);
-
+                    
                     System.out.print("id da unidade:");
                     int idUnidadeFinanceiroADMEdit = Integer.parseInt(scan.nextLine());
                     UnidadeFranquia unidaeBuscada = unidadeFranquiaDAO.buscarUnidade(idUnidadeFinanceiroADMEdit);
-
+                    
                     FinanceiroADM financeiroEdited = gui.cadastrarFinanceiroADM(unidaeBuscada);
-
+                    
                     financeiroEdited.setId(financeiroBuscado.getId());
-
+                    
                     financeiroADMDAO.atualizarFinancas(financeiroEdited);
-
+                    
                     break;
                 case 13:
-
+                    
                     System.out.print("id da franquia:");
                     int idFranquia = Integer.parseInt(scan.nextLine());
                     Franquia franquiaAchada = franquiaDAO.buscarFranquia(idFranquia);
-
+                    
                     for (Franquia fran : franquiaDAO.mostrarFranquias()) {
-
+                        
                         if (fran != null && fran.equals(franquiaAchada)) {
-
+                            
                             for (UnidadeFranquia uni : unidadeFranquiaDAO.mostrarUnidades()) {
-
+                                
                                 if (uni != null && fran.equals(uni.getFranquia())) {
-
+                                    
                                     for (FinanceiroADM financeiroADM : financeiroADMDAO.mostrarFinancas()) {
-
+                                        
                                         if (financeiroADM != null && financeiroADM.getUnidade().equals(uni)) {
                                             System.out.println(financeiroADM);
                                         }
@@ -637,17 +637,17 @@ public class Programa {
                                 }
                             }
                         }
-
+                        
                         for (FinanceiroMedico financeiroMedico : financeiroMedicoDAO.mostrarFinancas()) {
-
+                            
                             if (financeiroMedico != null && financeiroMedico.getFranquia().equals(fran)) {
                                 System.out.println(financeiroMedico);
                             }
-
+                            
                         }
-
+                        
                     }
-
+                    
                     break;
                 case 0:
                     inicioMenu();
@@ -656,20 +656,20 @@ public class Programa {
                     throw new AssertionError();
             }
         } while (opcaoUsuario != 0);
-
+        
     }
-
+    
     public void responsavelFranquiaMenu(Pessoa responsavelFranquia) {
 
         // pode tudo que Ã© relacionado a franquia dele
         int opcaoUsuario;
-
+        
         do {
-
+            
             System.out.println("----------------------------");
             System.out.print("Responsavel Franquia logado: ");
             System.out.println(responsavelFranquia);
-
+            
             System.out.println("Suas franquias:");
             /*
              * for (Franquia fran : franquiaDAO.mostrarFranquias()) {
@@ -681,9 +681,9 @@ public class Programa {
              * }
              */
             gui.mostrarFranquiasPrint(franquiaDAO.mostrarFranquiaPorResponsavel(responsavelFranquia));
-
+            
             opcaoUsuario = gui.pegaOpcaoResponsavelFranquia();
-
+            
             switch (opcaoUsuario) {
 
                 // CADASTRO FRANQUIA
@@ -695,16 +695,16 @@ public class Programa {
                     Pessoa pessoaDonoFranquia = pessoaDAO.buscarPessoa(idDonoFranquia);
                     System.out.println(pessoaDonoFranquia);
                     pessoaDonoFranquia.setTipoUsuario(TipoUsuario.DONO_FRANQUIA);
-
+                    
                     Franquia franquiaCriada = gui.cadastrarFranquia(pessoaDonoFranquia);
                     franquiaDAO.criarFranquia(franquiaCriada);
-
+                    
                     break;
                 case 2:
                     // MOSTRAR FRANQUIA
 
                     gui.mostrarFranquiasPrint(franquiaDAO.mostrarFranquiaPorResponsavel(responsavelFranquia));
-
+                    
                     break;
                 case 3:
                     // DELETE FRANQUIA
@@ -727,7 +727,7 @@ public class Programa {
                     } else {
                         franquiaDAO.excluirFranquia(idDelFranquia);
                     }
-
+                    
                     break;
                 case 4:
                     // EDIT FRANQUIA
@@ -744,10 +744,10 @@ public class Programa {
                     Pessoa pessoaEditDonoFranquia = pessoaDAO.buscarPessoa(idEditDonoFranquia);
                     System.out.println(pessoaEditDonoFranquia);
                     pessoaEditDonoFranquia.setTipoUsuario(TipoUsuario.DONO_FRANQUIA);
-
+                    
                     Franquia franquiaEdit = gui.cadastrarFranquia(pessoaEditDonoFranquia);
                     franquiaEdit.setId(idEditFranquia);
-
+                    
                     for (UnidadeFranquia unidade : unidadeFranquiaDAO.mostrarUnidades()) {
                         if (unidade != null) {
                             if (unidade.getFranquia().getId() == idEditFranquia) {
@@ -763,10 +763,10 @@ public class Programa {
                         }
                     }
                     franquiaDAO.atualizarFranquia(franquiaEdit);
-
+                    
                     break;
                 case 5:
-
+                    
                     System.out.println("------Criar unidade franquia------");
                     gui.mostrarPessoasPrint(pessoaDAO.mostrarResposnsaveisUnidade());
                     System.out.print("id de Pessoa:");
@@ -778,11 +778,11 @@ public class Programa {
                     System.out.print("id de franquia:");
                     int idFranquia = Integer.parseInt(scan.nextLine());
                     Franquia buscarFranquia = franquiaDAO.buscarFranquia(idFranquia);
-
+                    
                     UnidadeFranquia unidadefranquiaCriada = gui.cadastrarUnidadeFranquia(buscarFranquia,
                             pessoaDonoUnidadeFranquia);
                     unidadeFranquiaDAO.criarUnidade(unidadefranquiaCriada);
-
+                    
                     break;
                 case 6:
                     System.out.println("id da franquia:");
@@ -790,7 +790,7 @@ public class Programa {
                     gui.mostrarUnidadeFranquiasPrint(unidadeFranquiaDAO.mostrarUnidadePorFranquia(franquiaDAO.buscarFranquia(franfran)));
                     break;
                 case 7:
-
+                    
                     System.out.println("------ Delete unidade franquia------");
                     gui.mostrarFranquiasPrint(franquiaDAO.mostrarFranquiaPorResponsavel(responsavelFranquia));
                     System.out.println("id da franquia:");
@@ -819,19 +819,19 @@ public class Programa {
                             }
                         }
                     }
-
+                    
                     if (unidadeAdm != null && unidadeAdm.equals(unidade)
                             || unidadeConsulta != null && unidadeConsulta.equals(unidade)) {
                         System.out.println("Não é possivel excluir a unidade!");
-
+                        
                     } else {
                         unidadeFranquiaDAO.excluirUnidade(idDelUnidadeFranquia);
                         System.out.println("sucesso:D");
                     }
-
+                    
                     break;
                 case 8:
-
+                    
                     System.out.println("------Edit unidade franquia------");
                     gui.mostrarFranquiasPrint(franquiaDAO.mostrarFranquiaPorResponsavel(responsavelFranquia));
                     System.out.println("id franquia:");
@@ -848,11 +848,11 @@ public class Programa {
                     System.out.println(pessoaDonoUnidadeFranquiaEdit);
                     pessoaDonoUnidadeFranquiaEdit.setTipoUsuario(TipoUsuario.DONO_UNIDADE);
                     Franquia buscarFranquiaEdit = franquiaDAO.buscarFranquia(idFranUniEdit);
-
+                    
                     UnidadeFranquia unidadefranquiaEdit = gui.cadastrarUnidadeFranquia(buscarFranquiaEdit,
                             pessoaDonoUnidadeFranquiaEdit);
                     unidadefranquiaEdit.setId(idUnidade);
-
+                    
                     for (Consulta consulta : consultaDAO.mostrarConsultas()) {
                         if (consulta != null) {
                             if (consulta.getUnidade().getId() == idUnidade) {
@@ -860,7 +860,7 @@ public class Programa {
                             }
                         }
                     }
-
+                    
                     for (FinanceiroADM finaceiroAdm : financeiroADMDAO.mostrarFinancas()) {
                         if (finaceiroAdm != null) {
                             if (finaceiroAdm.getUnidade().getId() == idUnidade) {
@@ -880,11 +880,11 @@ public class Programa {
                     System.out.println("id unidade");
                     int idUnidadeFinanceiroADM = Integer.parseInt(scan.nextLine());
                     UnidadeFranquia uniFinanceiroCreate = unidadeFranquiaDAO.buscarUnidade(idUnidadeFinanceiroADM);
-
+                    
                     FinanceiroADM financeiroCreate = gui.cadastrarFinanceiroADM(uniFinanceiroCreate);
-
+                    
                     financeiroADMDAO.criarFinancas(financeiroCreate);
-
+                    
                     break;
                 case 10:
                     System.out.println("id da franquia:");
@@ -894,47 +894,47 @@ public class Programa {
                     break;
                 case 11:
                     System.out.println("------ Delete FINANCEIRO ADM------");
-
+                    
                     System.out.print("id do FINANCEIRO ADM:");
-
+                    
                     int idDelFinanceiroADM = Integer.parseInt(scan.nextLine());
                     financeiroADMDAO.excluirFinancas(idDelFinanceiroADM);
-
+                    
                     break;
                 case 12:
                     System.out.println("------ EDIT FINANCEIRO ADM------");
-
+                    
                     System.out.print("id do Financeiro ADM:");
                     int idFinanceiro = Integer.parseInt(scan.nextLine());
                     FinanceiroADM financeiroBuscado = financeiroADMDAO.buscarFinancas(idFinanceiro);
-
+                    
                     System.out.print("id da unidade:");
                     int idUnidadeFinanceiroADMEdit = Integer.parseInt(scan.nextLine());
                     UnidadeFranquia unidaeBuscada = unidadeFranquiaDAO.buscarUnidade(idUnidadeFinanceiroADMEdit);
-
+                    
                     FinanceiroADM financeiroEdited = gui.cadastrarFinanceiroADM(unidaeBuscada);
-
+                    
                     financeiroEdited.setId(financeiroBuscado.getId());
-
+                    
                     financeiroADMDAO.atualizarFinancas(financeiroEdited);
-
+                    
                     break;
                 case 13:
-
+                    
                     System.out.print("id da franquia:");
                     int idFranquiaRelatorio = Integer.parseInt(scan.nextLine());
                     Franquia franquiaAchada = franquiaDAO.buscarFranquia(idFranquiaRelatorio);
-
+                    
                     for (Franquia fran : franquiaDAO.mostrarFranquias()) {
-
+                        
                         if (fran != null && fran.equals(franquiaAchada)) {
-
+                            
                             for (UnidadeFranquia uni : unidadeFranquiaDAO.mostrarUnidades()) {
-
+                                
                                 if (uni != null && fran.equals(uni.getFranquia())) {
-
+                                    
                                     for (FinanceiroADM financeiroADM : financeiroADMDAO.mostrarFinancas()) {
-
+                                        
                                         if (financeiroADM != null && financeiroADM.getUnidade().equals(uni)) {
                                             System.out.println(financeiroADM);
                                         }
@@ -942,20 +942,20 @@ public class Programa {
                                 }
                             }
                         }
-
+                        
                         for (FinanceiroMedico financeiroMedico : financeiroMedicoDAO.mostrarFinancas()) {
-
+                            
                             if (financeiroMedico != null && financeiroMedico.getFranquia().equals(fran)) {
                                 System.out.println(financeiroMedico);
                             }
-
+                            
                         }
-
+                        
                     }
-
+                    
                     break;
                 case 0:
-
+                    
                     inicioMenu();
                     break;
                 default:
@@ -963,16 +963,16 @@ public class Programa {
             }
         } while (opcaoUsuario != 0);
     }
-
+    
     public void responsavelUnidadeMenu(Pessoa responsavelUnidade) {
         int opcaoUsuario;
-
+        
         do {
-
+            
             System.out.println("----------------------------");
             System.out.print("Responsavel Unidade logado: ");
             System.out.println(responsavelUnidade);
-
+            
             System.out.println("Suas unidades:");
 
             /*
@@ -985,12 +985,12 @@ public class Programa {
              * }
              */
             gui.mostrarUnidadeFranquiasPrint(unidadeFranquiaDAO.mostrarUnidadeResponsavel(responsavelUnidade));
-
+            
             opcaoUsuario = gui.pegaOpcaoResponsavelUnidade();
             switch (opcaoUsuario) {
-
+                
                 case 1:
-
+                    
                     System.out.println("------Criar unidade franquia------");
                     gui.mostrarPessoasPrint(pessoaDAO.mostrarResposnsaveisUnidade());
                     System.out.print("id de Pessoa:");
@@ -1002,17 +1002,17 @@ public class Programa {
                     System.out.print("id de franquia:");
                     int idFranquia = Integer.parseInt(scan.nextLine());
                     Franquia buscarFranquia = franquiaDAO.buscarFranquia(idFranquia);
-
+                    
                     UnidadeFranquia unidadefranquiaCriada = gui.cadastrarUnidadeFranquia(buscarFranquia,
                             pessoaDonoUnidadeFranquia);
                     unidadeFranquiaDAO.criarUnidade(unidadefranquiaCriada);
-
+                    
                     break;
                 case 2:
                     gui.mostrarUnidadeFranquiasPrint(unidadeFranquiaDAO.mostrarUnidadeResponsavel(responsavelUnidade));
                     break;
                 case 3:
-
+                    
                     System.out.println("------ Delete unidade franquia------");
                     gui.mostrarUnidadeFranquiasPrint(unidadeFranquiaDAO.mostrarUnidadeResponsavel(responsavelUnidade));
                     System.out.print("id da unidade franquia:");
@@ -1037,19 +1037,19 @@ public class Programa {
                             }
                         }
                     }
-
+                    
                     if (unidadeAdm != null && unidadeAdm.equals(unidade)
                             || unidadeConsulta != null && unidadeConsulta.equals(unidade)) {
                         System.out.println("Não é possivel excluir a unidade!");
-
+                        
                     } else {
                         unidadeFranquiaDAO.excluirUnidade(idDelUnidadeFranquia);
                         System.out.println("sucesso:D");
                     }
-
+                    
                     break;
                 case 4:
-
+                    
                     System.out.println("------Edit unidade franquia------");
                     gui.mostrarUnidadeFranquiasPrint(unidadeFranquiaDAO.mostrarUnidadeResponsavel(responsavelUnidade));
                     System.out.println("id da unidade:");
@@ -1065,11 +1065,11 @@ public class Programa {
                     int idFranquiaEdit = Integer.parseInt(scan.nextLine());
                     Franquia buscarFranquiaEdit = franquiaDAO.buscarFranquia(idFranquiaEdit);
                     System.out.println(buscarFranquiaEdit);
-
+                    
                     UnidadeFranquia unidadefranquiaEdit = gui.cadastrarUnidadeFranquia(buscarFranquiaEdit,
                             pessoaDonoUnidadeFranquiaEdit);
                     unidadefranquiaEdit.setId(idUnidade);
-
+                    
                     for (Consulta consulta : consultaDAO.mostrarConsultas()) {
                         if (consulta != null) {
                             if (consulta.getUnidade().getId() == idUnidade) {
@@ -1077,7 +1077,7 @@ public class Programa {
                             }
                         }
                     }
-
+                    
                     for (FinanceiroADM finaceiroAdm : financeiroADMDAO.mostrarFinancas()) {
                         if (finaceiroAdm != null) {
                             if (finaceiroAdm.getUnidade().getId() == idUnidade) {
@@ -1089,15 +1089,15 @@ public class Programa {
                     break;
                 case 5:
                     System.out.println("------ Criar FINANCEIRO ADM------");
-
+                    
                     System.out.println("id unidade:");
                     int idUnidadeFinanceiroADM = Integer.parseInt(scan.nextLine());
                     UnidadeFranquia uniFinanceiroCreate = unidadeFranquiaDAO.buscarUnidade(idUnidadeFinanceiroADM);
-
+                    
                     FinanceiroADM financeiroCreate = gui.cadastrarFinanceiroADM(uniFinanceiroCreate);
-
+                    
                     financeiroADMDAO.criarFinancas(financeiroCreate);
-
+                    
                     break;
                 case 6:
                     System.out.println("id da unidade:");
@@ -1107,62 +1107,62 @@ public class Programa {
                     break;
                 case 7:
                     System.out.println("------ Delete FINANCEIRO ADM------");
-
+                    
                     System.out.print("id do FINANCEIRO ADM:");
-
+                    
                     int idDelFinanceiroADM = Integer.parseInt(scan.nextLine());
                     financeiroADMDAO.excluirFinancas(idDelFinanceiroADM);
-
+                    
                     break;
                 case 8:
                     System.out.println("------ EDIT FINANCEIRO ADM------");
-
+                    
                     System.out.print("id do Financeiro ADM:");
                     int idFinanceiro = Integer.parseInt(scan.nextLine());
                     FinanceiroADM financeiroBuscado = financeiroADMDAO.buscarFinancas(idFinanceiro);
-
+                    
                     System.out.print("id da unidade:");
                     int idUnidadeFinanceiroADMEdit = Integer.parseInt(scan.nextLine());
                     UnidadeFranquia unidaeBuscada = unidadeFranquiaDAO.buscarUnidade(idUnidadeFinanceiroADMEdit);
-
+                    
                     FinanceiroADM financeiroEdited = gui.cadastrarFinanceiroADM(unidaeBuscada);
-
+                    
                     financeiroEdited.setId(financeiroBuscado.getId());
-
+                    
                     financeiroADMDAO.atualizarFinancas(financeiroEdited);
-
+                    
                     break;
                 case 9:
-
+                    
                     System.out.print("id da Unidade:");
                     int idUnidadeRelatorio = Integer.parseInt(scan.nextLine());
                     UnidadeFranquia unidadeAchada = unidadeFranquiaDAO.buscarUnidade(idUnidadeRelatorio);
-
+                    
                     for (UnidadeFranquia uni : unidadeFranquiaDAO.mostrarUnidades()) {
-
+                        
                         if (uni != null && uni.equals(unidadeAchada)) {
-
+                            
                             for (FinanceiroADM financeiroADM : financeiroADMDAO.mostrarFinancas()) {
-
+                                
                                 if (financeiroADM != null && financeiroADM.getUnidade().equals(uni)) {
                                     System.out.println(financeiroADM);
                                 }
                             }
-
+                            
                             for (FinanceiroMedico financeiroMedico : financeiroMedicoDAO.mostrarFinancas()) {
-
+                                
                                 if (financeiroMedico != null && financeiroMedico.getFranquia().equals(uni.getFranquia())) {
                                     System.out.println(financeiroMedico);
                                 }
-
+                                
                             }
                         }
-
+                        
                     }
-
+                    
                     break;
                 case 0:
-
+                    
                     inicioMenu();
                     break;
                 default:
@@ -1170,25 +1170,25 @@ public class Programa {
             }
         } while (opcaoUsuario != 0);
     }
-
+    
     public void admMenu() {
-
+        
         int opcaoUsuario;
         do {
             opcaoUsuario = gui.pegaOpcaoADM();
-
+            
             switch (opcaoUsuario) {
                 case 1:
                     System.out.println("------ Criar Pessoa ------");
                     Pessoa p = gui.cadastrarPessoa();
                     int id = pessoaDAO.criarPessoa(p);
                     System.out.println(id);
-
+                    
                     break;
                 case 2:
                     gui.mostrarPessoasPrint(pessoaDAO.mostrarPessoas());
                     break;
-
+                
                 case 3:
                     System.out.println("------ Editar Pessoa------");
                     Pessoa pessoaBuscada = new Pessoa();
@@ -1197,12 +1197,12 @@ public class Programa {
                         System.out.print("id da pessoa:");
                         idEdit = Integer.parseInt(scan.nextLine());
                         pessoaBuscada = pessoaDAO.buscarPessoa(idEdit);
-
+                        
                         if (pessoaBuscada == null) {
                             System.out.println("ID invalido! Tente novamente...");
                         }
                     } while (pessoaBuscada == null);
-
+                    
                     Pessoa editPessoa = gui.cadastrarPessoa();
                     editPessoa.setId(idEdit);
                     editPessoa.setTipoUsuario(pessoaBuscada.getTipoUsuario());
@@ -1215,7 +1215,7 @@ public class Programa {
                                     }
                                 }
                             }
-
+                            
                             break;
                         case DONO_FRANQUIA:
                             for (Franquia franquia : franquiaDAO.mostrarFranquias()) {
@@ -1244,39 +1244,39 @@ public class Programa {
                                 }
                             }
                             break;
-
+                        
                         default:
                             throw new AssertionError();
                     }
-
+                    
                     pessoaDAO.atualizarPessoa(editPessoa);
-
+                    
                     break;
                 case 4:
                     System.out.println("------ Delete Pessoa------");
-
+                    
                     System.out.print("id da pessoa:");
                     int idDel = Integer.parseInt(scan.nextLine());
-
+                    
                     if (pessoaDAO.buscarPessoa(idDel).getTipoUsuario() == null) {
-
+                        
                         pessoaDAO.excluirPessoa(idDel);
                     } else {
-
+                        
                         System.out.println("existe dados vinculados a pessoa");
                     }
-
+                    
                     break;
                 case 5:
                     // cadastrar medico
                     System.out.println("------ Criar Medico ------");
-
+                    
                     Pessoa pessoaMedico = gui.cadastrarPessoa();
                     pessoaMedico.setTipoUsuario(TipoUsuario.MEDICO);
                     pessoaDAO.criarPessoa(pessoaMedico);
                     Medico medicocriado = gui.cadastrarMedico(pessoaMedico);
                     medicoDAO.criarMedico(medicocriado);
-
+                    
                     break;
                 case 6:
                     // listar medicos
@@ -1299,15 +1299,15 @@ public class Programa {
                             System.out.println("ID invalido! tente novamente:");
                         }
                     } while (medico == null);
-
+                    
                     Medico medicoConsulta = new Medico();
                     Medico medicoFinanceiro = new Medico();
-
+                    
                     for (Consulta consulta : consultaDAO.mostrarConsultas()) {
                         if (consulta != null) {
                             if (consulta.getMedico().equals(medico)) {
                                 medicoConsulta = consulta.getMedico();
-
+                                
                             }
                         }
                     }
@@ -1318,7 +1318,7 @@ public class Programa {
                             }
                         }
                     }
-
+                    
                     if (medicoConsulta != null && medicoConsulta.equals(medico)
                             || medicoFinanceiro != null && medicoFinanceiro.equals(medico)) {
                         System.out.println("Não é possível excluir o médico! Existem dados vinculados ao médico ");
@@ -1327,22 +1327,22 @@ public class Programa {
                         medicoDAO.excluirMedico(idDelMedico);
                         System.out.println("sucesso!");
                     }
-
+                    
                     break;
-
+                
                 case 8:
                     System.out.println("------ EDIT Medico------");
-
+                    
                     System.out.print("id do medico:");
                     int idEditMedico = Integer.parseInt(scan.nextLine());
                     Medico medicoBuscado = medicoDAO.buscarMedico(idEditMedico);
                     System.out.println(medicoBuscado);
-
+                    
                     Pessoa pessoaMedicoEdit = gui.cadastrarPessoa();
                     pessoaMedicoEdit.setTipoUsuario(TipoUsuario.MEDICO);
-
+                    
                     Medico medicoEdit = gui.cadastrarMedico(pessoaMedicoEdit);
-
+                    
                     medicoEdit.setId(idEditMedico);
                     /*
                      * for (Franquia franquia : franquiaDAO.mostrarFranquias()) {
@@ -1365,33 +1365,33 @@ public class Programa {
                     }
                     // for(FinanceiroMed financeiro :)
                     medicoDAO.atualizarMedico(medicoEdit);
-
+                    
                     break;
                 // CADASTRO FRANQUIA
                 case 9:
                     System.out.println("------Criar franquia------");
-
+                    
                     System.out.println("id de Pessoa:");
                     int idDonoFranquia = Integer.parseInt(scan.nextLine());
                     Pessoa pessoaDonoFranquia = pessoaDAO.buscarPessoa(idDonoFranquia);
                     System.out.println(pessoaDonoFranquia);
                     pessoaDonoFranquia.setTipoUsuario(TipoUsuario.DONO_FRANQUIA);
-
+                    
                     Franquia franquiaCriada = gui.cadastrarFranquia(pessoaDonoFranquia);
                     franquiaDAO.criarFranquia(franquiaCriada);
-
+                    
                     break;
                 case 10:
                     // MOSTRAR FRANQUIA
 
                     gui.mostrarFranquiasPrint(franquiaDAO.mostrarFranquias());
-
+                    
                     break;
                 case 11:
                     // DELETE FRANQUIA
 
                     System.out.println("------ Delete franquia------");
-
+                    
                     System.out.print("id da franquia:");
                     int idDelFranquia = Integer.parseInt(scan.nextLine());
                     Franquia franquia = franquiaDAO.buscarFranquia(idDelFranquia);
@@ -1408,27 +1408,27 @@ public class Programa {
                     } else {
                         franquiaDAO.excluirFranquia(idDelFranquia);
                     }
-
+                    
                     break;
                 case 12:
                     // EDIT FRANQUIA
 
                     System.out.println("------ EDIT franquia------");
-
+                    
                     System.out.print("id da franquia:");
                     int idEditFranquia = Integer.parseInt(scan.nextLine());
                     Franquia franquiaBuscado = franquiaDAO.buscarFranquia(idEditFranquia);
                     System.out.println(franquiaBuscado);
-
+                    
                     System.out.print("id de Pessoa:");
                     int idEditDonoFranquia = Integer.parseInt(scan.nextLine());
                     Pessoa pessoaEditDonoFranquia = pessoaDAO.buscarPessoa(idEditDonoFranquia);
                     System.out.println(pessoaEditDonoFranquia);
                     pessoaEditDonoFranquia.setTipoUsuario(TipoUsuario.DONO_FRANQUIA);
-
+                    
                     Franquia franquiaEdit = gui.cadastrarFranquia(pessoaEditDonoFranquia);
                     franquiaEdit.setId(idEditFranquia);
-
+                    
                     for (UnidadeFranquia unidade : unidadeFranquiaDAO.mostrarUnidades()) {
                         if (unidade != null) {
                             if (unidade.getFranquia().getId() == idEditFranquia) {
@@ -1444,34 +1444,34 @@ public class Programa {
                         }
                     }
                     franquiaDAO.atualizarFranquia(franquiaEdit);
-
+                    
                     break;
                 case 13:
-
+                    
                     System.out.println("------Criar unidade franquia------");
-
+                    
                     System.out.print("id de Pessoa:");
                     int idDonoUnidadeFranquia = Integer.parseInt(scan.nextLine());
                     Pessoa pessoaDonoUnidadeFranquia = pessoaDAO.buscarPessoa(idDonoUnidadeFranquia);
                     System.out.println(pessoaDonoUnidadeFranquia);
                     pessoaDonoUnidadeFranquia.setTipoUsuario(TipoUsuario.DONO_UNIDADE);
-
+                    
                     System.out.print("id de franquia:");
                     int idFranquia = Integer.parseInt(scan.nextLine());
                     Franquia buscarFranquia = franquiaDAO.buscarFranquia(idFranquia);
-
+                    
                     UnidadeFranquia unidadefranquiaCriada = gui.cadastrarUnidadeFranquia(buscarFranquia,
                             pessoaDonoUnidadeFranquia);
                     unidadeFranquiaDAO.criarUnidade(unidadefranquiaCriada);
-
+                    
                     break;
                 case 14:
                     gui.mostrarUnidadeFranquiasPrint(unidadeFranquiaDAO.mostrarUnidades());
                     break;
                 case 15:
-
+                    
                     System.out.println("------ Delete unidade franquia------");
-
+                    
                     System.out.print("id da unidade franquia:");
                     int idDelUnidadeFranquia = Integer.parseInt(scan.nextLine());
                     UnidadeFranquia unidade = unidadeFranquiaDAO.buscarUnidade(idDelUnidadeFranquia);
@@ -1494,19 +1494,19 @@ public class Programa {
                             }
                         }
                     }
-
+                    
                     if (unidadeAdm != null && unidadeAdm.equals(unidade)
                             || unidadeConsulta != null && unidadeConsulta.equals(unidade)) {
                         System.out.println("Não é possivel excluir a unidade!");
-
+                        
                     } else {
                         unidadeFranquiaDAO.excluirUnidade(idDelUnidadeFranquia);
                         System.out.println("sucesso:D");
                     }
-
+                    
                     break;
                 case 16:
-
+                    
                     System.out.println("------Edit unidade franquia------");
                     System.out.println("id da unidade:");
                     int idUnidade = Integer.parseInt(scan.nextLine());
@@ -1516,16 +1516,16 @@ public class Programa {
                     Pessoa pessoaDonoUnidadeFranquiaEdit = pessoaDAO.buscarPessoa(idDonoUnidadeFranquiaEdit);
                     System.out.println(pessoaDonoUnidadeFranquiaEdit);
                     pessoaDonoUnidadeFranquiaEdit.setTipoUsuario(TipoUsuario.DONO_UNIDADE);
-
+                    
                     System.out.print("id de franquia:");
                     int idFranquiaEdit = Integer.parseInt(scan.nextLine());
                     Franquia buscarFranquiaEdit = franquiaDAO.buscarFranquia(idFranquiaEdit);
                     System.out.println(buscarFranquiaEdit);
-
+                    
                     UnidadeFranquia unidadefranquiaEdit = gui.cadastrarUnidadeFranquia(buscarFranquiaEdit,
                             pessoaDonoUnidadeFranquiaEdit);
                     unidadefranquiaEdit.setId(idUnidade);
-
+                    
                     for (Consulta consulta : consultaDAO.mostrarConsultas()) {
                         if (consulta != null) {
                             if (consulta.getUnidade().getId() == idUnidade) {
@@ -1533,7 +1533,7 @@ public class Programa {
                             }
                         }
                     }
-
+                    
                     for (FinanceiroADM finaceiroAdm : financeiroADMDAO.mostrarFinancas()) {
                         if (finaceiroAdm != null) {
                             if (finaceiroAdm.getUnidade().getId() == idUnidade) {
@@ -1543,46 +1543,46 @@ public class Programa {
                     }
                     unidadeFranquiaDAO.atualizarUnidade(unidadefranquiaEdit);
                     break;
-
+                
                 case 17:
                     System.out.println("------ Criar Consulta------");
-
+                    
                     System.out.print("id do medico:");
                     int idMedicoConsulta = Integer.parseInt(scan.nextLine());
-
+                    
                     pessoaDAO.buscarPacientes();
                     System.out.print("id do paciente:");
                     int idPacienteConsulta = Integer.parseInt(scan.nextLine());
-
+                    
                     System.out.print("id da Unidade:");
                     int idUnidadeConsultacreate = Integer.parseInt(scan.nextLine());
-
+                    
                     UnidadeFranquia unidadeConsultafindy = unidadeFranquiaDAO.buscarUnidade(idUnidadeConsultacreate);
                     Medico medicoconsulta = medicoDAO.buscarMedico(idMedicoConsulta);
                     Pessoa paceienteconsulta = pessoaDAO.buscarPessoa(idPacienteConsulta);
-
+                    
                     Consulta consultaInsert = gui.cadastrarConsulta(medicoconsulta, paceienteconsulta);
                     consultaInsert.setUnidade(unidadeConsultafindy);
-
+                    
                     consultaDAO.cadastrarConsulta(consultaInsert);
-
+                    
                     FinanceiroADM financa = new FinanceiroADM();
                     financa.setDescriacao(MovimentoDesc.CONSULTA);
                     financa.setTipoMovimentacao(TipoMovimentacao.ENTRADA);
                     financa.setUnidade(unidadeConsultafindy);
                     financa.setValor(consultaInsert.getValor());
                     financeiroADMDAO.criarFinancas(financa);
-
+                    
                     break;
                 case 18:
                     gui.mostrarConsultasPrint(consultaDAO.mostrarConsultas());
-
+                    
                     break;
                 case 19:
                     System.out.println("------ Delete Consulta------");
                     System.out.print("id do Consulta:");
                     consultaDAO.mostrarConsultas();
-
+                    
                     int idDelConsulta = Integer.parseInt(scan.nextLine());
                     Consulta consul = consultaDAO.buscarConsulta(idDelConsulta);
                     Consulta consultapro = new Consulta();
@@ -1604,26 +1604,26 @@ public class Programa {
                     if ((consultapro != null && consultapro.equals(consul))
                             || (consultainfo != null && consultainfo.equals(consul))) {
                         System.out.println("Não é possível excluir a consulta! Há dados vinculados à consulta");
-
+                        
                     } else {
                         consultaDAO.excluirConsulta(idDelConsulta);
                         System.out.println("Consulta deletada com sucesso!");
                     }
-
+                    
                     break;
-
+                
                 case 20:
                     System.out.println("------ EDIT Consulta------");
-
+                    
                     System.out.print("id do Consulta:");
                     int idEditConsulta = Integer.parseInt(scan.nextLine());
-
+                    
                     Consulta consultaBuscado = consultaDAO.buscarConsulta(idEditConsulta);
                     System.out.println(consultaBuscado);
-
+                    
                     System.out.print("id do medico:");
                     int idMedicoConsultaEdit = Integer.parseInt(scan.nextLine());
-
+                    
                     System.out.println("Pacientes:");
                     pessoaDAO.buscarPacientes();
                     System.out.print("id do paciente:");
@@ -1631,14 +1631,14 @@ public class Programa {
                     System.out.println("id unidade");
                     int idUnidadeConsulta = Integer.parseInt(scan.nextLine());
                     UnidadeFranquia uniConsultaEdit = unidadeFranquiaDAO.buscarUnidade(idUnidadeConsulta);
-
+                    
                     Medico medicoconsultaEdit = medicoDAO.buscarMedico(idMedicoConsultaEdit);
                     Pessoa paceienteconsultaEdit = pessoaDAO.buscarPessoa(idPacienteConsultaEdit);
-
+                    
                     Consulta consultaEdit = gui.cadastrarConsulta(medicoconsultaEdit, paceienteconsultaEdit);
                     consultaEdit.setUnidade(uniConsultaEdit);
                     consultaEdit.setId(idEditConsulta);
-
+                    
                     for (InfoConsulta info : infoConsultaDAO.mostrarInfoConsulta()) {
                         if (info != null) {
                             if (info.getConsulta().equals(consultaBuscado)) {
@@ -1655,109 +1655,241 @@ public class Programa {
                     }
                     consultaDAO.editarConsulta(consultaEdit);
                     System.out.println("editado");
-
+                    
                     break;
                 case 21:
-
+                    
                     System.out.println("------ Criar info Consulta------");
-
+                    
                     System.out.print("id da Consulta:");
                     int idConsulta = Integer.parseInt(scan.nextLine());
-
+                    
                     Consulta consultaVinculada = consultaDAO.buscarConsulta(idConsulta);
-
+                    
                     InfoConsulta InfoConsultaCriado = gui.cadastrarInfoConsulta(consultaVinculada);
-
+                    
                     infoConsultaDAO.criarInfoConsulta(InfoConsultaCriado);
-
+                    
                     break;
                 case 22:
-
+                    
                     gui.mostrarInfoConsultasPrint(infoConsultaDAO.mostrarInfoConsulta());
-
+                    
                     break;
                 case 23:
-
+                    
                     System.out.println("------ Delete info Consulta------");
                     System.out.print("id do info Consulta:");
                     infoConsultaDAO.mostrarInfoConsulta();
-
+                    
                     int idDelInfoConsulta = Integer.parseInt(scan.nextLine());
                     infoConsultaDAO.excluirInfoConsulta(idDelInfoConsulta);
-
+                    
                     break;
                 case 24:
-
+                    
                     System.out.println("------ EDIT info Consulta------");
-
+                    
                     System.out.print("id do info Consulta:");
                     int idEditInfoConsulta = Integer.parseInt(scan.nextLine());
-
+                    
                     System.out.print("id da Consulta:");
                     int idConsultaBusca = Integer.parseInt(scan.nextLine());
-
+                    
                     Consulta consultaBuscadaedit = consultaDAO.buscarConsulta(idConsultaBusca);
-
+                    
                     InfoConsulta infoCunsultaBusca = infoConsultaDAO.buscarInfoConsulta(idEditInfoConsulta);
-
+                    
                     InfoConsulta infoConsultaEditado = gui.cadastrarInfoConsulta(consultaBuscadaedit);
                     infoConsultaEditado.setId(infoCunsultaBusca.getId());
-
+                    
                     break;
                 case 25:
-
+                    
                     System.out.println("------ Criar PROCEDIMENTO------");
-
+                    
                     System.out.print("id da Consulta:");
                     int idConsultaProcedimento = Integer.parseInt(scan.nextLine());
-
+                    
                     Consulta consultaVinculadaProcedimento = consultaDAO.buscarConsulta(idConsultaProcedimento);
-
+                    
                     Procedimento criadoPrecedimento = gui.cadastrarProcedimento(consultaVinculadaProcedimento);
-
+                    
                     procedimentoDAO.criarProcedimento(criadoPrecedimento);
-
+                    
                     FinanceiroADM financaProce = new FinanceiroADM();
                     financaProce.setDescriacao(MovimentoDesc.PROCEDIMENTO);
                     financaProce.setTipoMovimentacao(TipoMovimentacao.ENTRADA);
                     financaProce.setUnidade(criadoPrecedimento.getConsulta().getUnidade());
                     financaProce.setValor(criadoPrecedimento.getValor());
                     financeiroADMDAO.criarFinancas(financaProce);
-
+                    
                     break;
                 case 26:
-
+                    
                     gui.mostrarProcedimentoPrint(procedimentoDAO.mostrarProcedimento());
-
+                    
                     break;
                 case 27:
                     System.out.println("------ Delete PROCEDIMENTO------");
-
+                    
                     System.out.print("id do PROCEDIMENTO:");
-
+                    
                     int idDelProcedimento = Integer.parseInt(scan.nextLine());
                     procedimentoDAO.excluirProcedimento(idDelProcedimento);
-
+                    
                     break;
                 case 28:
                     System.out.println("------ EDIT PROCEDIMENTO------");
-
+                    
                     System.out.print("id do PROCEDIMENTO:");
                     int idEditProcedimento = Integer.parseInt(scan.nextLine());
-
+                    
                     System.out.print("id da consulta:");
                     int idconsultaEditProce = Integer.parseInt(scan.nextLine());
-
+                    
                     Procedimento precedimentoBuscado = procedimentoDAO.buscarProcedimento(idEditProcedimento);
                     Consulta consultaBuscada = consultaDAO.buscarConsulta(idconsultaEditProce);
-
+                    
                     Procedimento novoProcedimento = gui.cadastrarProcedimento(consultaBuscada);
                     novoProcedimento.setId(precedimentoBuscado.getId());
-
+                    
                     procedimentoDAO.atualizarProcedimento(novoProcedimento);
-
+                    
                     break;
-
+                case 29:
+                    System.out.println("------ Criar FINANCEIRO ADM------");
+                    
+                    System.out.println("id franquia");
+                    int idFranquiaAdm = Integer.parseInt(scan.nextLine());
+                    gui.mostrarUnidadeFranquiasPrint(
+                            unidadeFranquiaDAO.mostrarUnidadePorFranquia(franquiaDAO.buscarFranquia(idFranquiaAdm)));
+                    System.out.println("id unidade");
+                    int idUnidadeFinanceiroADM = Integer.parseInt(scan.nextLine());
+                    UnidadeFranquia uniFinanceiroCreate = unidadeFranquiaDAO.buscarUnidade(idUnidadeFinanceiroADM);
+                    
+                    FinanceiroADM financeiroCreate = gui.cadastrarFinanceiroADM(uniFinanceiroCreate);
+                    
+                    financeiroADMDAO.criarFinancas(financeiroCreate);
+                    
+                    break;
+                case 30:
+                    System.out.println("id da franquia:");
+                    int idFranquiaAdmPrint = Integer.parseInt(scan.nextLine());
+                    gui.mostrarFinanceiroADMPrint(
+                            financeiroADMDAO.mostrarFinancasFranquia(franquiaDAO.buscarFranquia(idFranquiaAdmPrint)));
+                    break;
+                case 31:
+                    System.out.println("------ Delete FINANCEIRO ADM------");
+                    
+                    System.out.print("id do FINANCEIRO ADM:");
+                    
+                    int idDelFinanceiroADM = Integer.parseInt(scan.nextLine());
+                    financeiroADMDAO.excluirFinancas(idDelFinanceiroADM);
+                    
+                    break;
+                case 32:
+                    System.out.println("------ EDIT FINANCEIRO ADM------");
+                    
+                    System.out.print("id do Financeiro ADM:");
+                    int idFinanceiro = Integer.parseInt(scan.nextLine());
+                    FinanceiroADM financeiroBuscado = financeiroADMDAO.buscarFinancas(idFinanceiro);
+                    
+                    System.out.print("id da unidade:");
+                    int idUnidadeFinanceiroADMEdit = Integer.parseInt(scan.nextLine());
+                    UnidadeFranquia unidaeBuscada = unidadeFranquiaDAO.buscarUnidade(idUnidadeFinanceiroADMEdit);
+                    
+                    FinanceiroADM financeiroEdited = gui.cadastrarFinanceiroADM(unidaeBuscada);
+                    
+                    financeiroEdited.setId(financeiroBuscado.getId());
+                    
+                    financeiroADMDAO.atualizarFinancas(financeiroEdited);
+                    
+                    break;
+                case 33:
+                    System.out.println("------ Criar FINANCEIRO medico------");
+                    
+                    System.out.print("id medico:");
+                    int idmedicoCriandoFinaceiro = Integer.parseInt(scan.nextLine());
+                    Medico medicoB = medicoDAO.buscarMedico(idmedicoCriandoFinaceiro);
+                    
+                    System.out.print("id franquia:");
+                    int idFranquiaCriandoFinaceiro = Integer.parseInt(scan.nextLine());
+                    Franquia franquiaB = franquiaDAO.buscarFranquia(idFranquiaCriandoFinaceiro);
+                    
+                    financeiroMedicoDAO.criarFinancas(gui.cadastrarFinanceiroMedico(medicoB, franquiaB));
+                    
+                    break;
+                case 34:
+                    System.out.println("------ mostrar FINANCEIRO medico------");
+                    gui.mostrarFinanceiroMedicoPrint(financeiroMedicoDAO.mostrarFinancas());
+                    
+                    break;
+                case 35:
+                    System.out.println("------ delete FINANCEIRO medico------");
+                    
+                    System.out.print("id do financeiro medico:");
+                    int idFinaceiroMedico = Integer.parseInt(scan.nextLine());
+                    
+                    financeiroMedicoDAO.excluirFinancas(idFinaceiroMedico);
+                
+                case 36:
+                    System.out.println("------ EDIT FINANCEIRO medico------");
+                    
+                    System.out.print("id do financeiro medico:");
+                    int idFinaceiroMedicoEdit = Integer.parseInt(scan.nextLine());
+                    
+                    FinanceiroMedico financeiroMedicoAchado = financeiroMedicoDAO.buscarFinancas(idFinaceiroMedicoEdit);
+                    
+                    System.out.print("id medico:");
+                    int idmedicoCriandoFinaceiroEdit = Integer.parseInt(scan.nextLine());
+                    Medico medicoBedit = medicoDAO.buscarMedico(idmedicoCriandoFinaceiroEdit);
+                    
+                    System.out.print("id franquia:");
+                    int idFranquiaCriandoFinaceiroEdit = Integer.parseInt(scan.nextLine());
+                    Franquia franquiaBedit = franquiaDAO.buscarFranquia(idFranquiaCriandoFinaceiroEdit);
+                    
+                    FinanceiroMedico financeiroeditcriado = gui.cadastrarFinanceiroMedico(medicoBedit, franquiaBedit);
+                    financeiroeditcriado.setId(financeiroMedicoAchado.getId());
+                    
+                    financeiroMedicoDAO.atualizarFinancas(financeiroeditcriado);
+                
+                case 37:
+                    
+                    System.out.print("id da franquia:");
+                    int idFranquiaRelatorio = Integer.parseInt(scan.nextLine());
+                    Franquia franquiaAchada = franquiaDAO.buscarFranquia(idFranquiaRelatorio);
+                    
+                    for (Franquia fran : franquiaDAO.mostrarFranquias()) {
+                        
+                        if (fran != null && fran.equals(franquiaAchada)) {
+                            
+                            for (UnidadeFranquia uni : unidadeFranquiaDAO.mostrarUnidades()) {
+                                
+                                if (uni != null && fran.equals(uni.getFranquia())) {
+                                    
+                                    for (FinanceiroADM financeiroADM : financeiroADMDAO.mostrarFinancas()) {
+                                        
+                                        if (financeiroADM != null && financeiroADM.getUnidade().equals(uni)) {
+                                            System.out.println(financeiroADM);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        for (FinanceiroMedico financeiroMedico : financeiroMedicoDAO.mostrarFinancas()) {
+                            
+                            if (financeiroMedico != null && financeiroMedico.getFranquia().equals(fran)) {
+                                System.out.println(financeiroMedico);
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                    break;
+                
                 case 0:
                     inicioMenu();
                     break;
@@ -1765,7 +1897,7 @@ public class Programa {
                     throw new AssertionError();
             }
         } while (opcaoUsuario != 0);
-
+        
     }
 
     /*
@@ -1794,39 +1926,39 @@ public class Programa {
      * }
      */
     public void gerarFinanceiroMedico() {
-
+        
         for (Medico medico : medicoDAO.mostrarMedicos()) {
-
+            
             Consulta[] cosnsultassdasd = consultaDAO.consultarConsultasPorMedico(medico);
-
+            
             Procedimento[] procedime = procedimentoDAO.getProcedimentosPorMedico(medico);
-
+            
             Procedimento[] precedimentosData = null;
             int indexproce = 0;
-
+            
             Consulta[] consultaData = null;
             int indexconsul = 0;
-
+            
             for (Franquia fran : franquiaDAO.mostrarFranquias()) {
-
+                
                 if (fran != null) {
-
+                    
                     precedimentosData = new Procedimento[100];
-
+                    
                     consultaData = new Consulta[100];
 
                     // System.out.println(fran);
                     for (UnidadeFranquia uni : unidadeFranquiaDAO.mostrarUnidades()) {
-
+                        
                         if (uni != null && fran.equals(uni.getFranquia())) {
-
+                            
                             for (Consulta consulta : cosnsultassdasd) {
-
+                                
                                 if (consulta != null && consulta.getUnidade().equals(uni)) {
 
                                     // System.out.println(consulta);
                                     for (Procedimento procedimento : procedime) {
-
+                                        
                                         if (procedimento != null && procedimento.getConsulta().equals(consulta)) {
 
                                             // System.out.println(procedimento);
@@ -1844,26 +1976,26 @@ public class Programa {
                                      * System.out.println(procedimento);
                                      * }
                                      */
-
+                                    
                                 }
                             }
                             // System.out.println("3");
                         }
-
+                        
                     }
                     // System.out.println("chamo metodo");
                     financeiroMedicoDAO.registrarPagamento(medico, consultaData, precedimentosData, fran,
                             LocalDate.of(2023, 6, 1));
-
+                    
                     indexproce = 0;
                     indexconsul = 0;
                 }
             }
-
+            
         }
-
+        
     }
-
+    
     public void dadosTEST() {
 
         /* adm */
@@ -1970,7 +2102,7 @@ public class Programa {
         medico2.setSenha("test");
         medico2.setTipoUsuario(TipoUsuario.MEDICO);
         pessoaDAO.criarPessoa(medico2);
-
+        
         Medico medicodemedico2 = new Medico();
         medicodemedico2.setCrm("22222");
         medicodemedico2.setEspecialidade("Cardiologia");
@@ -1987,7 +2119,7 @@ public class Programa {
         medico3.setSenha("test");
         medico3.setTipoUsuario(TipoUsuario.MEDICO);
         pessoaDAO.criarPessoa(medico3);
-
+        
         Medico medicodemedico3 = new Medico();
         medicodemedico3.setCrm("33333");
         medicodemedico3.setEspecialidade("Pediatria");
@@ -2004,7 +2136,7 @@ public class Programa {
         medico4.setSenha("test");
         medico4.setTipoUsuario(TipoUsuario.MEDICO);
         pessoaDAO.criarPessoa(medico4);
-
+        
         Medico medicodemedico4 = new Medico();
         medicodemedico4.setCrm("44444");
         medicodemedico4.setEspecialidade("Dermatologia");
@@ -2018,14 +2150,14 @@ public class Programa {
         franquia1.setResponsavel(pessoa1);
         franquia1.setEndereco("Rua A, 123");
         franquia1.setCidade("São Paulo");
-
+        
         Franquia franquia2 = new Franquia();
         franquia2.setNome("Franquia 2");
         franquia2.setCnpj("987654321");
         franquia2.setResponsavel(pessoa1);
         franquia2.setEndereco("Rua B, 456");
         franquia2.setCidade("Rio de Janeiro");
-
+        
         Franquia franquia3 = new Franquia();
         franquia3.setNome("Franquia 3");
         franquia3.setCnpj("555555555");
@@ -2042,19 +2174,19 @@ public class Programa {
         unidadeFranquia1.setEndereco("Rua A, 123");
         unidadeFranquia1.setFranquia(franquia3);
         unidadeFranquia1.setResponsavel(pessoa3);
-
+        
         UnidadeFranquia unidadeFranquia2 = new UnidadeFranquia();
         unidadeFranquia2.setCidade("São Paulo");
         unidadeFranquia2.setEndereco("Rua B, 098");
         unidadeFranquia2.setFranquia(franquia1);
         unidadeFranquia2.setResponsavel(pessoa3);
-
+        
         UnidadeFranquia unidadeFranquia3 = new UnidadeFranquia();
         unidadeFranquia3.setCidade("São Paulo");
         unidadeFranquia3.setEndereco("Rua c, 398");
         unidadeFranquia3.setFranquia(franquia2);
         unidadeFranquia3.setResponsavel(pessoa4);
-
+        
         unidadeFranquiaDAO.criarUnidade(unidadeFranquia1);
         unidadeFranquiaDAO.criarUnidade(unidadeFranquia2);
         unidadeFranquiaDAO.criarUnidade(unidadeFranquia3);
@@ -2070,7 +2202,7 @@ public class Programa {
         consulta1.setData(LocalDate.of(2023, 5, 13));
         consulta1.setEstado(Estados.REALIZADA);
         consulta1.setHorario(LocalTime.of(14, 30));
-
+        
         Consulta consulta2 = new Consulta();
         consulta2.setMedico(medicodemedico2);
         consulta2.setValor(300);
@@ -2079,7 +2211,7 @@ public class Programa {
         consulta2.setEstado(Estados.AGENDADA);
         consulta2.setData(LocalDate.of(2023, 5, 15));
         consulta2.setHorario(LocalTime.of(10, 0));
-
+        
         Consulta consulta3 = new Consulta();
         consulta3.setMedico(medicodemedico2);
         consulta3.setValor(100);
@@ -2088,7 +2220,7 @@ public class Programa {
         consulta3.setEstado(Estados.REALIZADA);
         consulta3.setData(LocalDate.of(2023, 5, 17));
         consulta3.setHorario(LocalTime.of(16, 45));
-
+        
         Consulta consulta4 = new Consulta();
         consulta4.setMedico(medicodemedico2);
         consulta4.setValor(200);
@@ -2097,7 +2229,7 @@ public class Programa {
         consulta4.setData(LocalDate.of(2023, 5, 20));
         consulta4.setEstado(Estados.CANCELADA);
         consulta4.setHorario(LocalTime.of(16, 45));
-
+        
         Consulta consulta5 = new Consulta();
         consulta5.setMedico(medicodemedico2);
         consulta5.setValor(200);
@@ -2106,7 +2238,7 @@ public class Programa {
         consulta5.setData(LocalDate.of(2023, 4, 20));
         consulta5.setEstado(Estados.REALIZADA);
         consulta5.setHorario(LocalTime.of(16, 45));
-
+        
         consultaDAO.cadastrarConsulta(consulta1);
         consultaDAO.cadastrarConsulta(consulta2);
         consultaDAO.cadastrarConsulta(consulta3);
@@ -2148,7 +2280,7 @@ public class Programa {
         procedimento1.setEstado(Estados.REALIZADA);
         procedimento1.setValor(80.0);
         procedimento1.setLaudo("Resultado normal");
-
+        
         Procedimento procedimento2 = new Procedimento();
         procedimento2.setNome("Radiografia");
         procedimento2.setConsulta(consulta2);
@@ -2157,7 +2289,7 @@ public class Programa {
         procedimento2.setEstado(Estados.AGENDADA);
         procedimento2.setValor(120.0);
         procedimento2.setLaudo("Nenhum laudo disponível");
-
+        
         Procedimento procedimento3 = new Procedimento();
         procedimento3.setNome("Consulta dermatológica");
         procedimento3.setConsulta(consulta3);
@@ -2166,7 +2298,7 @@ public class Programa {
         procedimento3.setEstado(Estados.REALIZADA);
         procedimento3.setValor(200.0);
         procedimento3.setLaudo("Paciente apresenta alergia a cosméticos");
-
+        
         Procedimento procedimento4 = new Procedimento();
         procedimento4.setNome("Ecocardiograma");
         procedimento4.setConsulta(consulta4);
@@ -2175,15 +2307,15 @@ public class Programa {
         procedimento4.setEstado(Estados.CANCELADA);
         procedimento4.setValor(350.0);
         procedimento4.setLaudo("Exame não realizado devido ao cancelamento da consulta");
-
+        
         procedimentoDAO.criarProcedimento(procedimento1);
         procedimentoDAO.criarProcedimento(procedimento2);
         procedimentoDAO.criarProcedimento(procedimento3);
         procedimentoDAO.criarProcedimento(procedimento4);
     }
-
+    
     public static void main(String[] args) {
         new Programa();
     }
-
+    
 }

@@ -7,6 +7,7 @@ package UI;
 import Objects.Pessoa;
 import Objects.Medico;
 import Objects.Consulta;
+import Objects.EstadoFinanceiroMedico;
 import Objects.Estados;
 import Objects.FinanceiroADM;
 import Objects.TipoUsuario;
@@ -284,6 +285,36 @@ public class GUI {
 
     }
 
+    public FinanceiroMedico cadastrarFinanceiroMedico(Medico medico, Franquia franquia) {
+
+        FinanceiroMedico financa = new FinanceiroMedico();
+
+        financa.setMedico(medico);
+        financa.setFranquia(franquia);
+
+        System.out.print("valor:");
+        double valor = Double.parseDouble(scan.nextLine());
+        financa.setValor(valor);
+
+        System.out.print("tipo estado 1-agendado, 2-pago:");
+        int opEstado = Integer.parseInt(scan.nextLine());
+
+        switch (opEstado) {
+            case 1:
+                financa.setEstado(EstadoFinanceiroMedico.AGENDADO);
+                break;
+            case 2:
+                financa.setEstado(EstadoFinanceiroMedico.PAGO);
+
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+        return financa;
+
+    }
+
     public int pegaOpcaoADM() {
         System.out.println("------ PESSOA------");
         System.out.println("1 cadastrar PESSOA");
@@ -320,6 +351,17 @@ public class GUI {
         System.out.println("26 mostrar PROCEDIMENTO");
         System.out.println("27 deletar PROCEDIMENTO");
         System.out.println("28 editar PROCEDIMENTO");
+        System.out.println("-------Finaceniro ADM ---------");
+        System.out.println("29 - Criar Finaceiro ADM");
+        System.out.println("30 - Mostrar finanças Franquia");
+        System.out.println("31 - Editar Finaceiro ADM Franquia");
+        System.out.println("32 - Deletar Finaceiro ADM Franquia");
+        System.out.println("-------Finaceniro MEDICO ---------");
+        System.out.println("33 - Criar Finaceiro MEDICO");
+        System.out.println("34 - Mostrar finanças MEDICO");
+        System.out.println("35 - Editar Finaceiro ADM MEDICO");
+        System.out.println("36 - Deletar Finaceiro ADM MEDICO");
+        System.out.println("37 - Relatórios FINANCEIRO  Franquia");
         System.out.println("0 sair");
 
         System.out.print("Qual sua opcao ?");
@@ -407,7 +449,7 @@ public class GUI {
         System.out.println("11 - Deletar Financeiro ADM");
         System.out.println("12 - Editar finaceiro ADM");
         System.out.println("13 - Relatório de Finanças da Franquia");
-        
+
         System.out.println("0 - sair");
 
         System.out.print("Qual sua opcao ?");
